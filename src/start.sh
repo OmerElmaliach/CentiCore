@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setup path and build dir.
-cd ../../config
+cd ..
 mkdir build
 cd build
 

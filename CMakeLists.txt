@@ -5,11 +5,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
+qt_add_resources(CentiCore FILES resources/resources.qrc)
+
 qt_add_executable(CentiCore
-    ../src/gui/setup.cpp
-    ../src/gui/ui/main_interface.ui
-    ../src/gui/components/main_interface.cpp
-    ../src/gui/components/main_interface.h
+    src/main.cpp
+    src/gui/ui/main_interface.ui
+    src/gui/components/main_interface.cpp
 )
 
 target_link_libraries(CentiCore PRIVATE Qt6::Widgets)
