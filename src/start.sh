@@ -2,6 +2,7 @@
 
 # Setup path and build dir.
 cd ..
+rm -rf build
 mkdir build
 cd build
 
@@ -9,7 +10,7 @@ cd build
 cmake .. -DCMAKE_PREFIX_PATH="$HOME/Qt/6.9.1/gcc_64/lib/cmake"
 
 # Run makefile.
-make
+make -j$(nproc)
 
 # Run the gui app.
 echo "------------------------------------------------------------"
