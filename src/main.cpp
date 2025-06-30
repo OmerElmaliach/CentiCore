@@ -1,4 +1,3 @@
-#include <QString>
 #include <QDateTime>
 #include <QApplication>
 #include <QFile>
@@ -13,7 +12,7 @@ int main(int argc, char *argv[]) {
         styleFile.close();
     } else {
         qWarning("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-FRONT][ERROR]", "Failed to load style file for main_interface");
+         "[CENTICORE-FRONTEND][ERROR]", "Failed to load style file for main_interface");
     }
 
     MainInterface w;
