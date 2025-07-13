@@ -37,8 +37,8 @@
   <property name="windowTitle">
    <string>Dashboard</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="PageWidget" native="true">
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="pageWidget" native="true">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -46,6 +46,9 @@
       <width>201</width>
       <height>561</height>
      </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
     </property>
     <widget class="QPushButton" name="dashBoard_btn">
      <property name="geometry">
@@ -164,7 +167,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <resources/>
  <connections/>

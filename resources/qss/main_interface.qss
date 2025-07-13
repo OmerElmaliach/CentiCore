@@ -14,9 +14,28 @@ QPushButton:pressed {
     background-color: #2471a3;
 }
 
+#centralWidget {
+    background-color: #252525;
+    border-bottom: 1px solid #4b4b4b;
+}
+
 #topbarWidget {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dcdcdc;
+    background-color: #4b4b4b;
+    border-bottom: 1px solid #555555;
+}
+
+#pageWidget {
+    background-color: #333333;
+    border-bottom: 1px solid #4b4b4b;
+}
+
+#graphWidget {
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+}
+
+QStatusBar {
+    background-color: #202020;
 }
 
 QTextBrowser {
@@ -24,9 +43,4 @@ QTextBrowser {
     border: 1px solid #ccc;
     padding: 8px;
     font: 10pt 'Segoe UI';
-}
-
-#graphWidget {
-    background-color: #ecf0f1;
-    border: 1px solid #bdc3c7;
 }

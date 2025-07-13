@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "gui/components/main_interface.h"
+#include "gui/components/include/main_interface.h"
 const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
 
 int main(int argc, char *argv[]) {
