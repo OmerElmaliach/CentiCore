@@ -12,3 +12,14 @@ MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui
 MainInterface::~MainInterface() {
     delete m_ui;
 }
+
+void MainInterface::loadStyles(const char* stylePath) {
+    QFile styleFile(stylePath);  
+    if (styleFile.open(QFile::ReadOnly)) {
+        this->setStyleSheet(QLatin1String(styleFile.readAll()));
+        styleFile.close();
+    } else {
+        qWarning("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
+         "[CENTICORE-FRONTEND][ERROR]", "Failed to load style file for main_interface");
+    }
+}
