@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include <QDateTime>
 #include <QFile>
+#include <QMouseEvent>
+#include <QPoint>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -13,6 +15,8 @@ class MainInterface : public QMainWindow {
 
 private:
     Ui::MainInterface *m_ui;
+    QPoint m_dragPosition;
+    bool m_dragging = false;
 
 public:
     /**

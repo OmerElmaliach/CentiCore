@@ -3,9 +3,11 @@
 
 MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface) {
     m_ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    
     connect(m_ui->dashBoard_btn, &QPushButton::clicked, this, [] {
         qDebug("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-FRONTEND][INFO]", "Dashboard button pressed");
+         "[CENTICORE-UI][INFO]", "Dashboard button pressed");
     });
 }
 
@@ -20,6 +22,6 @@ void MainInterface::loadStyles(const char* stylePath) {
         styleFile.close();
     } else {
         qWarning("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-FRONTEND][ERROR]", "Failed to load style file for main_interface");
+         "[CENTICORE-UI][ERROR]", "Failed to load style file for main_interface");
     }
 }
