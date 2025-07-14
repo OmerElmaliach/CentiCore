@@ -33,6 +33,16 @@ public:
      * @brief Loads the qss into the ui file.
      */
     void loadStyles(const char* stylePath);
+
+    /**
+     * @brief Define and load window functionality.
+     */
+    void loadFuncs();
+
+    /**
+     * @brief Event filter for main window.
+     */
+    bool eventFilter(QObject *object, QEvent *event) override;
 };
 
 #endif

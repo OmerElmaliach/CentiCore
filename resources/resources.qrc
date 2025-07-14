@@ -2,4 +2,8 @@
   <qresource prefix="/styles">
     <file>qss/main_interface.qss</file>
   </qresource>
+
+  <qresource prefix="/icons">
+    <file>icons/exit_btn_ic.png</file>
+ </qresource>
 </RCC>

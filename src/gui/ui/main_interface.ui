@@ -131,7 +131,7 @@
     <widget class="QPushButton" name="exit_btn">
      <property name="geometry">
       <rect>
-       <x>1220</x>
+       <x>1230</x>
        <y>10</y>
        <width>41</width>
        <height>31</height>
@@ -142,7 +142,9 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../resources/icons/exit_btn_ic.png</normaloff>../../../resources/icons/exit_btn_ic.png</iconset>
+       <normaloff>:/icons/icons/exit_btn_ic.png</normaloff>
+       :/icons/icons/exit_btn_ic.png
+       </iconset>
      </property>
      <property name="iconSize">
       <size>
