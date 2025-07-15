@@ -34,6 +34,9 @@
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="acceptDrops">
    <bool>false</bool>
   </property>
@@ -142,15 +145,55 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>:/icons/icons/exit_btn_ic.png</normaloff>
-       :/icons/icons/exit_btn_ic.png
-       </iconset>
+       <normaloff>:/icons/icons/exit_btn_ic.png</normaloff>:/icons/icons/exit_btn_ic.png</iconset>
      </property>
      <property name="iconSize">
       <size>
        <width>26</width>
        <height>26</height>
       </size>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="minimize_btn">
+     <property name="geometry">
+      <rect>
+       <x>1190</x>
+       <y>10</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/icons/icons/minimize_btn_ic.png</normaloff>:/icons/icons/minimize_btn_ic.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>26</width>
+       <height>26</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QLabel" name="topbarDisplay">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>0</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>CentiCore</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>

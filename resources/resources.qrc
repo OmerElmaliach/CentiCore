@@ -5,5 +5,6 @@
 
   <qresource prefix="/icons">
     <file>icons/exit_btn_ic.png</file>
+    <file>icons/minimize_btn_ic.png</file>
  </qresource>
 </RCC>

@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QMouseEvent>
+#include <QCursor>
 #include <QPoint>
 
 QT_BEGIN_NAMESPACE
