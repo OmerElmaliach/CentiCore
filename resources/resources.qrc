@@ -3,6 +3,10 @@
     <file>qss/main_interface.qss</file>
   </qresource>
 
+  <qresource prefix="/background">
+    <file>background/stocks_bg.png</file>
+  </qresource>
+
   <qresource prefix="/icons">
     <file>icons/exit_btn_ic.png</file>
     <file>icons/minimize_btn_ic.png</file>

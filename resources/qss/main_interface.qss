@@ -9,14 +9,6 @@ QStatusBar {
     background-color: #202020;
 }
 
-QTextBrowser {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px;
-    font: 10pt 'Segoe UI';
-}
-
 /* --> Main Widget <-- */
 #centralWidget {
     background-color: #252525;
@@ -75,3 +67,24 @@ QTextBrowser {
 #minimize_btn:hover {
     background-color: #585858;
 }
+
+/* --> Statistic Widget <-- */
+#gainedWidget,
+#investWidget,
+#networthWidget {
+    border-radius: 4px;
+    border: 1px solid #414141;
+    background-image: url(:/background/background/stocks_bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+#gainedText,
+#investedText,
+#networthText {
+    font-size: 16px;
+    color: white;
+}
+
+
