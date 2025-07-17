@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Setup path and build dir.
-cd ..
 rm -rf build
 mkdir build && cd build
 

@@ -145,7 +145,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>:/icons/icons/exit_btn_ic.png</normaloff>:/icons/icons/exit_btn_ic.png</iconset>
+       <normaloff>:/assets/assets/exit_btn.png</normaloff>:/assets/assets/exit_btn.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -168,7 +168,7 @@
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>:/icons/icons/minimize_btn_ic.png</normaloff>:/icons/icons/minimize_btn_ic.png</iconset>
+       <normaloff>:/assets/assets/minimize_btn.png</normaloff>:/assets/assets/minimize_btn.png</iconset>
      </property>
      <property name="iconSize">
       <size>
