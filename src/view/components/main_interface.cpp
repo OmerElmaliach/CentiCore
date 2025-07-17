@@ -5,6 +5,7 @@ MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
+
     m_ui->topbarWidget->installEventFilter(this);
     m_ui->topbarDisplay->installEventFilter(this);
 }

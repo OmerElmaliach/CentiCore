@@ -349,15 +349,73 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QListView" name="monthlyExpenses">
+   <widget class="QWidget" name="expensesWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>1000</x>
+      <x>1020</x>
       <y>80</y>
-      <width>256</width>
+      <width>231</width>
       <height>571</height>
      </rect>
     </property>
+    <widget class="QListWidget" name="monthlyExpenses">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>40</y>
+       <width>231</width>
+       <height>491</height>
+      </rect>
+     </property>
+     <property name="itemAlignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="expensesLabel">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>231</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Monthly Expenses</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="totExpStr">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>530</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Total Expenses:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="totExpNum">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>530</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

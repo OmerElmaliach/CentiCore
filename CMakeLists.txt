@@ -9,19 +9,19 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 qt_standard_project_setup()
 
 # Define and add executables.
-file(GLOB GUI_COMPONENTS
-    "src/gui/components/*.cpp"
-    "src/gui/components/include/*.h"
+file(GLOB VIEW_COMPONENTS
+    "src/view/components/*.cpp"
+    "src/view/components/include/*.h"
 )
 
-file(GLOB GUI_UI
-    "src/gui/ui/*.ui"
+file(GLOB VIEW_UI
+    "src/view/ui/*.ui"
 )
 
 qt_add_executable(CentiCore
     src/main.cpp
-    ${GUI_UI}
-    ${GUI_COMPONENTS}
+    ${VIEW_UI}
+    ${VIEW_COMPONENTS}
 )
 
 qt_add_resources(CentiCoreResources resources/resources.qrc)
