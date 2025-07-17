@@ -1,0 +1,142 @@
+QPushButton {
+    color: white;
+    border-radius: 8px;
+    padding: 6px;
+    font: bold 11pt 'Segoe UI';
+}
+
+QStatusBar {
+    background-color: #202020;
+}
+
+/* --> Main Widget <-- */
+#centralWidget {
+    background-color: #252525;
+}
+
+/* --> Page Widget <-- */
+#pageWidget {
+    background-color: #333333;
+    border-radius: 4px;
+    border: 1px solid #414141;
+}
+
+#pageWidget QPushButton {
+    background-color: #005186;
+}
+
+#pageWidget QPushButton:hover {
+    background-color: #005b97;
+}
+
+#pageWidget QPushButton:pressed {
+    background-color: #0063a5
+}
+
+/* --> Graph <-- */
+#graphWidget {
+    background-color: #1d1d1d;
+    border-radius: 4px;
+    border: 1px solid #292929;
+}
+
+/* --> Topbar <-- */
+#topbarWidget {
+    background-color: #4b4b4b;
+    border-radius: 4px;
+    border: 1px solid #555555;
+}
+
+#topbarWidget QLabel {
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    letter-spacing: 3px;
+    font: bold 16pt 'Segoe UI';
+}
+
+#exit_btn,
+#minimize_btn {
+    background-color: #4b4b4b;
+}
+
+#exit_btn:hover {
+    background-color: #a00000;
+}
+
+#minimize_btn:hover {
+    background-color: #585858;
+}
+
+/* --> Statistic Widget <-- */
+#gainedWidget,
+#investWidget,
+#networthWidget {
+    border-radius: 4px;
+    border: 1px solid #414141;
+    background-image: url(:/background/background/stocks_bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+#gainedText,
+#investedText,
+#networthText {
+    font-size: 16px;
+    color: white;
+}
+
+#gainedNum,
+#investedNum,
+#networthNum {
+    color: #00be6f;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* --> Expenses List <-- */
+#expensesLabel {
+    font-size: 16px;
+}
+
+#expensesWidget {
+    background-color: #2c2c2c;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    font-family: "Segoe UI";
+    font-size: 16px;
+    padding: 4px;
+    outline: none;
+}
+
+#expensesWidget QLabel {
+    color: white;
+}
+
+#expensesWidget QListWidget {
+    background-color: #1e1e1e;
+    color: #bb0000;
+    border: 1px solid #3d3d3d;
+    font-size: 16px;
+    padding: 4px;
+    outline: none;
+}
+
+#expensesWidget QListWidget::item {
+    background-color: transparent;
+    padding: 8px 12px;
+    margin: 2px;
+    border-radius: 6px;
+}
+
+#expensesWidget QListWidget::item:hover {
+    background-color: #242424;
+}
+
+#expensesWidget QListWidget::item:selected {
+    background-color: #2c2c2c;
+    color: #bb0000;
+    font-weight: bold;
+}
