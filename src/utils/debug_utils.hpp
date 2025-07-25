@@ -1,5 +1,5 @@
-#ifndef DEBUG_UTILS
-#define DEBUG_UTILS
+#pragma once
+
 #include <iostream>
 #include <string>
 #include <QDateTime>
@@ -14,6 +14,8 @@ private:
     QFile m_logfile;
     
 public:
+    const char* logFolder = "logs/";
+    
     /**
      * Default constructor for DebugUtils
      */
@@ -33,6 +35,9 @@ public:
      * @brief Logs activity to the CLI and log file.
      */
     void debugLog(string info, string type);
-};
 
-#endif
+    /**
+     * @brief Prints initial welcome message.
+     */
+    void initMessage();
+};

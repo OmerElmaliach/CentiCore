@@ -1,4 +1,4 @@
-#include "include/main_interface.h"
+#include "include/main_interface.hpp"
 #include "../ui/ui_main_interface.h"
 
 MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface) {

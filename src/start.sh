@@ -12,4 +12,4 @@ make -j$(nproc)
 
 # Run the gui app.
 echo "------------------------------------------------------------"
-./CentiCore
+./centicore_ui

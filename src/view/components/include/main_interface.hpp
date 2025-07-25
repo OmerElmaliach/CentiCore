@@ -1,12 +1,12 @@
-#ifndef MAIN_INTERFACE_H
-#define MAIN_INTERFACE_H
+#pragma once
+
 #include <QMainWindow>
 #include <QDateTime>
 #include <QFile>
 #include <QMouseEvent>
 #include <QCursor>
 #include <QPoint>
-#include "debug_utils.h"
+#include "../../../utils/debug_utils.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -47,5 +47,3 @@ public:
      */
     bool eventFilter(QObject *object, QEvent *event) override;
 };
-
-#endif
