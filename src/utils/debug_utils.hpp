@@ -34,7 +34,7 @@ public:
     /**
      * @brief Logs activity to the CLI and log file.
      */
-    void debugLog(string info, string type);
+    void debugLog(string info, string origin, string type);
 
     /**
      * @brief Prints initial welcome message.

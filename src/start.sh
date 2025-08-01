@@ -11,5 +11,4 @@ cmake .. -DCMAKE_PREFIX_PATH="${HOME}/Qt/6.9.1/gcc_64/lib/cmake" -DCMAKE_EXPORT_
 make -j$(nproc)
 
 # Run the gui app.
-echo "------------------------------------------------------------"
 ./centicore_ui
