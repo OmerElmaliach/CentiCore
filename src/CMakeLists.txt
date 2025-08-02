@@ -6,14 +6,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 qt_standard_project_setup()
 
-# <== UI Setup ===>
-file(GLOB VIEW_COMPONENTS "view/components/*.cpp" "view/components/include/*.hpp")
-file(GLOB VIEW_UI "view/ui/*.ui")
+# <== General Setup ===>
 file(GLOB UTILS "utils/*.cpp" "utils/*.hpp")
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/view/components/include/version.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/generated/version.h
 )
+
+# <== UI Setup ===>
+file(GLOB VIEW_COMPONENTS "view/components/*.cpp" "view/components/include/*.hpp")
+file(GLOB VIEW_UI "view/ui/*.ui")
 
 qt_add_resources(CentiCoreResources view/resources/resources.qrc)
 qt_add_executable(centicore_ui
@@ -31,10 +33,12 @@ target_include_directories(centicore_ui PRIVATE
 )
 target_link_libraries(centicore_ui PRIVATE Qt6::Core Qt6::Widgets)
 
-
 # <== Backend Setup ===>
+file(GLOB TYPE_COMPONENTS "model/types/*.cpp" "model/types/*.hpp")
+
 qt_add_executable(centicore_backend
     main.cpp
+    ${TYPE_COMPONENTS}
     ${UTILS}
 )
 

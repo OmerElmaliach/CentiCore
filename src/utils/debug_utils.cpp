@@ -23,7 +23,7 @@ DebugUtils::~DebugUtils() {
 
 void DebugUtils::debugLog(string info, string origin, string type) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "[%s][CENTICORE-%s][%s] %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(), 
+    sprintf(buff, "[%s][CENTICORE-%s][%s] %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
         origin.c_str(), type.c_str(), info.c_str());
 
     // Write to log
