@@ -1,4 +1,4 @@
-#include "monthlyExpenses.hpp"
+#include "include/monthlyExpenses.hpp"
 
 MonthlyExpenses::MonthlyExpenses(string month, double total) : m_month(month), m_total(total) { }
 
