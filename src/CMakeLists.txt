@@ -19,6 +19,7 @@ file(GLOB VIEW_UI "view/ui/*.ui")
 
 # <== Model Classes ===>
 file(GLOB MODEL_TYPES "model/types/*.cpp" "model/types/include/*.hpp")
+file(GLOB MODEL_MANAGERS "model/managers/*.cpp" "model/managers/include/*.hpp")
 
 # <== Controller Classes ===>
 file(GLOB CONTROLLERS "controller/*.cpp" "controller/include/*.hpp")
@@ -29,6 +30,7 @@ qt_add_executable(centicore
     ${VIEW_UI}
     ${VIEW_COMPONENTS}
     ${MODEL_TYPES}
+    ${MODEL_MANAGERS}
     ${CONTROLLERS}
     ${UTILS}
     ${RESOURCES}
