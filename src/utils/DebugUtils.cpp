@@ -1,6 +1,6 @@
-#include "debug_utils.hpp"
+#include "DebugUtils.hpp"
 
-DebugUtils::DebugUtils() : DebugUtils("cc_" + QDateTime::currentDateTime().toString("dd-MM-yyyy") + ".log") {}
+DebugUtils::DebugUtils() : DebugUtils("cc_" + QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss") + ".log") {}
 
 DebugUtils::DebugUtils(QString filepath) {
     // Creates directory if doesnt exist.
@@ -9,16 +9,15 @@ DebugUtils::DebugUtils(QString filepath) {
         dir.mkpath(".");
 
     m_logfile.setFileName(logFolder + filepath);
-    bool pathExists = !m_logfile.exists();
     if (!m_logfile.open(QIODevice::WriteOnly | QIODevice::Text))
         qWarning("Failed to open log file.");
 
-    if (pathExists)
-        initMessage();
+    initMessage();
 }
 
-DebugUtils::~DebugUtils() {
-    m_logfile.close();
+DebugUtils& DebugUtils::getInstance() {
+    static DebugUtils instance;
+    return instance;
 }
 
 void DebugUtils::debugLog(string info, string origin, string type) {

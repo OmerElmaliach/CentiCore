@@ -1,5 +1,6 @@
 #include <QApplication>
 #include "view/components/include/MainInterface.hpp"
+#include "controller/include/AppController.hpp"
 const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
 
 int main(int argc, char *argv[]) {
@@ -8,8 +9,10 @@ int main(int argc, char *argv[]) {
     #endif
 
     QApplication app(argc, argv);
-    MainInterface w;
-    w.loadStyles(INTERFACE_UI);
-    w.show();
+    MainInterface* view = new MainInterface();
+    AppController* controller = new AppController(view);
+    
+    view->loadStyles(INTERFACE_UI);
+    view->show();
     return app.exec();
 }

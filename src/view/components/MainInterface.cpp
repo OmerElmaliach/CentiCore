@@ -1,22 +1,19 @@
 #include "include/MainInterface.hpp"
 #include "../ui/ui_main_interface.h"
 
-MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface) {
-    m_logger = new DebugUtils();
-
-    m_logger->debugLog("Performing UI setup", "VIEW", "INFO");
+MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface), m_logger(DebugUtils::getInstance()){
+    m_logger.debugLog("Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
 
     m_ui->topbarWidget->installEventFilter(this);
     m_ui->topbarDisplay->installEventFilter(this);
-    m_logger->debugLog("UI setup completed", "VIEW", "INFO");
+    m_logger.debugLog("UI setup completed", "VIEW", "INFO");
 }
 
 MainInterface::~MainInterface() {
     delete m_ui;
-    delete m_logger;
 }
 
 void MainInterface::loadStyles(const char* stylePath) {
@@ -25,20 +22,20 @@ void MainInterface::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger->debugLog("Failed to load style file for main_interface", "VIEW", "ERROR");
+        m_logger.debugLog("Failed to load style file for main_interface", "VIEW", "ERROR");
     }
 }
 
 void MainInterface::loadFuncs() {
     // Exit window button.
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
-        m_logger->debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
+        m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
         exit(0);
     });
 
     // Minimize window button.
     connect(m_ui->minimize_btn, &QPushButton::clicked, this, [this] {
-        m_logger->debugLog("Minimizing window", "VIEW", "INFO");
+        m_logger.debugLog("Minimizing window", "VIEW", "INFO");
         setWindowState(Qt::WindowMinimized);
     });
 }

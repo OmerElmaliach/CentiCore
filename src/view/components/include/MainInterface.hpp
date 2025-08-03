@@ -6,7 +6,7 @@
 #include <QMouseEvent>
 #include <QCursor>
 #include <QPoint>
-#include "../../../utils/debug_utils.hpp"
+#include "../../../utils/DebugUtils.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -19,7 +19,7 @@ private:
     Ui::MainInterface *m_ui;
     QPoint m_dragPosition;
     bool m_dragging = false;
-    DebugUtils* m_logger;
+    DebugUtils& m_logger;
 
 public:
     /**
