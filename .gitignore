@@ -1,5 +1,7 @@
 # General
 .vscode/
+data/
+note.txt
 
 # Config
 build/

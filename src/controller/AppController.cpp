@@ -1,5 +1,7 @@
 #include "include/AppController.hpp"
 
+#include "../model/managers/include/ExpenseStorageManager.hpp"
+
 AppController::AppController(MainInterface* view) : m_view(view), m_logger(DebugUtils::getInstance()) {
     route();
 }
