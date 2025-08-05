@@ -24,7 +24,10 @@ file(GLOB MODELS "model/*.cpp" "model/include/*.hpp")
 # <== Controller Classes ===>
 file(GLOB CONTROLLERS "controller/*.cpp" "controller/include/*.hpp")
 
-qt_add_resources(RESOURCES view/resources/resources.qrc)
+# <== Resources ===>
+qt_add_resources(RESOURCES "view/resources/resources.qrc")
+
+# <== Compile ===>
 qt_add_executable(centicore
     main.cpp
     ${VIEW_UI}
@@ -40,6 +43,11 @@ qt_add_executable(centicore
 target_include_directories(centicore PRIVATE
     src
     ${CMAKE_CURRENT_BINARY_DIR}/generated
+    ${PROJECT_SOURCE_DIR}/utils/include
+    ${PROJECT_SOURCE_DIR}/view/components/include
+    ${PROJECT_SOURCE_DIR}/controller/include
+    ${PROJECT_SOURCE_DIR}/model/include
+    ${PROJECT_SOURCE_DIR}/model/types/include
 )
 target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets)
 

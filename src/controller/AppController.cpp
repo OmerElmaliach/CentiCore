@@ -1,6 +1,7 @@
-#include "include/AppController.hpp"
+#include "AppController.hpp"
+#include "MainInterface.hpp"
 
-AppController::AppController(MainInterface* view) : m_view(view), m_logger(DebugUtils::getInstance()) {
+AppController::AppController() : m_logger(DebugUtils::getInstance()) {
     route();
 }
 
@@ -9,4 +10,8 @@ void AppController::route() {
     // connect(m_view, &MainInterface::test, this, &AppController::testMethod);
     // TODO: DEFINE SIGNALS
     m_logger.debugLog("Routing completed", "CONTROLLER", "INFO");
+}
+
+void AppController::setView(MainInterface* view) {
+    m_view = view;
 }

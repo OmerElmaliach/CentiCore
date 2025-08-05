@@ -1,4 +1,4 @@
-#include "include/ExpensesController.hpp"
+#include "ExpensesController.hpp"
 
 ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(DebugUtils::getInstance()) {}
 

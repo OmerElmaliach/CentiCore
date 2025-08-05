@@ -1,4 +1,4 @@
-#include "include/Expense.hpp"
+#include "Expense.hpp"
 
 Expense::Expense(string date, string name, double amount) : m_date(date), m_name(name), m_amount(amount) {}
 

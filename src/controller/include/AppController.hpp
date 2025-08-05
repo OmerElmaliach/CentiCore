@@ -2,8 +2,8 @@
 
 #include <QObject>
 #include "ExpensesController.hpp"
-#include "../../view/components/include/MainInterface.hpp"
-#include "../../utils/DebugUtils.hpp"
+#include "DebugUtils.hpp"
+class MainInterface;
 
 class AppController : public QObject {
     Q_OBJECT
@@ -16,10 +16,15 @@ public:
     /**
      * Constructor for the app controller.
      */
-    AppController(MainInterface* view);
+    AppController();
 
     /**
      * Routes all signals to proper functions in controllers.
      */
     void route();
+
+    /**
+     * Links a view to the controller.
+     */
+    void setView(MainInterface* view);
 };

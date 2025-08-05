@@ -1,4 +1,4 @@
-#include "include/Stock.hpp"
+#include "Stock.hpp"
 
 Stock::Stock(string symbol, double shares, double averageBuyPrice, double currPrice) :
     m_symbol(symbol),

@@ -1,7 +1,12 @@
-#include "include/MainInterface.hpp"
+#include "MainInterface.hpp"
 #include "../ui/ui_main_interface.h"
+#include "AppController.hpp"
 
-MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface), m_logger(DebugUtils::getInstance()){
+MainInterface::MainInterface(AppController* controller, QWidget *parent) :
+        QMainWindow(parent),
+        m_ui(new Ui::MainInterface),
+        m_logger(DebugUtils::getInstance()),
+        m_controller(controller) {
     m_logger.debugLog("Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);

@@ -1,4 +1,4 @@
-#include "include/ExpenseModel.hpp"
+#include "ExpenseModel.hpp"
 
 ExpenseModel::ExpenseModel() : m_logger(DebugUtils::getInstance()) {
     QDateTime dt = QDateTime::currentDateTime();

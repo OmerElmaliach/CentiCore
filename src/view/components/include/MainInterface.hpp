@@ -6,7 +6,8 @@
 #include <QMouseEvent>
 #include <QCursor>
 #include <QPoint>
-#include "../../../utils/DebugUtils.hpp"
+#include "DebugUtils.hpp"
+class AppController;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -20,12 +21,13 @@ private:
     QPoint m_dragPosition;
     bool m_dragging = false;
     DebugUtils& m_logger;
+    AppController* m_controller;
 
 public:
     /**
      * @brief Constructor function for main interface.
      */
-    explicit MainInterface(QWidget *parent = nullptr);
+    explicit MainInterface(AppController* controller, QWidget *parent = nullptr);
 
     /**
      * @brief Deconstructor function for main interface.

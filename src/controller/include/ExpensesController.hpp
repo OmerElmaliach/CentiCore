@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QObject>
-#include "../../model/include/ExpenseModel.hpp"
-#include "../../model/types/include/Expense.hpp"
-#include "../../utils/DebugUtils.hpp"
+#include "ExpenseModel.hpp"
+#include "Expense.hpp"
+#include "DebugUtils.hpp"
 
 class ExpensesController : public QObject {
     Q_OBJECT

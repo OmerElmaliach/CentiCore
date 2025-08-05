@@ -8,8 +8,8 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <string>
-#include "../types/include/Expense.hpp"
-#include "../../utils/DebugUtils.hpp"
+#include "Expense.hpp"
+#include "DebugUtils.hpp"
 #define LOG_MSG_LENGTH 256
 using namespace std;
 
