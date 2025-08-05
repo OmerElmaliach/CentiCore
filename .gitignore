@@ -1,5 +1,6 @@
 # General
 .vscode/
+data/
 
 # Config
 build/

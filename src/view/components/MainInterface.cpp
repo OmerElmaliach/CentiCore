@@ -1,13 +1,20 @@
-#include "include/main_interface.h"
+#include "MainInterface.hpp"
 #include "../ui/ui_main_interface.h"
+#include "AppController.hpp"
 
-MainInterface::MainInterface(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::MainInterface) {
+MainInterface::MainInterface(AppController* controller, QWidget *parent) :
+        QMainWindow(parent),
+        m_ui(new Ui::MainInterface),
+        m_logger(DebugUtils::getInstance()),
+        m_controller(controller) {
+    m_logger.debugLog("Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
 
     m_ui->topbarWidget->installEventFilter(this);
     m_ui->topbarDisplay->installEventFilter(this);
+    m_logger.debugLog("UI setup completed", "VIEW", "INFO");
 }
 
 MainInterface::~MainInterface() {
@@ -20,24 +27,21 @@ void MainInterface::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        qWarning("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-UI][ERROR]", "Failed to load style file for main_interface");
+        m_logger.debugLog("Failed to load style file for main_interface", "VIEW", "ERROR");
     }
 }
 
 void MainInterface::loadFuncs() {
     // Exit window button.
-    connect(m_ui->exit_btn, &QPushButton::clicked, this, [] {
-        qDebug("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-UI][INFO]", "Exit pressed, program shutdown...");
-         exit(0);
+    connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
+        m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
+        exit(0);
     });
 
     // Minimize window button.
     connect(m_ui->minimize_btn, &QPushButton::clicked, this, [this] {
-        qDebug("[%s]%s %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
-         "[CENTICORE-UI][INFO]", "Minimizing window");
-         setWindowState(Qt::WindowMinimized);
+        m_logger.debugLog("Minimizing window", "VIEW", "INFO");
+        setWindowState(Qt::WindowMinimized);
     });
 }
 
