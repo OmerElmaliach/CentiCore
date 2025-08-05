@@ -140,3 +140,11 @@ QStatusBar {
     color: #bb0000;
     font-weight: bold;
 }
+
+#expensesWidget #addExpense_btn:hover {
+    background-color: #383838;
+}
+
+#expensesWidget #addExpense_btn:pressed {
+    background-color: #414141;
+}
