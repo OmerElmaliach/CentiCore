@@ -7,12 +7,10 @@
     <file>background/stocks_bg.png</file>
   </qresource>
 
-  <qresource prefix="/assets">
-    <file>assets/exit_btn.png</file>
-    <file>assets/minimize_btn.png</file>
- </qresource>
-
  <qresource prefix="/icons">
     <file>icons/centicore_ic.png</file>
+    <file>icons/add_expense_ic.png</file>
+    <file>icons/exit_btn_ic.png</file>
+    <file>icons/minimize_btn_ic.png</file>
  </qresource>
 </RCC>
