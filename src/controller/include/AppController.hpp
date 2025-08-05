@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include "ExpensesController.hpp"
 #include "../../view/components/include/MainInterface.hpp"
 #include "../../utils/DebugUtils.hpp"
 

@@ -1,6 +1,6 @@
 # <== Project properties ===>
 cmake_minimum_required(VERSION 3.16)
-project(CentiCore VERSION 0.1.2)
+project(CentiCore VERSION 0.1.3)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
@@ -19,7 +19,6 @@ file(GLOB VIEW_UI "view/ui/*.ui")
 
 # <== Model Classes ===>
 file(GLOB MODEL_TYPES "model/types/*.cpp" "model/types/include/*.hpp")
-file(GLOB MODEL_MANAGERS "model/managers/*.cpp" "model/managers/include/*.hpp")
 file(GLOB MODELS "model/*.cpp" "model/include/*.hpp")
 
 # <== Controller Classes ===>
@@ -32,7 +31,6 @@ qt_add_executable(centicore
     ${VIEW_COMPONENTS}
     ${MODELS}
     ${MODEL_TYPES}
-    ${MODEL_MANAGERS}
     ${CONTROLLERS}
     ${UTILS}
     ${RESOURCES}
