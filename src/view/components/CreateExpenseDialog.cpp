@@ -7,7 +7,13 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
         m_logger(DebugUtils::getInstance()) {
     m_logger.debugLog("Creating QDialog Expense...", "VIEW", "INFO");
     m_ui->setupUi(this);
+    setWindowFlags(Qt::FramelessWindowHint);
     loadStyles(DIALOG_UI);
+
+    WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
+    m_ui->topbarLabel->installEventFilter(dragFilter);
+    connect(m_ui->createBtn, &QPushButton::clicked, this, &QDialog::accept);
+    connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
 }
 
 CreateExpenseDialog::~CreateExpenseDialog() {

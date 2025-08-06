@@ -1,7 +1,9 @@
 #pragma once
 
 #include <QDialog>
+#include <QMouseEvent>
 #include "DebugUtils.hpp"
+#include "WindowDragFilter.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CreateExpenseDialog; }

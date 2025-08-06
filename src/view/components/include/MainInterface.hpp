@@ -8,6 +8,7 @@
 #include <QPoint>
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
+#include "WindowDragFilter.hpp"
 class AppController;
 
 QT_BEGIN_NAMESPACE
@@ -20,8 +21,6 @@ class MainInterface : public QMainWindow {
 private:
     const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
     Ui::MainInterface *m_ui;
-    QPoint m_dragPosition;
-    bool m_dragging = false;
     DebugUtils& m_logger;
     AppController* m_controller;
 
@@ -45,9 +44,4 @@ public:
      * @brief Define and load window functionality.
      */
     void loadFuncs();
-
-    /**
-     * @brief Event filter for main window.
-     */
-    bool eventFilter(QObject *object, QEvent *event) override;
 };

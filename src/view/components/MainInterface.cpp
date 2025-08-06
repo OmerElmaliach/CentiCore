@@ -13,8 +13,9 @@ MainInterface::MainInterface(AppController* controller, QWidget *parent) :
     loadFuncs();
     loadStyles(INTERFACE_UI);
 
-    m_ui->topbarWidget->installEventFilter(this);
-    m_ui->topbarDisplay->installEventFilter(this);
+    WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
+    m_ui->topbarWidget->installEventFilter(dragFilter);
+    m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("UI setup completed", "VIEW", "INFO");
 }
 
@@ -50,22 +51,4 @@ void MainInterface::loadFuncs() {
         CreateExpenseDialog* dialog = new CreateExpenseDialog();
         dialog->exec();
     });
-}
-
-bool MainInterface::eventFilter(QObject *object, QEvent *event) {
-    if(object == m_ui->topbarWidget || object == m_ui->topbarDisplay) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            QMouseEvent* mouse_eve = static_cast <QMouseEvent*> (event);
-            if (mouse_eve->buttons() == Qt::LeftButton) {
-                m_dragPosition = QCursor::pos() - frameGeometry().topLeft();  
-                m_dragging = true;
-            }
-        } else if (event->type() == QEvent::MouseMove && m_dragging) {
-            move(QCursor::pos() - m_dragPosition);
-        } else if (event->type() == QEvent::MouseButtonRelease && m_dragging) {
-            m_dragging = false;
-        }
-    }
-
-    return QObject::eventFilter(object, event); 
 }
