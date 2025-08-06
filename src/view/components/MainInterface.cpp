@@ -11,6 +11,7 @@ MainInterface::MainInterface(AppController* controller, QWidget *parent) :
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
+    loadStyles(INTERFACE_UI);
 
     m_ui->topbarWidget->installEventFilter(this);
     m_ui->topbarDisplay->installEventFilter(this);
@@ -42,6 +43,12 @@ void MainInterface::loadFuncs() {
     connect(m_ui->minimize_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Minimizing window", "VIEW", "INFO");
         setWindowState(Qt::WindowMinimized);
+    });
+
+    // Add expense button.
+    connect(m_ui->addExpense_btn, &QPushButton::clicked, this, [this] {
+        CreateExpenseDialog* dialog = new CreateExpenseDialog();
+        dialog->exec();
     });
 }
 

@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QCursor>
 #include <QPoint>
+#include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
 class AppController;
 
@@ -17,6 +18,7 @@ class MainInterface : public QMainWindow {
     Q_OBJECT
 
 private:
+    const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
     Ui::MainInterface *m_ui;
     QPoint m_dragPosition;
     bool m_dragging = false;
