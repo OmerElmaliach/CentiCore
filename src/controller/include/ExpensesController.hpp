@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <string>
 #include "ExpenseModel.hpp"
 #include "Expense.hpp"
 #include "DebugUtils.hpp"
@@ -21,10 +22,10 @@ public:
     /**
      * Adds an expense.
      */
-    bool add(Expense exp);
+    bool add(string date, string name, double amount);
 
     /**
      * removes an expense.
      */
-    bool remove(Expense exp);
+    bool remove(string date, string name, double amount);
 };

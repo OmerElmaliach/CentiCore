@@ -1,6 +1,5 @@
 #include <QApplication>
 #include "MainInterface.hpp"
-#include "AppController.hpp"
 
 int main(int argc, char *argv[]) {
     #if defined(__linux__)
@@ -8,10 +7,8 @@ int main(int argc, char *argv[]) {
     #endif
 
     QApplication app(argc, argv);
-    AppController* controller = new AppController();
-    MainInterface* view = new MainInterface(controller);
+    MainInterface* view = new MainInterface();
     
-    controller->setView(view);
     view->show();
     return app.exec();
 }

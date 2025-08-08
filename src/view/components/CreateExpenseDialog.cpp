@@ -29,3 +29,26 @@ void CreateExpenseDialog::loadStyles(const char* stylePath) {
         m_logger.debugLog("Failed to load style file for Expense Dialog", "VIEW", "ERROR");
     }
 }
+
+void CreateExpenseDialog::accept() {
+    // Send a request to add an expense
+    ExpensesController* ec = new ExpensesController();
+    bool isNumber;
+    QString category = m_ui->categoryInput->text(), amount = m_ui->amountInput->text();
+    amount.toDouble(&isNumber);
+
+    // Check if fields are invalid
+    if (category.isEmpty() || !isNumber) {
+        QDialog::accept();
+        return;
+    }
+
+    bool wasAdded = ec->add(QDateTime().currentDateTime().toString("dd-hh").toStdString(), category.toStdString(), amount.toDouble());
+    delete ec;
+
+    if (wasAdded) {
+        emit expenseCreated(category, amount); 
+    }
+
+    QDialog::accept();
+}

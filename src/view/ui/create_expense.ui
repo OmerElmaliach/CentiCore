@@ -104,7 +104,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="expenseNameInput">
+  <widget class="QLineEdit" name="categoryInput">
    <property name="geometry">
     <rect>
      <x>110</x>

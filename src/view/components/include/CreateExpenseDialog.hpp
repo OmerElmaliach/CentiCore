@@ -2,8 +2,10 @@
 
 #include <QDialog>
 #include <QMouseEvent>
+#include <QDateTime>
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
+#include "ExpensesController.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CreateExpenseDialog; }
@@ -32,4 +34,12 @@ public:
      * @brief Loads the qss into the ui file.
      */
     void loadStyles(const char* stylePath);
+
+    /**
+     * @brief Handles expense creation upon accept.
+     */
+    void accept() override;
+
+signals:
+    void expenseCreated(const QString name, QString amount);
 };

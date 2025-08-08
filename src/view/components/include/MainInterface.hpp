@@ -9,7 +9,6 @@
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
-class AppController;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -22,13 +21,12 @@ private:
     const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
     Ui::MainInterface *m_ui;
     DebugUtils& m_logger;
-    AppController* m_controller;
 
 public:
     /**
      * @brief Constructor function for main interface.
      */
-    explicit MainInterface(AppController* controller, QWidget *parent = nullptr);
+    explicit MainInterface(QWidget *parent = nullptr);
 
     /**
      * @brief Deconstructor function for main interface.
@@ -44,4 +42,9 @@ public:
      * @brief Define and load window functionality.
      */
     void loadFuncs();
+
+    /**
+     * @brief Adds an expense to the display widget.
+     */
+    void onExpenseCreated(const QString name, QString amount);
 };

@@ -1,13 +1,11 @@
 #include "MainInterface.hpp"
 #include "../ui/ui_main_interface.h"
-#include "AppController.hpp"
 
-MainInterface::MainInterface(AppController* controller, QWidget *parent) :
+MainInterface::MainInterface(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::MainInterface),
-        m_logger(DebugUtils::getInstance()),
-        m_controller(controller) {
-    m_logger.debugLog("Performing UI setup", "VIEW", "INFO");
+        m_logger(DebugUtils::getInstance()) {
+    m_logger.debugLog("Performing MainInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
@@ -16,7 +14,7 @@ MainInterface::MainInterface(AppController* controller, QWidget *parent) :
     WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
-    m_logger.debugLog("UI setup completed", "VIEW", "INFO");
+    m_logger.debugLog("MainInterface UI setup completed", "VIEW", "INFO");
 }
 
 MainInterface::~MainInterface() {
@@ -49,6 +47,11 @@ void MainInterface::loadFuncs() {
     // Add expense button.
     connect(m_ui->addExpense_btn, &QPushButton::clicked, this, [this] {
         CreateExpenseDialog* dialog = new CreateExpenseDialog();
+        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreated);
         dialog->exec();
     });
+}
+
+void MainInterface::onExpenseCreated(const QString name, QString amount) {
+    m_ui->monthlyExpenses->addItem(name + " - " + amount);
 }
