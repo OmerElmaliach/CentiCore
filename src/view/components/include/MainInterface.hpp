@@ -4,8 +4,10 @@
 #include <QDateTime>
 #include <QFile>
 #include <QMouseEvent>
+#include <QListView>
 #include <QCursor>
 #include <QPoint>
+#include <QStringListModel>
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
@@ -21,6 +23,7 @@ private:
     const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
     Ui::MainInterface *m_ui;
     DebugUtils& m_logger;
+    QStringListModel *m_model;
 
 public:
     /**
@@ -46,5 +49,5 @@ public:
     /**
      * @brief Adds an expense to the display widget.
      */
-    void onExpenseCreated(const QString name, QString amount);
+    void onExpenseCreate(const QString name, QString amount);
 };

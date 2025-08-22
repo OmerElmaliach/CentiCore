@@ -5,12 +5,18 @@ MainInterface::MainInterface(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::MainInterface),
         m_logger(DebugUtils::getInstance()) {
+    // Load functions and styles
     m_logger.debugLog("Performing MainInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadFuncs();
     loadStyles(INTERFACE_UI);
 
+    // Setup expense model
+    m_model = new QStringListModel();
+    m_ui->expenseView->setModel(m_model);
+
+    // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
@@ -47,11 +53,13 @@ void MainInterface::loadFuncs() {
     // Add expense button.
     connect(m_ui->addExpense_btn, &QPushButton::clicked, this, [this] {
         CreateExpenseDialog* dialog = new CreateExpenseDialog();
-        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreated);
+        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreate);
         dialog->exec();
     });
 }
 
-void MainInterface::onExpenseCreated(const QString name, QString amount) {
-    m_ui->monthlyExpenses->addItem(name + " - " + amount);
+void MainInterface::onExpenseCreate(const QString name, QString amount) {
+    QStringList curr = m_model->stringList();
+    curr.append(name);
+    m_model->setStringList(curr);
 }
