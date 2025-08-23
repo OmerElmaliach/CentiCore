@@ -42,12 +42,17 @@ public:
     void loadStyles(const char* stylePath);
 
     /**
-     * @brief Define and load window functionality.
+     * @brief Define and load buttons functionality.
      */
-    void loadFuncs();
+    void loadBtns();
 
     /**
      * @brief Adds an expense to the display widget.
      */
     void onExpenseCreate(const QString name, QString amount);
+
+    /**
+     * @brief Loads up existing expenses to the item widget
+     */
+    void loadExpenses();
 };

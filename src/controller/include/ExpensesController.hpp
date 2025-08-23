@@ -13,19 +13,31 @@ private:
     ExpenseModel& m_model;
     DebugUtils& m_logger;
 
-public:
     /**
-     * Constructor for ExpensesController
+     * @brief Constructor for ExpensesController
      */
     ExpensesController();
 
+public:
+
+    static ExpensesController& getInstance();
+
     /**
-     * Adds an expense.
+     * @brief Adds an expense.
      */
     bool add(string date, string name, double amount);
 
     /**
-     * removes an expense.
+     * @brief removes an expense.
      */
     bool remove(string date, string name, double amount);
+
+    /**
+     * @brief Returns monthly expense data.
+     */
+    QJsonArray getExpenses();
+
+    ExpensesController(const ExpensesController&) = delete;
+    
+    ExpensesController& operator=(const ExpensesController&) = delete;
 };

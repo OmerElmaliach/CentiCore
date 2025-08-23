@@ -5,16 +5,18 @@ MainInterface::MainInterface(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::MainInterface),
         m_logger(DebugUtils::getInstance()) {
-    // Load functions and styles
     m_logger.debugLog("Performing MainInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    loadFuncs();
-    loadStyles(INTERFACE_UI);
 
     // Setup expense model
     m_model = new QStringListModel();
     m_ui->expenseView->setModel(m_model);
+
+    // Load functions and styles
+    loadBtns();
+    loadStyles(INTERFACE_UI);
+    loadExpenses();
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
@@ -28,7 +30,7 @@ MainInterface::~MainInterface() {
 }
 
 void MainInterface::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);  
+    QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
@@ -37,7 +39,7 @@ void MainInterface::loadStyles(const char* stylePath) {
     }
 }
 
-void MainInterface::loadFuncs() {
+void MainInterface::loadBtns() {
     // Exit window button.
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
@@ -60,6 +62,19 @@ void MainInterface::loadFuncs() {
 
 void MainInterface::onExpenseCreate(const QString name, QString amount) {
     QStringList curr = m_model->stringList();
-    curr.append(name);
+    curr.append(name + " " + amount + "$");
     m_model->setStringList(curr);
+    m_logger.debugLog("Added expense to list", "VIEW", "INFO");
+}
+
+void MainInterface::loadExpenses() {
+    QJsonArray data = ExpensesController::getInstance().getExpenses();
+    QStringList curr = m_model->stringList();
+    for (int i = 0; i < data.size(); i++) {
+        QJsonObject item = data[i].toObject();
+        curr.append(item["name"].toString() + " " + QString::number(item["amount"].toDouble()) + "$");
+    }
+
+    m_model->setStringList(curr);
+    m_logger.debugLog("Loaded previous monthly expenses", "VIEW", "INFO");
 }

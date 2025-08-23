@@ -21,30 +21,35 @@ private:
     QJsonArray m_data;
 
     /**
-     * Constructor for the expense storage.
+     * @brief Constructor for the expense storage.
      */
     ExpenseModel();
 
 public:
     /**
-     * Returns the instance of the expense storage.
+     * @brief Returns the instance of the expense storage.
      */
     static ExpenseModel& getInstance();
 
     /**
-     * Adds an expense to the db.
+     * @brief Adds an expense to the db.
      */
     bool add(Expense exp);
 
     /**
-     * removes an expense from the db.
+     * @brief removes an expense from the db.
      */
     bool remove(Expense exp, int idx);
 
     /**
-     * Finds and returns the first index of a given expense.
+     * @brief Finds and returns the first index of a given expense.
      */
     int find(Expense exp);
+
+    /**
+     * @brief Returns an array of current monthly expenses.
+     */
+    QJsonArray getExpenses();
 
     ExpenseModel(const ExpenseModel&) = delete;
     

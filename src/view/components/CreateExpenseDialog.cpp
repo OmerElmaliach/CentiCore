@@ -32,7 +32,6 @@ void CreateExpenseDialog::loadStyles(const char* stylePath) {
 
 void CreateExpenseDialog::accept() {
     // Send a request to add an expense
-    ExpensesController* ec = new ExpensesController();
     bool isNumber;
     QString category = m_ui->categoryInput->text(), amount = m_ui->amountInput->text();
     amount.toDouble(&isNumber);
@@ -43,8 +42,7 @@ void CreateExpenseDialog::accept() {
         return;
     }
 
-    bool wasAdded = ec->add(QDateTime().currentDateTime().toString("dd-hh").toStdString(), category.toStdString(), amount.toDouble());
-    delete ec;
+    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd-hh").toStdString(), category.toStdString(), amount.toDouble());
 
     if (wasAdded) {
         emit expenseCreated(category, amount); 

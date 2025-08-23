@@ -75,3 +75,7 @@ int ExpenseModel::find(Expense exp) {
 
     return -1;
 }
+
+QJsonArray ExpenseModel::getExpenses() {
+    return m_data;
+}

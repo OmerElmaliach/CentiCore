@@ -2,6 +2,11 @@
 
 ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(DebugUtils::getInstance()) {}
 
+ExpensesController& ExpensesController::getInstance() {
+    static ExpensesController instance;
+    return instance;
+}
+
 bool ExpensesController::add(string date, string name, double amount) {
     m_logger.debugLog("Signal for add expense received", "CONTROLLER", "INFO");
     Expense exp(date, name, amount);
@@ -21,4 +26,8 @@ bool ExpensesController::remove(string date, string name, double amount) {
 
     m_logger.debugLog("Couldn't find given expense", "CONTROLLER", "WARNING");
     return false;
+}
+
+QJsonArray ExpensesController::getExpenses() {
+    return m_model.getExpenses();
 }
