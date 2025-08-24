@@ -197,15 +197,44 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="graphWidget" native="true">
+   <widget class="QWidget" name="stocksWidget" native="true">
     <property name="geometry">
      <rect>
       <x>270</x>
       <y>200</y>
       <width>711</width>
-      <height>291</height>
+      <height>281</height>
      </rect>
     </property>
+    <widget class="QTableView" name="stocksView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>681</width>
+       <height>211</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="stocksTxt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Stocks</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="numsWidget" native="true">
     <property name="geometry">
@@ -216,7 +245,7 @@
       <height>101</height>
      </rect>
     </property>
-    <widget class="QWidget" name="investWidget" native="true">
+    <widget class="QWidget" name="valueWidget" native="true">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -225,6 +254,67 @@
        <height>101</height>
       </rect>
      </property>
+     <widget class="QLabel" name="valueNum">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>40</y>
+        <width>231</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="valueText">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Portfolio Value</string>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="investedWidget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>0</y>
+       <width>231</width>
+       <height>101</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="investedText">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Total Invested</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
      <widget class="QLabel" name="investedNum">
       <property name="geometry">
        <rect>
@@ -241,69 +331,8 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="investedText">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>10</y>
-        <width>131</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Invested</string>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
     </widget>
-    <widget class="QWidget" name="gainedWidget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>0</y>
-       <width>231</width>
-       <height>101</height>
-      </rect>
-     </property>
-     <widget class="QLabel" name="gainedText">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>10</y>
-        <width>131</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Gained</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="gainedNum">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>40</y>
-        <width>231</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="networthWidget" native="true">
+    <widget class="QWidget" name="changeWidget" native="true">
      <property name="geometry">
       <rect>
        <x>480</x>
@@ -312,7 +341,7 @@
        <height>101</height>
       </rect>
      </property>
-     <widget class="QLabel" name="networthNum">
+     <widget class="QLabel" name="changeNum">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -328,7 +357,7 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="networthText">
+     <widget class="QLabel" name="changeText">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -341,7 +370,7 @@
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="text">
-       <string>Networth</string>
+       <string>Daily Change</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -349,7 +378,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="expensesWidget" native="true">
+   <widget class="QWidget" name="investsWidget" native="true">
     <property name="geometry">
      <rect>
       <x>1020</x>
@@ -358,7 +387,7 @@
       <height>571</height>
      </rect>
     </property>
-    <widget class="QLabel" name="expensesLabel">
+    <widget class="QLabel" name="investsLabel">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -368,34 +397,34 @@
       </rect>
      </property>
      <property name="text">
-      <string>Monthly Expenses</string>
+      <string>All Investments</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="totExpStr">
+    <widget class="QLabel" name="investsStr">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>530</y>
-       <width>111</width>
+       <width>121</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Total Expenses:</string>
+      <string>Total Investments:</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="totExpNum">
+    <widget class="QLabel" name="investsTxt">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>150</x>
        <y>530</y>
-       <width>101</width>
+       <width>81</width>
        <height>41</height>
       </rect>
      </property>
@@ -403,7 +432,7 @@
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="addExpense_btn">
+    <widget class="QPushButton" name="addInvest_btn">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -429,7 +458,7 @@
       </size>
      </property>
     </widget>
-    <widget class="QListView" name="expenseView">
+    <widget class="QListView" name="investsView">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -440,15 +469,44 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="leadWidget" native="true">
+   <widget class="QWidget" name="cryptoWidget" native="true">
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>510</y>
+      <y>490</y>
       <width>711</width>
-      <height>141</height>
+      <height>161</height>
      </rect>
     </property>
+    <widget class="QTableView" name="cryptoView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>50</y>
+       <width>671</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="cryptoTxt">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Crypto</string>
+     </property>
+     <property name="scaledContents">
+      <bool>false</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
