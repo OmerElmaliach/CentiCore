@@ -72,7 +72,7 @@ void MainInterface::loadExpenses() {
     QStringList curr = m_model->stringList();
     for (int i = 0; i < data.size(); i++) {
         QJsonObject item = data[i].toObject();
-        curr.append(item["name"].toString() + " " + QString::number(item["amount"].toDouble()) + "$");
+        curr.append(item["category"].toString() + " " + QString::number(item["amount"].toDouble()) + "$");
     }
 
     m_model->setStringList(curr);
