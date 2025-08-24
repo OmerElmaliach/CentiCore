@@ -25,13 +25,13 @@ ExpenseModel& ExpenseModel::getInstance() {
 
 bool ExpenseModel::add(Expense exp) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new expense: %s, amount: %.2f", exp.getName().c_str(), exp.getAmount());
+    sprintf(buff, "Appending new expense: %s, amount: %.2f", exp.getCategory().c_str(), exp.getAmount());
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Create new expense and append to array data
     QJsonObject jsonExpense;
     jsonExpense["date"] = QJsonValue(exp.getDate().c_str());
-    jsonExpense["name"] = QJsonValue(exp.getName().c_str());
+    jsonExpense["category"] = QJsonValue(exp.getCategory().c_str());
     jsonExpense["amount"] = QJsonValue(exp.getAmount());
     m_data.append(jsonExpense);
 
@@ -49,7 +49,7 @@ bool ExpenseModel::add(Expense exp) {
 
 bool ExpenseModel::remove(Expense exp, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing expense: name: %s, date: %s", exp.getDate().c_str(), exp.getName().c_str());
+    sprintf(buff, "Removing expense: name: %s, date: %s", exp.getDate().c_str(), exp.getCategory().c_str());
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     m_data.removeAt(idx);
@@ -69,7 +69,7 @@ int ExpenseModel::find(Expense exp) {
     // Loop and find the expense index.
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();
-        if ((!item["date"].toString().toStdString().compare(exp.getDate())) && (!item["name"].toString().toStdString().compare(exp.getName())))
+        if ((!item["date"].toString().toStdString().compare(exp.getDate())) && (!item["name"].toString().toStdString().compare(exp.getCategory())))
             return i;
     }
 

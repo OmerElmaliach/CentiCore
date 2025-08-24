@@ -49,7 +49,7 @@ public:
     /**
      * @brief Adds an expense to the display widget.
      */
-    void onExpenseCreate(const QString name, QString amount);
+    void onExpenseCreate(const QString category, QString amount);
 
     /**
      * @brief Loads up existing expenses to the item widget

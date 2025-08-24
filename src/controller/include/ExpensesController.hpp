@@ -25,12 +25,12 @@ public:
     /**
      * @brief Adds an expense.
      */
-    bool add(string date, string name, double amount);
+    bool add(string date, string category, double amount);
 
     /**
      * @brief removes an expense.
      */
-    bool remove(string date, string name, double amount);
+    bool remove(string date, string category, double amount);
 
     /**
      * @brief Returns monthly expense data.

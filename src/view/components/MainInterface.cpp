@@ -60,9 +60,9 @@ void MainInterface::loadBtns() {
     });
 }
 
-void MainInterface::onExpenseCreate(const QString name, QString amount) {
+void MainInterface::onExpenseCreate(const QString category, QString amount) {
     QStringList curr = m_model->stringList();
-    curr.append(name + " " + amount + "$");
+    curr.append(category + " " + amount + "$");
     m_model->setStringList(curr);
     m_logger.debugLog("Added expense to list", "VIEW", "INFO");
 }

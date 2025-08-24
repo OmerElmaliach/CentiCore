@@ -38,11 +38,12 @@ void CreateExpenseDialog::accept() {
 
     // Check if fields are invalid
     if (category.isEmpty() || !isNumber) {
+        m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }
 
-    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd-hh").toStdString(), category.toStdString(), amount.toDouble());
+    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd").toStdString(), category.toStdString(), amount.toDouble());
 
     if (wasAdded) {
         emit expenseCreated(category, amount); 
