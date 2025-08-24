@@ -358,19 +358,6 @@
       <height>571</height>
      </rect>
     </property>
-    <widget class="QListWidget" name="monthlyExpenses">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>50</y>
-       <width>231</width>
-       <height>481</height>
-      </rect>
-     </property>
-     <property name="itemAlignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
     <widget class="QLabel" name="expensesLabel">
      <property name="geometry">
       <rect>
@@ -442,6 +429,26 @@
       </size>
      </property>
     </widget>
+    <widget class="QListView" name="expenseView">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>50</y>
+       <width>231</width>
+       <height>481</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="leadWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>510</y>
+      <width>711</width>
+      <height>141</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

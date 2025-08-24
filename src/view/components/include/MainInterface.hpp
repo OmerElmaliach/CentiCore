@@ -4,10 +4,13 @@
 #include <QDateTime>
 #include <QFile>
 #include <QMouseEvent>
+#include <QListView>
 #include <QCursor>
 #include <QPoint>
+#include <QStringListModel>
+#include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
-class AppController;
+#include "WindowDragFilter.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainInterface; }
@@ -17,17 +20,16 @@ class MainInterface : public QMainWindow {
     Q_OBJECT
 
 private:
+    const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
     Ui::MainInterface *m_ui;
-    QPoint m_dragPosition;
-    bool m_dragging = false;
     DebugUtils& m_logger;
-    AppController* m_controller;
+    QStringListModel *m_model;
 
 public:
     /**
      * @brief Constructor function for main interface.
      */
-    explicit MainInterface(AppController* controller, QWidget *parent = nullptr);
+    explicit MainInterface(QWidget *parent = nullptr);
 
     /**
      * @brief Deconstructor function for main interface.
@@ -40,12 +42,17 @@ public:
     void loadStyles(const char* stylePath);
 
     /**
-     * @brief Define and load window functionality.
+     * @brief Define and load buttons functionality.
      */
-    void loadFuncs();
+    void loadBtns();
 
     /**
-     * @brief Event filter for main window.
+     * @brief Adds an expense to the display widget.
      */
-    bool eventFilter(QObject *object, QEvent *event) override;
+    void onExpenseCreate(const QString category, QString amount);
+
+    /**
+     * @brief Loads up existing expenses to the item widget
+     */
+    void loadExpenses();
 };

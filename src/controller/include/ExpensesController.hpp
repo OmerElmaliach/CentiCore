@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <string>
 #include "ExpenseModel.hpp"
 #include "Expense.hpp"
 #include "DebugUtils.hpp"
@@ -12,19 +13,31 @@ private:
     ExpenseModel& m_model;
     DebugUtils& m_logger;
 
-public:
     /**
-     * Constructor for ExpensesController
+     * @brief Constructor for ExpensesController
      */
     ExpensesController();
 
-    /**
-     * Adds an expense.
-     */
-    bool add(Expense exp);
+public:
+
+    static ExpensesController& getInstance();
 
     /**
-     * removes an expense.
+     * @brief Adds an expense.
      */
-    bool remove(Expense exp);
+    bool add(string date, string category, double amount);
+
+    /**
+     * @brief removes an expense.
+     */
+    bool remove(string date, string category, double amount);
+
+    /**
+     * @brief Returns monthly expense data.
+     */
+    QJsonArray getExpenses();
+
+    ExpensesController(const ExpensesController&) = delete;
+    
+    ExpensesController& operator=(const ExpensesController&) = delete;
 };

@@ -1,20 +1,28 @@
 #include "MainInterface.hpp"
 #include "../ui/ui_main_interface.h"
-#include "AppController.hpp"
 
-MainInterface::MainInterface(AppController* controller, QWidget *parent) :
+MainInterface::MainInterface(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::MainInterface),
-        m_logger(DebugUtils::getInstance()),
-        m_controller(controller) {
-    m_logger.debugLog("Performing UI setup", "VIEW", "INFO");
+        m_logger(DebugUtils::getInstance()) {
+    m_logger.debugLog("Performing MainInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    loadFuncs();
 
-    m_ui->topbarWidget->installEventFilter(this);
-    m_ui->topbarDisplay->installEventFilter(this);
-    m_logger.debugLog("UI setup completed", "VIEW", "INFO");
+    // Setup expense model
+    m_model = new QStringListModel();
+    m_ui->expenseView->setModel(m_model);
+
+    // Load functions and styles
+    loadBtns();
+    loadStyles(INTERFACE_UI);
+    loadExpenses();
+
+    // Load events
+    WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
+    m_ui->topbarWidget->installEventFilter(dragFilter);
+    m_ui->topbarDisplay->installEventFilter(dragFilter);
+    m_logger.debugLog("MainInterface UI setup completed", "VIEW", "INFO");
 }
 
 MainInterface::~MainInterface() {
@@ -22,7 +30,7 @@ MainInterface::~MainInterface() {
 }
 
 void MainInterface::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);  
+    QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
@@ -31,7 +39,7 @@ void MainInterface::loadStyles(const char* stylePath) {
     }
 }
 
-void MainInterface::loadFuncs() {
+void MainInterface::loadBtns() {
     // Exit window button.
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
@@ -43,22 +51,30 @@ void MainInterface::loadFuncs() {
         m_logger.debugLog("Minimizing window", "VIEW", "INFO");
         setWindowState(Qt::WindowMinimized);
     });
+
+    // Add expense button.
+    connect(m_ui->addExpense_btn, &QPushButton::clicked, this, [this] {
+        CreateExpenseDialog* dialog = new CreateExpenseDialog();
+        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreate);
+        dialog->exec();
+    });
 }
 
-bool MainInterface::eventFilter(QObject *object, QEvent *event) {
-    if(object == m_ui->topbarWidget || object == m_ui->topbarDisplay) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            QMouseEvent* mouse_eve = static_cast <QMouseEvent*> (event);
-            if (mouse_eve->buttons() == Qt::LeftButton) {
-                m_dragPosition = QCursor::pos() - frameGeometry().topLeft();  
-                m_dragging = true;
-            }
-        } else if (event->type() == QEvent::MouseMove && m_dragging) {
-            move(QCursor::pos() - m_dragPosition);
-        } else if (event->type() == QEvent::MouseButtonRelease && m_dragging) {
-            m_dragging = false;
-        }
+void MainInterface::onExpenseCreate(const QString category, QString amount) {
+    QStringList curr = m_model->stringList();
+    curr.append(category + " " + amount + "$");
+    m_model->setStringList(curr);
+    m_logger.debugLog("Added expense to list", "VIEW", "INFO");
+}
+
+void MainInterface::loadExpenses() {
+    QJsonArray data = ExpensesController::getInstance().getExpenses();
+    QStringList curr = m_model->stringList();
+    for (int i = 0; i < data.size(); i++) {
+        QJsonObject item = data[i].toObject();
+        curr.append(item["category"].toString() + " " + QString::number(item["amount"].toDouble()) + "$");
     }
 
-    return QObject::eventFilter(object, event); 
+    m_model->setStringList(curr);
+    m_logger.debugLog("Loaded previous monthly expenses", "VIEW", "INFO");
 }

@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="/styles">
     <file>qss/main_interface.qss</file>
+    <file>qss/create_expense.qss</file>
   </qresource>
 
   <qresource prefix="/background">
