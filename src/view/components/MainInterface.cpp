@@ -1,4 +1,5 @@
 #include "MainInterface.hpp"
+#include "StockInterface.hpp"
 #include "../ui/ui_main_interface.h"
 
 MainInterface::MainInterface(QWidget *parent) :
@@ -35,7 +36,7 @@ void MainInterface::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file for main_interface", "VIEW", "ERROR");
+        m_logger.debugLog("Failed to load style file main_interface", "VIEW", "ERROR");
     }
 }
 
@@ -57,6 +58,13 @@ void MainInterface::loadBtns() {
         CreateExpenseDialog* dialog = new CreateExpenseDialog();
         connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreate);
         dialog->exec();
+    });
+
+    // Stocks page button.
+    connect(m_ui->stocks_btn, &QPushButton::clicked, this, [this] {
+        StockInterface* stocks = new StockInterface();
+        stocks->show();
+        this->close();
     });
 }
 
