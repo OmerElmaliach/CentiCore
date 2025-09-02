@@ -7,14 +7,13 @@ StockInterface::StockInterface(QWidget *parent) :
         m_logger(DebugUtils::getInstance()) {
     m_logger.debugLog("Performing StockInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
 
     // Load functions and styles
     loadBtns();
     loadStyles(INTERFACE_UI);
 
     // Load events
-    WindowDragFilter* dragFilter = new WindowDragFilter(this, this);
+    WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("StockInterface UI setup completed", "VIEW", "INFO");

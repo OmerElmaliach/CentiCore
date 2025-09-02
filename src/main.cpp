@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "MainInterface.hpp"
+#include "AppContainer.hpp"
 
 int main(int argc, char *argv[]) {
     #if defined(__linux__)
@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     #endif
 
     QApplication app(argc, argv);
-    MainInterface* view = new MainInterface();
+    AppContainer* view = new AppContainer();
     
     view->show();
     return app.exec();
