@@ -26,7 +26,7 @@ void CreateExpenseDialog::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file for Expense Dialog", "VIEW", "ERROR");
+        m_logger.debugLog("Failed to load style file for Expense Dialog", "VIEW", "ERR");
     }
 }
 

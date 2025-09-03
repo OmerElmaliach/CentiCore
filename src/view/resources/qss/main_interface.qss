@@ -1,12 +1,9 @@
+/* --> General <-- */
 QPushButton {
     color: white;
     border-radius: 8px;
     padding: 6px;
     font: bold 11pt 'Segoe UI';
-}
-
-QStatusBar {
-    background-color: #202020;
 }
 
 /* --> Main Widget <-- */

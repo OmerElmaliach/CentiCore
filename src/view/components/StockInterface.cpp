@@ -29,7 +29,7 @@ void StockInterface::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file stocks.ui", "VIEW", "ERROR");
+        m_logger.debugLog("Failed to load style file stocks.ui", "VIEW", "ERR");
     }
 }
 
@@ -37,13 +37,19 @@ void StockInterface::loadBtns() {
     // Exit window button.
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
-        exit(0);
+        this->window()->close();
     });
 
     // Minimize window button.
     connect(m_ui->minimize_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Minimizing window", "VIEW", "INFO");
-        setWindowState(Qt::WindowMinimized);
+        this->window()->setWindowState(Qt::WindowMinimized);
+    });
+
+    // Move to dashboard
+    connect(m_ui->dashBoard_btn, &QPushButton::clicked, this, [this] {
+        m_logger.debugLog("Switching to dashboard page", "VIEW", "INFO");
+        emit switchPage(0);
     });
 }
 

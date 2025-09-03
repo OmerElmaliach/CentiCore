@@ -209,19 +209,19 @@
     <widget class="QTableView" name="stocksView">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>0</x>
        <y>50</y>
-       <width>681</width>
-       <height>211</height>
+       <width>711</width>
+       <height>231</height>
       </rect>
      </property>
     </widget>
     <widget class="QLabel" name="stocksTxt">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>10</y>
-       <width>131</width>
+       <width>81</width>
        <height>31</height>
       </rect>
      </property>
@@ -481,19 +481,19 @@
     <widget class="QTableView" name="cryptoView">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>0</x>
        <y>50</y>
-       <width>671</width>
-       <height>91</height>
+       <width>711</width>
+       <height>111</height>
       </rect>
      </property>
     </widget>
     <widget class="QLabel" name="cryptoTxt">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>10</y>
-       <width>131</width>
+       <width>81</width>
        <height>31</height>
       </rect>
      </property>
@@ -509,7 +509,6 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <resources/>
  <connections/>

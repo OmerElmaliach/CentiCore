@@ -5,12 +5,14 @@
 #include <QStackedWidget>
 #include "MainInterface.hpp"
 #include "StockInterface.hpp"
+#include "DebugUtils.hpp"
 
 class AppContainer : public QMainWindow {
     Q_OBJECT
 
 private:
     QStackedWidget* m_stack;
+    DebugUtils& m_logger;
 
 public:
     /**

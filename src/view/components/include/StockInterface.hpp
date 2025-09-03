@@ -1,12 +1,6 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QDateTime>
-#include <QFile>
-#include <QMouseEvent>
-#include <QListView>
-#include <QCursor>
-#include <QPoint>
 #include <QStringListModel>
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
@@ -54,4 +48,7 @@ public:
      * @brief Loads up existing assets to the item widget
      */
     void loadAssets();
+
+signals:
+    void switchPage(int index);
 };
