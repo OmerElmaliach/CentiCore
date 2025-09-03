@@ -1,12 +1,6 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QDateTime>
-#include <QFile>
-#include <QMouseEvent>
-#include <QListView>
-#include <QCursor>
-#include <QPoint>
 #include <QStringListModel>
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
@@ -55,4 +49,7 @@ public:
      * @brief Loads up existing expenses to the item widget
      */
     void loadExpenses();
+
+signals:
+    void switchPage(int index);
 };

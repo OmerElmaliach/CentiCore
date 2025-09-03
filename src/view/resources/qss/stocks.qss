@@ -6,6 +6,10 @@ QPushButton {
     font: bold 11pt 'Segoe UI';
 }
 
+QLabel {
+    color: white;
+}
+
 /* --> Main Widget <-- */
 #centralWidget {
     background-color: #252525;
@@ -58,54 +62,12 @@ QPushButton {
     background-color: #585858;
 }
 
-/* --> Statistic Widget <-- */
-#gainedWidget,
-#investWidget,
-#networthWidget {
-    border-radius: 4px;
-    border: 1px solid #414141;
-    background-image: url(:/background/background/stocks_bg.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: transparent;
-}
-
-#gainedText,
-#investedText,
-#networthText {
-    font-size: 16px;
-    color: white;
-}
-
-#gainedNum,
-#investedNum,
-#networthNum {
-    color: #00be6f;
-    font-family: "Consolas", "Courier New", monospace;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* --> Graph <-- */
-#graphWidget {
-    background-color: #1d1d1d;
-    border-radius: 4px;
-    border: 1px solid #292929;
-}
-
-/* --> Leading Stocks <-- */
-#leadWidget {
-    background-color: #1d1d1d;
-    border-radius: 4px;
-    border: 1px solid #292929;
-}
-
-/* --> Expenses List <-- */
-#expensesLabel {
+/* --> Investments List <-- */
+#investsLabel {
     font-size: 16px;
 }
 
-#expensesWidget {
+#investsWidget {
     background-color: #2c2c2c;
     border: 1px solid #3d3d3d;
     border-radius: 8px;
@@ -115,11 +77,11 @@ QPushButton {
     outline: none;
 }
 
-#expensesWidget QLabel {
+#investsWidget QLabel {
     color: white;
 }
 
-#expensesWidget QListView {
+#investsWidget QListView {
     background-color: #1e1e1e;
     color: #bb0000;
     border: 1px solid #3d3d3d;
@@ -128,27 +90,92 @@ QPushButton {
     outline: none;
 }
 
-#expensesWidget QListView::item {
+#investsWidget QListView::item {
     background-color: transparent;
     padding: 8px 12px;
     margin: 2px;
     border-radius: 6px;
 }
 
-#expensesWidget QListView::item:hover {
+#investsWidget QListView::item:hover {
     background-color: #242424;
 }
 
-#expensesWidget QListView::item:selected {
+#investsWidget QListView::item:selected {
     background-color: #2c2c2c;
     color: #bb0000;
     font-weight: bold;
 }
 
-#expensesWidget #addExpense_btn:hover {
+#investsWidget #addInvest_btn:hover {
     background-color: #383838;
 }
 
-#expensesWidget #addExpense_btn:pressed {
+#investsWidget #addInvest_btn:pressed {
     background-color: #414141;
+}
+
+/* --> Statistic Widget <-- */
+#valueWidget,
+#investedWidget,
+#changeWidget {
+    border-radius: 4px;
+    border: 1px solid #414141;
+    background-image: url(:/background/background/stocks_bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+#valueWidget,
+#investedWidget,
+#changeWidget {
+    font-size: 16px;
+    color: white;
+}
+
+#valueWidget,
+#investedWidget,
+#changeWidget {
+    color: #00be6f;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* --> Asset Tables <-- */
+QTableView {
+    border: 1px solid #3a3a3a;
+    border-top: 1px solid #424242;
+    border-radius: 0 0 8px 8px;
+    background-color: #1b1b1b;
+    color: #e0e0e0;
+}
+
+QHeaderView::section {
+    background-color: #3a3a3a;
+    color: #f0f0f0;
+    padding: 6px;
+    border: 1px solid #444;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+QTableCornerButton::section {
+    background-color: #3a3a3a;
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+
+#stocksWidget,
+#cryptoWidget {
+    border: 1px solid #424242;
+    background-color: #222222;
+    border-radius: 8px;
+}
+
+#stocksTxt,
+#cryptoTxt {
+    font-size: 16px;
+    letter-spacing: 1px;
 }

@@ -23,6 +23,11 @@ private:
      * Constructor for DebugUtils
      */
     DebugUtils(QString filepath);
+
+    /**
+     * @brief Prints initial welcome message.
+     */
+    void initMessage();
     
 public:
     const char* logFolder = "logs/";
@@ -36,11 +41,6 @@ public:
      * @brief Logs activity to the CLI and log file.
      */
     void debugLog(string info, string origin, string type);
-
-    /**
-     * @brief Prints initial welcome message.
-     */
-    void initMessage();
 
     DebugUtils(const DebugUtils&) = delete;
     
