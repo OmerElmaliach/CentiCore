@@ -13,7 +13,7 @@ bool ExpensesController::add(string date, string category, double amount) {
     if (m_model.find(exp) == -1)
         return m_model.add(exp);
 
-    m_logger.debugLog("Expense with given category and date already exists", "CONTROLLER", "WARNING");
+    m_logger.debugLog("Expense with given category and date already exists", "CONTROLLER", "WARN");
     return false;
 }
 
@@ -24,7 +24,7 @@ bool ExpensesController::remove(string date, string category, double amount) {
     if (idx != -1)
         return m_model.remove(exp, idx);
 
-    m_logger.debugLog("Couldn't find given expense", "CONTROLLER", "WARNING");
+    m_logger.debugLog("Couldn't find given expense", "CONTROLLER", "WARN");
     return false;
 }
 

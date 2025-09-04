@@ -57,7 +57,7 @@ bool AssetModel::add(Asset item) {
 
 bool AssetModel::remove(string symbol, double shares, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing asset: name: %s, amount: %.2f", symbol, shares);
+    sprintf(buff, "Removing asset: name: %s, amount: %.2f", symbol.c_str(), shares);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Check if should remove asset completely or partially
