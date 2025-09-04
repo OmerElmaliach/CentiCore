@@ -41,8 +41,10 @@ public:
 
     /**
      * @brief Adds an asset to the display widget.
+     * 
+     * @param type - 0 for stock, 1 for crypto
      */
-    void onAssetCreate(const QString sign, QString amount, QString type);
+    void onAssetCreate(const QString sign, QString amount, int type);
 
     /**
      * @brief Loads up existing assets to the item widget

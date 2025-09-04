@@ -53,7 +53,7 @@ void StockInterface::loadBtns() {
     });
 }
 
-void StockInterface::onAssetCreate(const QString sign, QString amount, QString type) {
+void StockInterface::onAssetCreate(const QString sign, QString amount, int type) {
     // TODO: IMPLEMENT
 }
 

@@ -10,7 +10,7 @@ ExpenseModel::ExpenseModel() : m_logger(DebugUtils::getInstance()) {
     m_dataFile.setFileName(dataPath + dt.toString("MMMM") + ".json");
     if (m_dataFile.exists()) {
         if (!m_dataFile.open(QIODevice::ReadOnly | QIODevice::Text))
-            m_logger.debugLog("Failed to open expense file", "MODEL", "ERROR");
+            m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
         
         // Extract available data from the json file.
         m_data = QJsonDocument().fromJson(m_dataFile.readAll()).array();
@@ -36,7 +36,7 @@ bool ExpenseModel::add(Expense exp) {
     m_data.append(jsonExpense);
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open expense file", "MODEL", "ERROR");
+        m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
         return false;
     }
     
@@ -54,7 +54,7 @@ bool ExpenseModel::remove(Expense exp, int idx) {
 
     m_data.removeAt(idx);
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open expense file", "MODEL", "ERROR");
+        m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
         return false;
     }
     
