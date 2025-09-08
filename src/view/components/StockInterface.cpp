@@ -8,9 +8,30 @@ StockInterface::StockInterface(QWidget *parent) :
     m_logger.debugLog("Performing StockInterface UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
+    // Setup assets model
+    m_stock_model = new QStandardItemModel();
+    m_ui->stocksView->setModel(m_stock_model);
+    m_stock_model->setHeaderData(0, Qt::Horizontal, "Symbol");
+    m_stock_model->setHeaderData(1, Qt::Horizontal, "Shares");
+    m_stock_model->setHeaderData(2, Qt::Horizontal, "Value Per Stock");
+    m_stock_model->setHeaderData(3, Qt::Horizontal, "Daily change (%)");
+    m_stock_model->setHeaderData(4, Qt::Horizontal, "Daily change ($)");
+    m_stock_model->setHeaderData(5, Qt::Horizontal, "Post-Market (%)");
+    m_stock_model->setHeaderData(6, Qt::Horizontal, "Total Value");
+
+    m_crypto_model = new QStandardItemModel();
+    m_ui->cryptoView->setModel(m_crypto_model);
+    m_crypto_model->setHeaderData(0, Qt::Horizontal, "Symbol");
+    m_crypto_model->setHeaderData(1, Qt::Horizontal, "Amount");
+    m_crypto_model->setHeaderData(2, Qt::Horizontal, "Value Per Coin");
+    m_crypto_model->setHeaderData(3, Qt::Horizontal, "Daily change (%)");
+    m_crypto_model->setHeaderData(4, Qt::Horizontal, "Daily change ($)");
+    m_crypto_model->setHeaderData(6, Qt::Horizontal, "Total Value");
+
     // Load functions and styles
     loadBtns();
     loadStyles(INTERFACE_UI);
+    loadAssets();
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
@@ -34,13 +55,13 @@ void StockInterface::loadStyles(const char* stylePath) {
 }
 
 void StockInterface::loadBtns() {
-    // Exit window button.
+    // Exit window button
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
         this->window()->close();
     });
 
-    // Minimize window button.
+    // Minimize window button
     connect(m_ui->minimize_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Minimizing window", "VIEW", "INFO");
         this->window()->setWindowState(Qt::WindowMinimized);
@@ -51,12 +72,43 @@ void StockInterface::loadBtns() {
         m_logger.debugLog("Switching to dashboard page", "VIEW", "INFO");
         emit switchPage(0);
     });
+
+    // Add stock button
+    connect(m_ui->addStock_btn, &QPushButton::clicked, this, [this] {
+        CreateAssetDialog* dialog = new CreateAssetDialog(0);
+        connect(dialog, &CreateAssetDialog::assetCreated, this, &StockInterface::onAssetCreate);
+        dialog->exec();
+    });
+
+    // Add crypto button
+    connect(m_ui->addCrypto_btn, &QPushButton::clicked, this, [this] {
+        CreateAssetDialog* dialog = new CreateAssetDialog(1);
+        connect(dialog, &CreateAssetDialog::assetCreated, this, &StockInterface::onAssetCreate);
+        dialog->exec();
+    });
 }
 
-void StockInterface::onAssetCreate(const QString sign, QString amount, int type) {
-    // TODO: IMPLEMENT
+void StockInterface::onAssetCreate(const QString symbol, QString shares, int type) {
+    // Update assets list
+    QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
+    int currRow = model->rowCount();
+    model->setItem(currRow, 0, new QStandardItem(symbol));
+    model->setItem(currRow, 1, new QStandardItem(shares));
+
+    m_logger.debugLog("Added asset to list", "VIEW", "INFO");
 }
 
 void StockInterface::loadAssets() {
-    // TODO: IMPLEMENT
+    QJsonArray data = AssetsController::getInstance().getAssets();
+
+    // Add each asset
+    for (int i = 0; i < data.size(); i++) {
+        QJsonObject item = data[i].toObject();
+        QStandardItemModel* model = (item["type"].toInt()) ? m_crypto_model : m_stock_model;
+        int currRow = model->rowCount();
+        model->setItem(currRow, 0, new QStandardItem(item["symbol"].toString()));
+        model->setItem(currRow, 1, new QStandardItem(QString::number(item["shares"].toDouble())));
+    }
+
+    m_logger.debugLog("Loaded previous assets", "VIEW", "INFO");
 }

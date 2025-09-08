@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QStringListModel>
+#include <QStandardItemModel>
+#include "CreateAssetDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 
@@ -16,7 +17,8 @@ private:
     const char* INTERFACE_UI = ":/styles/qss/stocks.qss";
     Ui::StockInterface *m_ui;
     DebugUtils& m_logger;
-    QStringListModel *m_model;
+    QStandardItemModel* m_stock_model;
+    QStandardItemModel* m_crypto_model;
 
 public:
     /**
@@ -42,9 +44,9 @@ public:
     /**
      * @brief Adds an asset to the display widget.
      * 
-     * @param type - 0 for stock, 1 for crypto
+     * @param type 0 for stock, 1 for crypto
      */
-    void onAssetCreate(const QString sign, QString amount, int type);
+    void onAssetCreate(const QString symbol, QString shares, int type);
 
     /**
      * @brief Loads up existing assets to the item widget
