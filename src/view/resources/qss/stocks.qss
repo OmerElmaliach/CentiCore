@@ -117,7 +117,7 @@ QLabel {
 
 /* --> Statistic Widget <-- */
 #valueWidget,
-#investedWidget,
+#balanceWidget,
 #changeWidget {
     border-radius: 4px;
     border: 1px solid #414141;
@@ -128,14 +128,14 @@ QLabel {
 }
 
 #valueWidget,
-#investedWidget,
+#balanceWidget,
 #changeWidget {
     font-size: 16px;
     color: white;
 }
 
 #valueWidget,
-#investedWidget,
+#balanceWidget,
 #changeWidget {
     color: #00be6f;
     font-family: "Consolas", "Courier New", monospace;
@@ -145,37 +145,131 @@ QLabel {
 
 /* --> Asset Tables <-- */
 QTableView {
-    border: 1px solid #3a3a3a;
-    border-top: 1px solid #424242;
-    border-radius: 0 0 8px 8px;
-    background-color: #1b1b1b;
+    border: 1px solid #414141;
+    background-color: #1e1e1e;
     color: #e0e0e0;
+    gridline-color: #2a2a2a;
+    selection-background-color: #005186;
+    selection-color: white;
+    alternate-background-color: #242424;
+    font-family: 'Segoe UI';
+    font-size: 12pt;
+    outline: none;
 }
 
+QTableView::item {
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+QTableView::item:hover {
+    background-color: #2a2a2a;
+}
+
+QTableView::item:selected {
+    background-color: #005186;
+    color: white;
+}
+
+QTableView::item:selected:hover {
+    background-color: #005b97;
+}
+
+/* Row and columns background */
+QAbstractItemView {
+    background-color: #1e1e1e;
+}
+
+/* Header styling */
 QHeaderView::section {
-    background-color: #3a3a3a;
-    color: #f0f0f0;
-    padding: 6px;
-    border: 1px solid #444;
+    background-color: #333333;
+    color: #ffffff;
+    padding: 10px 12px;
+    border: none;
+    border-right: 1px solid #414141;
+    border-bottom: 1px solid #414141;
     font-weight: bold;
-    border-radius: 4px;
+    font-size: 11pt;
+    text-align: left;
 }
 
-QTableCornerButton::section {
+QHeaderView::section:hover {
     background-color: #3a3a3a;
-    border: 1px solid #444;
-    border-radius: 4px;
 }
 
+QHeaderView::section:pressed {
+    background-color: #005186;
+}
+
+/* Scrollbars for tables */
+QTableView QScrollBar:vertical {
+    background-color: #2c2c2c;
+    width: 12px;
+    border-radius: 6px;
+    border: 1px solid #414141;
+}
+
+QTableView QScrollBar::handle:vertical {
+    background-color: #005186;
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+QTableView QScrollBar::handle:vertical:hover {
+    background-color: #005b97;
+}
+
+QTableView QScrollBar::add-line:vertical,
+QTableView QScrollBar::sub-line:vertical {
+    background: none;
+    border: none;
+}
+
+QTableView QScrollBar:horizontal {
+    background-color: #2c2c2c;
+    height: 12px;
+    border-radius: 6px;
+    border: 1px solid #414141;
+}
+
+QTableView QScrollBar::handle:horizontal {
+    background-color: #005186;
+    border-radius: 5px;
+    min-width: 20px;
+}
+
+QTableView QScrollBar::handle:horizontal:hover {
+    background-color: #005b97;
+}
+
+QTableView QScrollBar::add-line:horizontal,
+QTableView QScrollBar::sub-line:horizontal {
+    background: none;
+    border: none;
+}
+
+/* Container widgets */
 #stocksWidget,
 #cryptoWidget {
-    border: 1px solid #424242;
-    background-color: #222222;
+    border: 1px solid #414141;
+    background-color: #252525;
     border-radius: 8px;
+    padding: 4px;
 }
 
 #stocksTxt,
 #cryptoTxt {
     font-size: 16px;
     letter-spacing: 1px;
+}
+
+#stocksWidget QPushButton:hover,
+#cryptoWidget QPushButton:hover {
+    background-color: #383838;
+}
+
+#stocksWidget QPushButton:pressed,
+#cryptoWidget QPushButton:pressed {
+    background-color: #414141;
 }

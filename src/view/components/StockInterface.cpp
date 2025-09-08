@@ -11,22 +11,17 @@ StockInterface::StockInterface(QWidget *parent) :
     // Setup assets model
     m_stock_model = new QStandardItemModel();
     m_ui->stocksView->setModel(m_stock_model);
-    m_stock_model->setHeaderData(0, Qt::Horizontal, "Symbol");
-    m_stock_model->setHeaderData(1, Qt::Horizontal, "Shares");
-    m_stock_model->setHeaderData(2, Qt::Horizontal, "Value Per Stock");
-    m_stock_model->setHeaderData(3, Qt::Horizontal, "Daily change (%)");
-    m_stock_model->setHeaderData(4, Qt::Horizontal, "Daily change ($)");
-    m_stock_model->setHeaderData(5, Qt::Horizontal, "Post-Market (%)");
-    m_stock_model->setHeaderData(6, Qt::Horizontal, "Total Value");
+    QStringList stockHeaders = {"Symbol", "Shares", "Value Per Stock", "Daily change (%)", "Post-Market (%)", "Total Value"};
+    m_stock_model->setHorizontalHeaderLabels(stockHeaders);
+    m_ui->stocksView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->stocksView->verticalHeader()->setVisible(false);
 
     m_crypto_model = new QStandardItemModel();
     m_ui->cryptoView->setModel(m_crypto_model);
-    m_crypto_model->setHeaderData(0, Qt::Horizontal, "Symbol");
-    m_crypto_model->setHeaderData(1, Qt::Horizontal, "Amount");
-    m_crypto_model->setHeaderData(2, Qt::Horizontal, "Value Per Coin");
-    m_crypto_model->setHeaderData(3, Qt::Horizontal, "Daily change (%)");
-    m_crypto_model->setHeaderData(4, Qt::Horizontal, "Daily change ($)");
-    m_crypto_model->setHeaderData(6, Qt::Horizontal, "Total Value");
+    QStringList cryptoHeaders = {"Symbol", "Amount", "Value Per Coin", "Daily change (%)", "Daily change ($)", "Total Value"};
+    m_crypto_model->setHorizontalHeaderLabels(cryptoHeaders);
+    m_ui->cryptoView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->cryptoView->verticalHeader()->setVisible(false);
 
     // Load functions and styles
     loadBtns();

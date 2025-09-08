@@ -82,7 +82,7 @@
       <string>Stocks / Crypto</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="expenses_btn">
+    <widget class="QPushButton" name="stats_btn">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -92,7 +92,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Expenses</string>
+      <string>Statistics</string>
      </property>
     </widget>
     <widget class="QPushButton" name="settings_btn">
