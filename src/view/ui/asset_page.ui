@@ -454,7 +454,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="investsTxt">
+    <widget class="QLabel" name="investsNum">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -501,6 +501,9 @@
        <width>231</width>
        <height>481</height>
       </rect>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
     </widget>
    </widget>

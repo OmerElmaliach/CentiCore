@@ -21,10 +21,14 @@ AssetPage::AssetPage(QWidget *parent) :
     m_crypto_model->setHorizontalHeaderLabels(headers);
     m_ui->cryptoView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
+    m_invest_model = new QStringListModel();
+    m_ui->investsView->setModel(m_invest_model);
+
     // Load functions and styles
     loadBtns();
     loadStyles(INTERFACE_UI);
     loadAssets();
+    loadInvests();
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
@@ -79,6 +83,13 @@ void AssetPage::loadBtns() {
         connect(dialog, &CreateAssetDialog::assetCreated, this, &AssetPage::onAssetCreate);
         dialog->exec();
     });
+
+    // Add investment button
+    connect(m_ui->addInvest_btn, &QPushButton::clicked, this, [this] {
+        CreateInvestDialog* dialog = new CreateInvestDialog();
+        connect(dialog, &CreateInvestDialog::investCreated, this, &AssetPage::onInvestCreate);
+        dialog->exec();
+    });
 }
 
 void AssetPage::onAssetCreate(const QString symbol, QString shares, int type) {
@@ -109,4 +120,34 @@ void AssetPage::loadAssets() {
     }
 
     m_logger.debugLog("Loaded previous assets", "VIEW", "INFO");
+}
+
+void AssetPage::onInvestCreate(double amount) {
+    QStringList currList = m_invest_model->stringList();
+    double currTot = stod(m_ui->investsNum->text().toStdString().c_str());
+
+    // Update investment list
+    currList.append(QString::number(amount) + "$");
+    m_invest_model->setStringList(currList);
+    m_ui->investsNum->setText(QString::number(currTot + amount) + "$");
+
+    m_logger.debugLog("Added investment to list", "VIEW", "INFO");
+}
+
+void AssetPage::loadInvests() {
+    double sumInv = 0;
+    m_ui->investsNum->setText("0");
+    QJsonArray data = InvestsController::getInstance().getInvestments();
+    QStringList curr = m_invest_model->stringList();
+
+    // Add each investment made
+    for (int i = 0; i < data.size(); i++) {
+        QJsonObject item = data[i].toObject();
+        curr.append(QString::number(item["amount"].toDouble()) + "$");
+        sumInv += item["amount"].toDouble();
+    }
+
+    m_ui->investsNum->setText(QString::number(sumInv) + "$");
+    m_invest_model->setStringList(curr);
+    m_logger.debugLog("Loaded previous investments", "VIEW", "INFO");
 }

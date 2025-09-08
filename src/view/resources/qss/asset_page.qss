@@ -83,28 +83,38 @@ QLabel {
 
 #investsWidget QListView {
     background-color: #1e1e1e;
-    color: #bb0000;
-    border: 1px solid #3d3d3d;
+    color: #e0e0e0;
+    border: none;
+    border-radius: 6px;
     font-size: 16px;
-    padding: 4px;
+    padding: 8px;
     outline: none;
+    margin: 4px;
 }
 
 #investsWidget QListView::item {
-    background-color: transparent;
-    padding: 8px 12px;
-    margin: 2px;
+    background-color: #242424;
+    padding: 12px 16px;
+    margin: 3px 2px;
     border-radius: 6px;
+    border: 1px solid #2a2a2a;
+    min-height: 20px;
 }
 
 #investsWidget QListView::item:hover {
-    background-color: #242424;
+    background-color: #292929;
+    border: 1px solid #255d25;
 }
 
 #investsWidget QListView::item:selected {
-    background-color: #2c2c2c;
-    color: #bb0000;
+    background-color: #255d25;
+    border: 1px solid #2f6b2f;
     font-weight: bold;
+}
+
+#investsWidget QListView::item:selected:hover {
+    background-color: #2f6b2f;
+    border: 1px solid #397939;
 }
 
 #investsWidget #addInvest_btn:hover {
@@ -149,11 +159,8 @@ QTableView {
     background-color: #1e1e1e;
     color: #e0e0e0;
     gridline-color: #2a2a2a;
-    selection-background-color: #005186;
-    selection-color: white;
-    alternate-background-color: #242424;
     font-family: 'Segoe UI';
-    font-size: 12pt;
+    font-size: 11pt;
     outline: none;
 }
 

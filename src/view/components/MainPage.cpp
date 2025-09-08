@@ -1,5 +1,4 @@
 #include "MainPage.hpp"
-#include "AssetPage.hpp"
 #include "../ui/ui_main_page.h"
 
 MainPage::MainPage(QWidget *parent) :
