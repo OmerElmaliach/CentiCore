@@ -7,28 +7,28 @@
 #include "WindowDragFilter.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainInterface; }
+namespace Ui { class MainPage; }
 QT_END_NAMESPACE
 
-class MainInterface : public QMainWindow {
+class MainPage : public QMainWindow {
     Q_OBJECT
 
 private:
-    const char* INTERFACE_UI = ":/styles/qss/main_interface.qss";
-    Ui::MainInterface *m_ui;
+    const char* PAGE_UI = ":/styles/qss/main_page.qss";
+    Ui::MainPage *m_ui;
     DebugUtils& m_logger;
     QStringListModel *m_model;
 
 public:
     /**
-     * @brief Constructor function for main interface.
+     * @brief Constructor function for main page.
      */
-    explicit MainInterface(QWidget *parent = nullptr);
+    explicit MainPage(QWidget *parent = nullptr);
 
     /**
-     * @brief Deconstructor function for main interface.
+     * @brief Deconstructor function for main page.
      */
-    ~MainInterface();
+    ~MainPage();
 
     /**
      * @brief Loads the qss into the ui file.

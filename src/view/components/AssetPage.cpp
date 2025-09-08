@@ -1,11 +1,11 @@
-#include "StockInterface.hpp"
+#include "AssetPage.hpp"
 #include "../ui/ui_asset_page.h"
 
-StockInterface::StockInterface(QWidget *parent) :
+AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
-        m_ui(new Ui::StockInterface),
+        m_ui(new Ui::AssetPage),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Performing StockInterface UI setup", "VIEW", "INFO");
+    m_logger.debugLog("Performing AssetPage UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
     // Setup assets model
@@ -30,14 +30,14 @@ StockInterface::StockInterface(QWidget *parent) :
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
-    m_logger.debugLog("StockInterface UI setup completed", "VIEW", "INFO");
+    m_logger.debugLog("AssetPage UI setup completed", "VIEW", "INFO");
 }
 
-StockInterface::~StockInterface() {
+AssetPage::~AssetPage() {
     delete m_ui;
 }
 
-void StockInterface::loadStyles(const char* stylePath) {
+void AssetPage::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
@@ -47,7 +47,7 @@ void StockInterface::loadStyles(const char* stylePath) {
     }
 }
 
-void StockInterface::loadBtns() {
+void AssetPage::loadBtns() {
     // Exit window button
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
@@ -69,19 +69,19 @@ void StockInterface::loadBtns() {
     // Add stock button
     connect(m_ui->addStock_btn, &QPushButton::clicked, this, [this] {
         CreateAssetDialog* dialog = new CreateAssetDialog(0);
-        connect(dialog, &CreateAssetDialog::assetCreated, this, &StockInterface::onAssetCreate);
+        connect(dialog, &CreateAssetDialog::assetCreated, this, &AssetPage::onAssetCreate);
         dialog->exec();
     });
 
     // Add crypto button
     connect(m_ui->addCrypto_btn, &QPushButton::clicked, this, [this] {
         CreateAssetDialog* dialog = new CreateAssetDialog(1);
-        connect(dialog, &CreateAssetDialog::assetCreated, this, &StockInterface::onAssetCreate);
+        connect(dialog, &CreateAssetDialog::assetCreated, this, &AssetPage::onAssetCreate);
         dialog->exec();
     });
 }
 
-void StockInterface::onAssetCreate(const QString symbol, QString shares, int type) {
+void AssetPage::onAssetCreate(const QString symbol, QString shares, int type) {
     // Update assets list
     QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
     int currRow = model->rowCount();
@@ -91,7 +91,7 @@ void StockInterface::onAssetCreate(const QString symbol, QString shares, int typ
     m_logger.debugLog("Added asset to list", "VIEW", "INFO");
 }
 
-void StockInterface::loadAssets() {
+void AssetPage::loadAssets() {
     QJsonArray data = AssetsController::getInstance().getAssets();
 
     // Add each asset

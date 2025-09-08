@@ -1,12 +1,12 @@
-#include "MainInterface.hpp"
-#include "StockInterface.hpp"
-#include "../ui/ui_main_interface.h"
+#include "MainPage.hpp"
+#include "AssetPage.hpp"
+#include "../ui/ui_main_page.h"
 
-MainInterface::MainInterface(QWidget *parent) :
+MainPage::MainPage(QWidget *parent) :
         QMainWindow(parent),
-        m_ui(new Ui::MainInterface),
+        m_ui(new Ui::MainPage),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Performing MainInterface UI setup", "VIEW", "INFO");
+    m_logger.debugLog("Performing MainPage UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
     // Setup expense model
@@ -15,31 +15,31 @@ MainInterface::MainInterface(QWidget *parent) :
 
     // Load functions and styles
     loadBtns();
-    loadStyles(INTERFACE_UI);
+    loadStyles(PAGE_UI);
     loadExpenses();
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
-    m_logger.debugLog("MainInterface UI setup completed", "VIEW", "INFO");
+    m_logger.debugLog("MainPage UI setup completed", "VIEW", "INFO");
 }
 
-MainInterface::~MainInterface() {
+MainPage::~MainPage() {
     delete m_ui;
 }
 
-void MainInterface::loadStyles(const char* stylePath) {
+void MainPage::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file main_interface", "VIEW", "ERR");
+        m_logger.debugLog("Failed to load style file main_page", "VIEW", "ERR");
     }
 }
 
-void MainInterface::loadBtns() {
+void MainPage::loadBtns() {
     // Exit window button
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("Exit pressed, program shutdown...", "VIEW", "INFO");
@@ -55,7 +55,7 @@ void MainInterface::loadBtns() {
     // Add expense button
     connect(m_ui->addExpense_btn, &QPushButton::clicked, this, [this] {
         CreateExpenseDialog* dialog = new CreateExpenseDialog();
-        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainInterface::onExpenseCreate);
+        connect(dialog, &CreateExpenseDialog::expenseCreated, this, &MainPage::onExpenseCreate);
         dialog->exec();
     });
 
@@ -66,7 +66,7 @@ void MainInterface::loadBtns() {
     });
 }
 
-void MainInterface::onExpenseCreate(const QString category, QString amount) {
+void MainPage::onExpenseCreate(const QString category, QString amount) {
     QStringList currList = m_model->stringList();
     double currTot = stod(m_ui->totExpNum->text().toStdString().c_str());
 
@@ -78,7 +78,7 @@ void MainInterface::onExpenseCreate(const QString category, QString amount) {
     m_logger.debugLog("Added expense to list", "VIEW", "INFO");
 }
 
-void MainInterface::loadExpenses() {
+void MainPage::loadExpenses() {
     double sumExp = 0;
     m_ui->totExpNum->setText("0");
     QJsonArray data = ExpensesController::getInstance().getExpenses();

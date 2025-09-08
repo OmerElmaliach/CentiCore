@@ -266,10 +266,10 @@ QTableView QScrollBar::sub-line:horizontal {
 
 #stocksWidget QPushButton:hover,
 #cryptoWidget QPushButton:hover {
-    background-color: #383838;
+    background-color: #642525;
 }
 
 #stocksWidget QPushButton:pressed,
 #cryptoWidget QPushButton:pressed {
-    background-color: #414141;
+    background-color: #6d2929;
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StockInterface</class>
- <widget class="QMainWindow" name="StockInterface">
+ <class>AssetPage</class>
+ <widget class="QMainWindow" name="AssetPage">
   <property name="enabled">
    <bool>true</bool>
   </property>

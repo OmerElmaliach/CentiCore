@@ -7,29 +7,29 @@
 #include "WindowDragFilter.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class StockInterface; }
+namespace Ui { class AssetPage; }
 QT_END_NAMESPACE
 
-class StockInterface : public QMainWindow {
+class AssetPage : public QMainWindow {
     Q_OBJECT
 
 private:
     const char* INTERFACE_UI = ":/styles/qss/asset_page.qss";
-    Ui::StockInterface *m_ui;
+    Ui::AssetPage *m_ui;
     DebugUtils& m_logger;
     QStandardItemModel* m_stock_model;
     QStandardItemModel* m_crypto_model;
 
 public:
     /**
-     * @brief Constructor function for stock interface.
+     * @brief Constructor function for asset page.
      */
-    explicit StockInterface(QWidget *parent = nullptr);
+    explicit AssetPage(QWidget *parent = nullptr);
 
     /**
-     * @brief Deconstructor function for stock interface.
+     * @brief Deconstructor function for asset page.
      */
-    ~StockInterface();
+    ~AssetPage();
 
     /**
      * @brief Loads the qss into the ui file.

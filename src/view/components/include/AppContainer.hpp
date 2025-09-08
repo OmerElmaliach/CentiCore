@@ -3,8 +3,8 @@
 #include <QMainWindow>
 #include <QDateTime>
 #include <QStackedWidget>
-#include "MainInterface.hpp"
-#include "StockInterface.hpp"
+#include "MainPage.hpp"
+#include "AssetPage.hpp"
 #include "DebugUtils.hpp"
 
 class AppContainer : public QMainWindow {
