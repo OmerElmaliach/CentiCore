@@ -15,7 +15,7 @@ class CreateExpenseDialog : public QDialog {
     Q_OBJECT
 
 private:
-    const char* DIALOG_UI = ":/styles/qss/create_expense.qss";
+    const char* DIALOG_UI = ":/styles/qss/dialog_box.qss";
     Ui::CreateExpenseDialog *m_ui;
     DebugUtils& m_logger;
 

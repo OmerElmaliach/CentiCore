@@ -14,7 +14,7 @@ class StockInterface : public QMainWindow {
     Q_OBJECT
 
 private:
-    const char* INTERFACE_UI = ":/styles/qss/stocks.qss";
+    const char* INTERFACE_UI = ":/styles/qss/asset_page.qss";
     Ui::StockInterface *m_ui;
     DebugUtils& m_logger;
     QStandardItemModel* m_stock_model;

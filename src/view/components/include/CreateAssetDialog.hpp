@@ -15,7 +15,7 @@ class CreateAssetDialog : public QDialog {
     Q_OBJECT
 
 private:
-    const char* DIALOG_UI = ":/styles/qss/create_asset.qss";
+    const char* DIALOG_UI = ":/styles/qss/dialog_box.qss";
     Ui::CreateAssetDialog *m_ui;
     DebugUtils& m_logger;
     int m_type;

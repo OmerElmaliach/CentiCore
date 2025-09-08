@@ -253,7 +253,7 @@ QTableView QScrollBar::sub-line:horizontal {
 #stocksWidget,
 #cryptoWidget {
     border: 1px solid #414141;
-    background-color: #252525;
+    background-color: #552020;
     border-radius: 8px;
     padding: 4px;
 }

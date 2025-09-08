@@ -221,6 +221,9 @@
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>true</bool>
      </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
     <widget class="QLabel" name="stocksTxt">
      <property name="geometry">
@@ -527,6 +530,9 @@
      </attribute>
      <attribute name="horizontalHeaderStretchLastSection">
       <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderCascadingSectionResizes">
       <bool>false</bool>

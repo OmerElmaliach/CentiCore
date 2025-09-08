@@ -1,5 +1,5 @@
 #include "StockInterface.hpp"
-#include "../ui/ui_stocks.h"
+#include "../ui/ui_asset_page.h"
 
 StockInterface::StockInterface(QWidget *parent) :
         QMainWindow(parent),
@@ -9,19 +9,17 @@ StockInterface::StockInterface(QWidget *parent) :
     m_ui->setupUi(this);
 
     // Setup assets model
+    QStringList headers = {"Symbol", "Quantity", "Price per Unit", "Daily change (%)", "Daily change ($)", "Total Value"};
+
     m_stock_model = new QStandardItemModel();
     m_ui->stocksView->setModel(m_stock_model);
-    QStringList stockHeaders = {"Symbol", "Shares", "Value Per Stock", "Daily change (%)", "Post-Market (%)", "Total Value"};
-    m_stock_model->setHorizontalHeaderLabels(stockHeaders);
+    m_stock_model->setHorizontalHeaderLabels(headers);
     m_ui->stocksView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_ui->stocksView->verticalHeader()->setVisible(false);
 
     m_crypto_model = new QStandardItemModel();
     m_ui->cryptoView->setModel(m_crypto_model);
-    QStringList cryptoHeaders = {"Symbol", "Amount", "Value Per Coin", "Daily change (%)", "Daily change ($)", "Total Value"};
-    m_crypto_model->setHorizontalHeaderLabels(cryptoHeaders);
+    m_crypto_model->setHorizontalHeaderLabels(headers);
     m_ui->cryptoView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_ui->cryptoView->verticalHeader()->setVisible(false);
 
     // Load functions and styles
     loadBtns();
@@ -103,6 +101,11 @@ void StockInterface::loadAssets() {
         int currRow = model->rowCount();
         model->setItem(currRow, 0, new QStandardItem(item["symbol"].toString()));
         model->setItem(currRow, 1, new QStandardItem(QString::number(item["shares"].toDouble())));
+        // TODO: ADD VALUES WITH JSON REQUEST
+        model->setItem(currRow, 2, new QStandardItem("N/A"));
+        model->setItem(currRow, 3, new QStandardItem("N/A"));
+        model->setItem(currRow, 4, new QStandardItem("N/A"));
+        model->setItem(currRow, 5, new QStandardItem("N/A"));
     }
 
     m_logger.debugLog("Loaded previous assets", "VIEW", "INFO");
