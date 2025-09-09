@@ -8,6 +8,7 @@
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 #include "InvestsController.hpp"
+#include "AssetsController.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class AssetPage; }

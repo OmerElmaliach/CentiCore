@@ -1,9 +1,9 @@
 # <== Project properties ===>
 cmake_minimum_required(VERSION 3.16)
-project(CentiCore VERSION 0.5.0)
+project(CentiCore VERSION 0.5.1)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network)
 qt_standard_project_setup()
 
 # <== General Setup ===>
@@ -24,6 +24,9 @@ file(GLOB MODELS "model/*.cpp" "model/include/*.hpp")
 # <== Controller Classes ===>
 file(GLOB CONTROLLERS "controller/*.cpp" "controller/include/*.hpp")
 
+# <== ApiServices Classes ===>
+file(GLOB SERVICES "services/*.cpp" "services/include/*.hpp")
+
 # <== Resources ===>
 qt_add_resources(RESOURCES "view/resources/resources.qrc")
 
@@ -35,6 +38,7 @@ qt_add_executable(centicore
     ${MODELS}
     ${MODEL_TYPES}
     ${CONTROLLERS}
+    ${SERVICES}
     ${UTILS}
     ${RESOURCES}
 )
@@ -48,8 +52,9 @@ target_include_directories(centicore PRIVATE
     ${PROJECT_SOURCE_DIR}/controller/include
     ${PROJECT_SOURCE_DIR}/model/include
     ${PROJECT_SOURCE_DIR}/model/types/include
+    ${PROJECT_SOURCE_DIR}/services/include
 )
-target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets Qt6::Network)
 
 if(WIN32)
     set_target_properties(centicore PROPERTIES WIN32_EXECUTABLE ON)

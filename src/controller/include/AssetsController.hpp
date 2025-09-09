@@ -1,7 +1,10 @@
 #pragma once
 
 #include <QObject>
+#include <QJsonDocument>
 #include <string>
+#include <QTimer>
+#include "ApiServices.hpp"
 #include "AssetModel.hpp"
 #include "Asset.hpp"
 #include "DebugUtils.hpp"
@@ -23,7 +26,7 @@ public:
     static AssetsController& getInstance();
 
     /**
-     * @brief Adds an asset.
+     * @brief Adds an asset
      */
     bool add(string symbol, double shares, double currPrice, int type);
 
@@ -33,7 +36,12 @@ public:
     bool remove(string symbol, double shares);
 
     /**
-     * @brief Returns monthly asset data.
+     * @brief Updates asset price and daily percentage using timer
+     */
+    void update();
+
+    /**
+     * @brief Returns monthly asset data
      */
     QJsonArray getAssets();
 

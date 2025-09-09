@@ -24,6 +24,20 @@ bool AssetsController::remove(string symbol, double shares) {
     return false;
 }
 
+void AssetsController::update() {
+    QTimer* timer = new QTimer();
+    connect(timer, &QTimer::timeout, [&]() {
+        ApiServices* api = new ApiServices();
+        connect(api, &ApiServices::assetDataReceived, this, [](const QString& symbol, const QJsonDocument& data) {
+            qDebug() << "Received data for" << symbol << ":" << data;
+        });
+
+        api->getAsset("AAPL");
+    });
+
+    timer->start(2000);
+}
+
 QJsonArray AssetsController::getAssets() {
     return m_model.getAssets();
 }

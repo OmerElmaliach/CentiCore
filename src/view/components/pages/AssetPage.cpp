@@ -35,6 +35,9 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("AssetPage UI setup completed", "VIEW", "INFO");
+
+    // Start regulary updating data
+    AssetsController::getInstance().update();
 }
 
 AssetPage::~AssetPage() {
