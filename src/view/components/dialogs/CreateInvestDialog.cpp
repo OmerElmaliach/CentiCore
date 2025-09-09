@@ -1,13 +1,14 @@
-#include "CreateExpenseDialog.hpp"
-#include "../ui/ui_create_expense.h"
+#include "CreateInvestDialog.hpp"
+#include "../../ui/ui_create_invest.h"
 
-CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
+CreateInvestDialog::CreateInvestDialog(QWidget *parent) :
         QDialog(parent),
-        m_ui(new Ui::CreateExpenseDialog),
+        m_ui(new Ui::CreateInvestDialog),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Creating QDialog Expense...", "VIEW", "INFO");
+    m_logger.debugLog("Creating QDialog Invest...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
+    m_ui->dateInput->setDate(QDate::currentDate());
     loadStyles(DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
@@ -16,11 +17,11 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
     connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-CreateExpenseDialog::~CreateExpenseDialog() {
+CreateInvestDialog::~CreateInvestDialog() {
     delete m_ui;
 }
 
-void CreateExpenseDialog::loadStyles(const char* stylePath) {
+void CreateInvestDialog::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);  
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
@@ -30,23 +31,23 @@ void CreateExpenseDialog::loadStyles(const char* stylePath) {
     }
 }
 
-void CreateExpenseDialog::accept() {
-    // Send a request to add an expense
+void CreateInvestDialog::accept() {
+    // Send a request to add an investment
     bool isNumber;
-    QString category = m_ui->categoryInput->text(), amount = m_ui->amountInput->text();
+    QString amount = m_ui->amountInput->text();
     amount.toDouble(&isNumber);
 
     // Check if fields are invalid
-    if (category.isEmpty() || !isNumber) {
+    if (!isNumber) {
         m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }
 
-    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd").toStdString(), category.toStdString(), amount.toDouble());
+    bool wasAdded = InvestsController::getInstance().add(amount.toDouble(), m_ui->dateInput->dateTime().toString("dd/MM/yy"));
 
     if (wasAdded) {
-        emit expenseCreated(category, amount); 
+        emit investCreated(amount.toDouble()); 
     }
 
     QDialog::accept();

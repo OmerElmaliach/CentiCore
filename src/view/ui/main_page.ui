@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainInterface</class>
- <widget class="QMainWindow" name="MainInterface">
+ <class>MainPage</class>
+ <widget class="QMainWindow" name="MainPage">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -82,7 +82,7 @@
       <string>Stocks / Crypto</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="expenses_btn">
+    <widget class="QPushButton" name="stats_btn">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -92,7 +92,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Expenses</string>
+      <string>Statistics</string>
      </property>
     </widget>
     <widget class="QPushButton" name="settings_btn">
@@ -437,6 +437,9 @@
        <width>231</width>
        <height>481</height>
       </rect>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
     </widget>
    </widget>

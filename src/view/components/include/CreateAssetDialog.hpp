@@ -1,33 +1,33 @@
 #pragma once
 
 #include <QDialog>
-#include <QDateTime>
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
-#include "ExpensesController.hpp"
+#include "AssetsController.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class CreateExpenseDialog; }
+namespace Ui { class CreateAssetDialog; }
 QT_END_NAMESPACE
 
-class CreateExpenseDialog : public QDialog {
+class CreateAssetDialog : public QDialog {
     Q_OBJECT
 
 private:
     const char* DIALOG_UI = ":/styles/qss/dialog_box.qss";
-    Ui::CreateExpenseDialog *m_ui;
+    Ui::CreateAssetDialog *m_ui;
     DebugUtils& m_logger;
+    int m_type;
 
 public:
     /**
      * @brief Constructor function for qdialog.
      */
-    explicit CreateExpenseDialog(QWidget *parent = nullptr);
+    explicit CreateAssetDialog(int type, QWidget *parent = nullptr);
 
     /**
      * @brief Deconstructor function for qdialog.
      */
-    ~CreateExpenseDialog();
+    ~CreateAssetDialog();
 
     /**
      * @brief Loads the qss into the ui file.
@@ -35,10 +35,10 @@ public:
     void loadStyles(const char* stylePath);
 
     /**
-     * @brief Handles expense creation upon accept.
+     * @brief Handles asset creation upon accept.
      */
     void accept() override;
 
 signals:
-    void expenseCreated(const QString name, QString amount);
+    void assetCreated(const QString symbol, QString shares, int type);
 };

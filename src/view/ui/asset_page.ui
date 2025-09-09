@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StockInterface</class>
- <widget class="QMainWindow" name="StockInterface">
+ <class>AssetPage</class>
+ <widget class="QMainWindow" name="AssetPage">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -82,7 +82,7 @@
       <string>Stocks / Crypto</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="expenses_btn">
+    <widget class="QPushButton" name="stats_btn">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -92,7 +92,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Expenses</string>
+      <string>Statistics</string>
      </property>
     </widget>
     <widget class="QPushButton" name="settings_btn">
@@ -215,6 +215,15 @@
        <height>231</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
     <widget class="QLabel" name="stocksTxt">
      <property name="geometry">
@@ -233,6 +242,32 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addStock_btn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>10</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:icons/icons/add_ic.png</normaloff>:icons/icons/add_ic.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -290,7 +325,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="investedWidget" native="true">
+    <widget class="QWidget" name="balanceWidget" native="true">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -299,7 +334,7 @@
        <height>101</height>
       </rect>
      </property>
-     <widget class="QLabel" name="investedText">
+     <widget class="QLabel" name="balanceText">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -309,13 +344,13 @@
        </rect>
       </property>
       <property name="text">
-       <string>Total Invested</string>
+       <string>Total Profit / Loss</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="investedNum">
+     <widget class="QLabel" name="balanceNum">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -419,7 +454,7 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="investsTxt">
+    <widget class="QLabel" name="investsNum">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -467,6 +502,9 @@
        <height>481</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="cryptoWidget" native="true">
@@ -487,6 +525,21 @@
        <height>111</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <attribute name="horizontalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>false</bool>
+     </attribute>
     </widget>
     <widget class="QLabel" name="cryptoTxt">
      <property name="geometry">
@@ -505,6 +558,32 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addCrypto_btn">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>10</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:icons/icons/add_ic.png</normaloff>:icons/icons/add_ic.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
      </property>
     </widget>
    </widget>
