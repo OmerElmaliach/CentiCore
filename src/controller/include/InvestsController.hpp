@@ -24,7 +24,7 @@ public:
     /**
      * @brief Adds an investment.
      */
-    bool add(double amount);
+    bool add(double amount, QString date);
 
     /**
      * @brief Returns all investments.

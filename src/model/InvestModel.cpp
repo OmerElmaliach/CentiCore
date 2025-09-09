@@ -23,7 +23,7 @@ InvestModel& InvestModel::getInstance() {
     return instance;
 }
 
-bool InvestModel::add(double amount) {
+bool InvestModel::add(double amount, QString date) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "Appending new investment, amount: %.2f", amount);
     m_logger.debugLog(buff, "MODEL", "INFO");
@@ -31,6 +31,7 @@ bool InvestModel::add(double amount) {
     // Create new investment and append to array data
     QJsonObject jsonInv;
     jsonInv["amount"] = QJsonValue(amount);
+    jsonInv["date"] = QJsonValue(date);
     m_data.append(jsonInv);
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {

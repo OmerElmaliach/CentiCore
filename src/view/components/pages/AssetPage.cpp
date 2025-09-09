@@ -1,5 +1,5 @@
 #include "AssetPage.hpp"
-#include "../ui/ui_asset_page.h"
+#include "../../ui/ui_asset_page.h"
 
 AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
@@ -26,7 +26,7 @@ AssetPage::AssetPage(QWidget *parent) :
 
     // Load functions and styles
     loadBtns();
-    loadStyles(INTERFACE_UI);
+    loadStyles(PAGE_UI);
     loadAssets();
     loadInvests();
 

@@ -7,9 +7,9 @@ InvestsController& InvestsController::getInstance() {
     return instance;
 }
 
-bool InvestsController::add(double amount) {
+bool InvestsController::add(double amount, QString date) {
     m_logger.debugLog("Signal for add investment received", "CONTROLLER", "INFO");
-    return m_model.add(amount);
+    return m_model.add(amount, date);
 }
 
 QJsonArray InvestsController::getInvestments() {

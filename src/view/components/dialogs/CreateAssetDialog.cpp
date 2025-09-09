@@ -1,11 +1,12 @@
-#include "CreateExpenseDialog.hpp"
-#include "../ui/ui_create_expense.h"
+#include "CreateAssetDialog.hpp"
+#include "../../ui/ui_create_asset.h"
 
-CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
+CreateAssetDialog::CreateAssetDialog(int type, QWidget *parent) :
+        m_type(type),
         QDialog(parent),
-        m_ui(new Ui::CreateExpenseDialog),
+        m_ui(new Ui::CreateAssetDialog),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Creating QDialog Expense...", "VIEW", "INFO");
+    m_logger.debugLog("Creating QDialog Asset...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadStyles(DIALOG_UI);
@@ -16,37 +17,37 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
     connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
 }
 
-CreateExpenseDialog::~CreateExpenseDialog() {
+CreateAssetDialog::~CreateAssetDialog() {
     delete m_ui;
 }
 
-void CreateExpenseDialog::loadStyles(const char* stylePath) {
+void CreateAssetDialog::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);  
     if (styleFile.open(QFile::ReadOnly)) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file for Expense Dialog", "VIEW", "ERR");
+        m_logger.debugLog("Failed to load style file for Asset Dialog", "VIEW", "ERR");
     }
 }
 
-void CreateExpenseDialog::accept() {
-    // Send a request to add an expense
+void CreateAssetDialog::accept() {
+    // Send a request to add an asset
     bool isNumber;
-    QString category = m_ui->categoryInput->text(), amount = m_ui->amountInput->text();
-    amount.toDouble(&isNumber);
+    QString symbol = m_ui->symbolInput->text(), quant = m_ui->quantInput->text();
+    quant.toDouble(&isNumber);
 
     // Check if fields are invalid
-    if (category.isEmpty() || !isNumber) {
+    if (symbol.isEmpty() || !isNumber) {
         m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }
 
-    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd").toStdString(), category.toStdString(), amount.toDouble());
+    bool wasAdded = AssetsController::getInstance().add(symbol.toStdString(), quant.toDouble(), 0, m_type);
 
     if (wasAdded) {
-        emit expenseCreated(category, amount); 
+        emit assetCreated(symbol, quant, m_type); 
     }
 
     QDialog::accept();

@@ -63,7 +63,7 @@
     <string>Symbol:</string>
    </property>
   </widget>
-  <widget class="QLabel" name="sharesLabel">
+  <widget class="QLabel" name="quantLabel">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -85,7 +85,7 @@
     </size>
    </property>
    <property name="text">
-    <string>Shares:</string>
+    <string>Quantity:</string>
    </property>
   </widget>
   <widget class="QLabel" name="topbarLabel">
@@ -117,7 +117,7 @@
     <string>Symbol...</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="sharesInput">
+  <widget class="QLineEdit" name="quantInput">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -127,7 +127,7 @@
     </rect>
    </property>
    <property name="placeholderText">
-    <string>Shares...</string>
+    <string>Quantity...</string>
    </property>
   </widget>
   <widget class="QPushButton" name="cancelBtn">

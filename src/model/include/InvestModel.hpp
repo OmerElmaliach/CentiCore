@@ -33,7 +33,7 @@ public:
     /**
      * @brief Adds an investment to the db.
      */
-    bool add(double amount);
+    bool add(double amount, QString date);
 
     /**
      * @brief Returns an array of investments.

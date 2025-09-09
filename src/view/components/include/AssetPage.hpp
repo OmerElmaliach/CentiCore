@@ -17,7 +17,7 @@ class AssetPage : public QMainWindow {
     Q_OBJECT
 
 private:
-    const char* INTERFACE_UI = ":/styles/qss/asset_page.qss";
+    const char* PAGE_UI = ":/styles/qss/asset_page.qss";
     Ui::AssetPage *m_ui;
     DebugUtils& m_logger;
     QStandardItemModel* m_stock_model;

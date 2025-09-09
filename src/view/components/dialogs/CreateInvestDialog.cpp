@@ -1,5 +1,5 @@
 #include "CreateInvestDialog.hpp"
-#include "../ui/ui_create_invest.h"
+#include "../../ui/ui_create_invest.h"
 
 CreateInvestDialog::CreateInvestDialog(QWidget *parent) :
         QDialog(parent),
@@ -8,6 +8,7 @@ CreateInvestDialog::CreateInvestDialog(QWidget *parent) :
     m_logger.debugLog("Creating QDialog Invest...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
+    m_ui->dateInput->setDate(QDate::currentDate());
     loadStyles(DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
@@ -43,7 +44,7 @@ void CreateInvestDialog::accept() {
         return;
     }
 
-    bool wasAdded = InvestsController::getInstance().add(amount.toDouble());
+    bool wasAdded = InvestsController::getInstance().add(amount.toDouble(), m_ui->dateInput->dateTime().toString("dd/MM/yy"));
 
     if (wasAdded) {
         emit investCreated(amount.toDouble()); 

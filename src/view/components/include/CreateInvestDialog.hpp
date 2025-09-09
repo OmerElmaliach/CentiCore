@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QDialog>
-#include <QMouseEvent>
-#include <QDateTime>
+#include <QDate>
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 #include "InvestsController.hpp"
