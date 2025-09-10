@@ -1,11 +1,12 @@
 #include "ApiServices.hpp"
 
-ApiServices::ApiServices() : m_logger(DebugUtils::getInstance()) {
+ApiServices::ApiServices(QObject *parent) : m_logger(DebugUtils::getInstance()) {
     m_manager = new QNetworkAccessManager(this);
 }
 
-ApiServices::~ApiServices() {
-    free(m_manager);
+ApiServices& ApiServices::getInstance() {
+    static ApiServices instance;
+    return instance;
 }
 
 void ApiServices::getAsset(const QString& symbol) {

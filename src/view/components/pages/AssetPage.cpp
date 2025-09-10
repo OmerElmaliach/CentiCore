@@ -10,7 +10,6 @@ AssetPage::AssetPage(QWidget *parent) :
 
     // Setup assets model
     QStringList headers = {"Symbol", "Quantity", "Price per Unit", "Daily change (%)", "Daily change ($)", "Total Value"};
-
     m_stock_model = new QStandardItemModel();
     m_ui->stocksView->setModel(m_stock_model);
     m_stock_model->setHorizontalHeaderLabels(headers);
@@ -35,6 +34,8 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("AssetPage UI setup completed", "VIEW", "INFO");
+
+    connect(&AssetsController::getInstance(), &AssetsController::updateAsset, this, &AssetPage::updateAsset);
 
     // Start regulary updating data
     AssetsController::getInstance().update();
@@ -123,6 +124,20 @@ void AssetPage::loadAssets() {
     }
 
     m_logger.debugLog("Loaded previous assets", "VIEW", "INFO");
+}
+
+void AssetPage::updateAsset(QString symbol, double currPrice, double d, double dp, int type) {
+    QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
+    for (int i = 0; i < model->rowCount(); i++) {
+        QStandardItem* item = model->item(i);
+        if (item && item->text() == symbol) {
+            model->setItem(i, 2, new QStandardItem(QString::number(currPrice)));
+            model->setItem(i, 3, new QStandardItem(QString::number(dp)));
+            model->setItem(i, 4, new QStandardItem(QString::number(d)));
+            model->setItem(i, 5, new QStandardItem(QString::number(currPrice * model->item(i, 1)->text().toDouble())));
+            break;
+        }
+    }
 }
 
 void AssetPage::onInvestCreate(double amount) {

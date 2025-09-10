@@ -21,8 +21,3 @@ int Asset::getType() { return m_type; }
 void Asset::setShares(double shares) { m_shares = shares; }
 
 void Asset::setCurrPrice(double currPrice) { m_currPrice = currPrice; }
-
-void Asset::update(double newPrice) {
-    setCurrPrice(newPrice);
-    m_lastUpdated = QDateTime::currentDateTime().toString("hh:mm:ss"); 
-}

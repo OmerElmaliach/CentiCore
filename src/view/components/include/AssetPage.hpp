@@ -59,6 +59,11 @@ public:
     void loadAssets();
 
     /**
+     * @brief Updates asset stats in view
+     */
+    void updateAsset(QString symbol, double currPrice, double d, double dp, int type);
+
+    /**
      * @brief Adds an investment to the item list
      */
     void onInvestCreate(double amount);

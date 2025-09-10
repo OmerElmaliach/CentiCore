@@ -37,9 +37,4 @@ public:
     void setShares(double shares);
 
     void setCurrPrice(double currPrice);
-
-    /**
-     * @brief Updates the current price and records the update time.
-     */
-    void update(double newPrice);
 };

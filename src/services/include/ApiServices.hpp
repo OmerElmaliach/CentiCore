@@ -15,21 +15,21 @@ private:
     QNetworkAccessManager* m_manager;
     DebugUtils& m_logger;
 
-public:
     /**
      * @brief Constructor for api services.
      */
-    ApiServices();
+    ApiServices(QObject *parent = nullptr);
 
-    /**
-     * @brief Deconstructor for api services.
-     */
-    ~ApiServices();
+public:
+    static ApiServices& getInstance();
 
     /**
      * @brief Retrieves information regarding an asset symbol
      */
     void getAsset(const QString& symbol);
+
+    ApiServices(const ApiServices&) = delete;
+    ApiServices& operator=(const ApiServices&) = delete;
 
 signals:
     void assetDataReceived(const QString& symbol, const QJsonDocument& data);

@@ -45,7 +45,15 @@ public:
      */
     QJsonArray getAssets();
 
+    /**
+     * @brief Returns type of asset
+     */
+    int getType(QString symbol);
+
     AssetsController(const AssetsController&) = delete;
     
     AssetsController& operator=(const AssetsController&) = delete;
+
+signals:
+    void updateAsset(QString symbol, double currPrice, double d, double dp, int type);
 };

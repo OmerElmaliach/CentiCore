@@ -25,19 +25,37 @@ bool AssetsController::remove(string symbol, double shares) {
 }
 
 void AssetsController::update() {
-    QTimer* timer = new QTimer();
-    connect(timer, &QTimer::timeout, [&]() {
-        ApiServices* api = new ApiServices();
-        connect(api, &ApiServices::assetDataReceived, this, [](const QString& symbol, const QJsonDocument& data) {
-            qDebug() << "Received data for" << symbol << ":" << data;
+    QTimer* timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, [this] {
+        ApiServices& api = ApiServices::getInstance();
+        connect(&api, &ApiServices::assetDataReceived, this, [this](const QString& symbol, const QJsonDocument& data) {
+            // Update model
+            if (!m_model.update(symbol.toStdString(), data["c"].toDouble()))
+                m_logger.debugLog("Failed to update asset: " + symbol.toStdString(), "CONTROLLER", "ERR");
+            
+            // Update view
+            int type = getType(symbol);
+            if (type != -1)
+                emit updateAsset(symbol, data["c"].toDouble(), data["d"].toDouble(), data["dp"].toDouble(), type);
         });
 
-        api->getAsset("AAPL");
+        connect(&api, &ApiServices::assetRequestFailed, this, [this](const QString& symbol, const QString& error) {
+            m_logger.debugLog("Failed to retrieve asset: " + symbol.toStdString() + "ERROR: " + error.toStdString(), "CONTROLLER", "ERR");
+        });
+
+        QJsonArray assetArr = getAssets();
+        for (int i = 0; i < assetArr.size(); i++) {
+            api.getAsset(assetArr[i].toObject()["symbol"].toString());
+        }
     });
 
-    timer->start(2000);
+    timer->start(5000);
 }
 
 QJsonArray AssetsController::getAssets() {
     return m_model.getAssets();
+}
+
+int AssetsController::getType(QString symbol) {
+    return m_model.getType(symbol);
 }

@@ -79,6 +79,29 @@ bool AssetModel::remove(string symbol, double shares, int idx) {
     return true;
 }
 
+bool AssetModel::update(std::string symbol, double currPrice) {
+    int idx = find(symbol);
+    if (idx == -1) {
+        m_logger.debugLog("Unable to find symbol: " + symbol, "MODEL", "ERR");
+        return false;
+    }
+
+    QJsonObject obj = m_data[idx].toObject();
+    obj["current_price"] = QJsonValue(currPrice);
+    obj["last_updated"] = QJsonValue(QDateTime::currentDateTime().toString("hh:mm:ss"));
+    m_data[idx] = obj;
+
+    if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        m_logger.debugLog("Failed to open asset file", "MODEL", "ERR");
+        return false;
+    }
+    
+    m_dataFile.write(QJsonDocument(m_data).toJson());
+    m_dataFile.close();
+
+    return true;
+}
+
 int AssetModel::find(string symbol) {
     // Loop and find the asset index
     for (int i = 0; i < m_data.size(); i++) {
@@ -92,4 +115,14 @@ int AssetModel::find(string symbol) {
 
 QJsonArray AssetModel::getAssets() {
     return m_data;
+}
+
+int AssetModel::getType(QString symbol) {
+    for (int i = 0; i < m_data.size(); i++) {
+        QJsonObject item = m_data[i].toObject();
+        if (item["symbol"].toString() == symbol)
+            return item["type"].toInt();
+    }
+
+    return -1;
 }

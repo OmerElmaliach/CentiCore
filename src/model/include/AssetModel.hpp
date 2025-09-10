@@ -37,14 +37,24 @@ public:
     bool add(Asset st);
 
     /**
-     * @brief removes an asset from the db.
+     * @brief Removes an asset from the db.
      */
     bool remove(string symbol, double shares, int idx);
+
+    /**
+     * @brief Updates the current price of an asset
+     */
+    bool update(string symbol, double currPrice);
 
     /**
      * @brief Finds and returns the first index of a given asset.
      */
     int find(string symbol);
+
+    /**
+     * @brief Returns type of asset
+     */
+    int getType(QString symbol);
 
     /**
      * @brief Returns an array of current monthly assets.
