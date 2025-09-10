@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QStringListModel>
+#include <QTableView>
 #include "CreateAssetDialog.hpp"
 #include "CreateInvestDialog.hpp"
 #include "DebugUtils.hpp"
@@ -24,6 +25,14 @@ private:
     QStandardItemModel* m_stock_model;
     QStandardItemModel* m_crypto_model;
     QStringListModel *m_invest_model;
+    enum AssetColumns {
+        SYMBOL = 0,
+        QUANTITY = 1, 
+        PRICE = 2,
+        DAILY_CHANGE_PERCENT = 3,
+        DAILY_CHANGE_DOLLAR = 4,
+        TOTAL_VALUE = 5
+    };
 
 public:
     /**
@@ -72,6 +81,11 @@ public:
      * @brief Loads up existing investments to the item list
      */
     void loadInvests();
+
+    /**
+     * @brief utility function to setup tables
+     */
+    void setupAssetModel(QStandardItemModel*& model, QTableView* view);
 
 signals:
     void switchPage(int index);

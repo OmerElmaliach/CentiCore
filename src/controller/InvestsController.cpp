@@ -8,7 +8,7 @@ InvestsController& InvestsController::getInstance() {
 }
 
 bool InvestsController::add(double amount, QString date) {
-    m_logger.debugLog("Signal for add investment received", "CONTROLLER", "INFO");
+    m_logger.debugLog("InvestsController: Signal for add investment received", "CONTROLLER", "INFO");
     return m_model.add(amount, date);
 }
 

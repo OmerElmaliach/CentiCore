@@ -5,7 +5,7 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
         QDialog(parent),
         m_ui(new Ui::CreateExpenseDialog),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Creating QDialog Expense...", "VIEW", "INFO");
+    m_logger.debugLog("CreateExpenseDialog: Creating QDialog Expense...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadStyles(DIALOG_UI);
@@ -26,7 +26,7 @@ void CreateExpenseDialog::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file for Expense Dialog", "VIEW", "ERR");
+        m_logger.debugLog("CreateExpenseDialog: Failed to load style file for Expense Dialog", "VIEW", "ERR");
     }
 }
 
@@ -37,8 +37,8 @@ void CreateExpenseDialog::accept() {
     amount.toDouble(&isNumber);
 
     // Check if fields are invalid
-    if (category.isEmpty() || !isNumber) {
-        m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
+    if (category.isEmpty() || !isNumber || amount.toDouble() < 0) {
+        m_logger.debugLog("CreateExpenseDialog: Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }

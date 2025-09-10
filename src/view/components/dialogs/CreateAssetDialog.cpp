@@ -6,7 +6,7 @@ CreateAssetDialog::CreateAssetDialog(int type, QWidget *parent) :
         QDialog(parent),
         m_ui(new Ui::CreateAssetDialog),
         m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Creating QDialog Asset...", "VIEW", "INFO");
+    m_logger.debugLog("CreateAssetDialog: Creating QDialog Asset...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     loadStyles(DIALOG_UI);
@@ -27,7 +27,7 @@ void CreateAssetDialog::loadStyles(const char* stylePath) {
         setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        m_logger.debugLog("Failed to load style file for Asset Dialog", "VIEW", "ERR");
+        m_logger.debugLog("CreateAssetDialog: Failed to load style file for Asset Dialog", "VIEW", "ERR");
     }
 }
 
@@ -39,7 +39,7 @@ void CreateAssetDialog::accept() {
 
     // Check if fields are invalid
     if (symbol.isEmpty() || !isNumber) {
-        m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
+        m_logger.debugLog("CreateAssetDialog: Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }

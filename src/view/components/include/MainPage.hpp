@@ -14,6 +14,7 @@ class MainPage : public QMainWindow {
     Q_OBJECT
 
 private:
+    static constexpr int STOCKS_PAGE = 1;
     const char* PAGE_UI = ":/styles/qss/main_page.qss";
     Ui::MainPage *m_ui;
     DebugUtils& m_logger;

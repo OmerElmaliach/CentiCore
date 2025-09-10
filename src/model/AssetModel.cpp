@@ -10,7 +10,7 @@ AssetModel::AssetModel() : m_logger(DebugUtils::getInstance()) {
     m_dataFile.setFileName(dataPath + "Assets.json");
     if (m_dataFile.exists()) {
         if (!m_dataFile.open(QIODevice::ReadOnly | QIODevice::Text))
-            m_logger.debugLog("Failed to open asset file", "MODEL", "ERR");
+            m_logger.debugLog("AssetModel: Failed to open asset file", "MODEL", "ERR");
         
         // Extract available data from the json file.
         m_data = QJsonDocument().fromJson(m_dataFile.readAll()).array();
@@ -25,7 +25,7 @@ AssetModel& AssetModel::getInstance() {
 
 bool AssetModel::add(QString symbol, double quantity, double currPrice, QString lastUpdated, int type) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new asset: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
+    sprintf(buff, "AssetModel: Appending new asset: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     int idx = find(symbol);
@@ -44,7 +44,7 @@ bool AssetModel::add(QString symbol, double quantity, double currPrice, QString 
     }
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open asset file", "MODEL", "ERR");
+        m_logger.debugLog("AssetModel: Failed to open asset file", "MODEL", "ERR");
         return false;
     }
     
@@ -57,7 +57,7 @@ bool AssetModel::add(QString symbol, double quantity, double currPrice, QString 
 
 bool AssetModel::remove(QString symbol, double quantity, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing asset: name: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
+    sprintf(buff, "AssetModel: Removing asset: name: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Check if should remove asset completely or partially
@@ -70,7 +70,7 @@ bool AssetModel::remove(QString symbol, double quantity, int idx) {
     }
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open asset file", "MODEL", "ERR");
+        m_logger.debugLog("AssetModel: Failed to open asset file", "MODEL", "ERR");
         return false;
     }
     
@@ -84,7 +84,7 @@ bool AssetModel::remove(QString symbol, double quantity, int idx) {
 bool AssetModel::update(QString symbol, double currPrice) {
     int idx = find(symbol);
     if (idx == -1) {
-        m_logger.debugLog("Unable to find symbol: " + symbol.toStdString(), "MODEL", "ERR");
+        m_logger.debugLog("AssetModel: Unable to find symbol: " + symbol.toStdString(), "MODEL", "ERR");
         return false;
     }
 
@@ -94,7 +94,7 @@ bool AssetModel::update(QString symbol, double currPrice) {
     m_data[idx] = obj;
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open asset file", "MODEL", "ERR");
+        m_logger.debugLog("AssetModel: Failed to open asset file", "MODEL", "ERR");
         return false;
     }
     

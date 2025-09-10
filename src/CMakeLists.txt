@@ -1,6 +1,6 @@
 # <== Project properties ===>
 cmake_minimum_required(VERSION 3.16)
-project(CentiCore VERSION 0.5.3)
+project(CentiCore VERSION 0.5.4)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network)
@@ -18,7 +18,6 @@ file(GLOB VIEW_COMPONENTS "view/components/pages/*.cpp" "view/components/dialogs
 file(GLOB VIEW_UI "view/ui/*.ui")
 
 # <== Model Classes ===>
-file(GLOB MODEL_TYPES "model/types/*.cpp" "model/types/include/*.hpp")
 file(GLOB MODELS "model/*.cpp" "model/include/*.hpp")
 
 # <== Controller Classes ===>
@@ -36,7 +35,6 @@ qt_add_executable(centicore
     ${VIEW_UI}
     ${VIEW_COMPONENTS}
     ${MODELS}
-    ${MODEL_TYPES}
     ${CONTROLLERS}
     ${SERVICES}
     ${UTILS}
@@ -51,7 +49,6 @@ target_include_directories(centicore PRIVATE
     ${PROJECT_SOURCE_DIR}/view/components/include
     ${PROJECT_SOURCE_DIR}/controller/include
     ${PROJECT_SOURCE_DIR}/model/include
-    ${PROJECT_SOURCE_DIR}/model/types/include
     ${PROJECT_SOURCE_DIR}/services/include
 )
 target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets Qt6::Network)

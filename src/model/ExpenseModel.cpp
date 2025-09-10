@@ -10,7 +10,7 @@ ExpenseModel::ExpenseModel() : m_logger(DebugUtils::getInstance()) {
     m_dataFile.setFileName(dataPath + dt.toString("MMMM") + ".json");
     if (m_dataFile.exists()) {
         if (!m_dataFile.open(QIODevice::ReadOnly | QIODevice::Text))
-            m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
+            m_logger.debugLog("ExpenseModel: Failed to open expense file", "MODEL", "ERR");
         
         // Extract available data from the json file.
         m_data = QJsonDocument().fromJson(m_dataFile.readAll()).array();
@@ -25,7 +25,7 @@ ExpenseModel& ExpenseModel::getInstance() {
 
 bool ExpenseModel::add(QString category, double amount, QString date) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new expense: %s, amount: %.2f", category.toStdString().c_str(), amount);
+    sprintf(buff, "ExpenseModel: Appending new expense: %s, amount: %.2f", category.toStdString().c_str(), amount);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Create new expense and append to array data
@@ -36,7 +36,7 @@ bool ExpenseModel::add(QString category, double amount, QString date) {
     m_data.append(jsonExpense);
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
+        m_logger.debugLog("ExpenseModel: Failed to open expense file", "MODEL", "ERR");
         return false;
     }
     
@@ -49,12 +49,12 @@ bool ExpenseModel::add(QString category, double amount, QString date) {
 
 bool ExpenseModel::remove(QString category, QString date, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing expense: name: %s, date: %s", date.toStdString().c_str(), category.toStdString().c_str());
+    sprintf(buff, "ExpenseModel: Removing expense: name: %s, date: %s", date.toStdString().c_str(), category.toStdString().c_str());
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     m_data.removeAt(idx);
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open expense file", "MODEL", "ERR");
+        m_logger.debugLog("ExpenseModel: Failed to open expense file", "MODEL", "ERR");
         return false;
     }
     

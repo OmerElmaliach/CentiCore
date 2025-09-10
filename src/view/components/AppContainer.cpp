@@ -22,6 +22,6 @@ void AppContainer::switchPage(int index) {
     try {
         m_stack->setCurrentIndex(index);
     } catch(exception e) {
-        m_logger.debugLog("Failed to switch page, index: " + index, "VIEW", "ERR");
+        m_logger.debugLog("AppContainer: Failed to switch page, index: " + index, "VIEW", "ERR");
     }
 }
