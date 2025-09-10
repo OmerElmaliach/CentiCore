@@ -3,7 +3,6 @@
 #include <QObject>
 #include <string>
 #include "ExpenseModel.hpp"
-#include "Expense.hpp"
 #include "DebugUtils.hpp"
 
 class ExpensesController : public QObject {
@@ -25,12 +24,12 @@ public:
     /**
      * @brief Adds an expense.
      */
-    bool add(string date, string category, double amount);
+    bool add(QString category, double amount, QString date);
 
     /**
      * @brief removes an expense.
      */
-    bool remove(string date, string category, double amount);
+    bool remove(QString category, double amount, QString date);
 
     /**
      * @brief Returns monthly expense data.

@@ -96,12 +96,12 @@ void AssetPage::loadBtns() {
     });
 }
 
-void AssetPage::onAssetCreate(const QString symbol, QString shares, int type) {
+void AssetPage::onAssetCreate(const QString symbol, QString quantity, int type) {
     // Update assets list
     QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
     int currRow = model->rowCount();
     model->setItem(currRow, 0, new QStandardItem(symbol));
-    model->setItem(currRow, 1, new QStandardItem(shares));
+    model->setItem(currRow, 1, new QStandardItem(quantity));
 
     m_logger.debugLog("Added asset to list", "VIEW", "INFO");
 }
@@ -115,7 +115,7 @@ void AssetPage::loadAssets() {
         QStandardItemModel* model = (item["type"].toInt()) ? m_crypto_model : m_stock_model;
         int currRow = model->rowCount();
         model->setItem(currRow, 0, new QStandardItem(item["symbol"].toString()));
-        model->setItem(currRow, 1, new QStandardItem(QString::number(item["shares"].toDouble())));
+        model->setItem(currRow, 1, new QStandardItem(QString::number(item["quantity"].toDouble())));
         // TODO: ADD VALUES WITH JSON REQUEST
         model->setItem(currRow, 2, new QStandardItem("N/A"));
         model->setItem(currRow, 3, new QStandardItem("N/A"));

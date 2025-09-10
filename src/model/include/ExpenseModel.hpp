@@ -6,9 +6,7 @@
 #include <QJsonArray>
 #include <QCoreApplication>
 #include <QJsonObject>
-#include <QDateTime>
 #include <string>
-#include "Expense.hpp"
 #include "DebugUtils.hpp"
 #define LOG_MSG_LENGTH 256
 using namespace std;
@@ -34,17 +32,17 @@ public:
     /**
      * @brief Adds an expense to the db.
      */
-    bool add(Expense exp);
+    bool add(QString category, double amount, QString date);
 
     /**
      * @brief removes an expense from the db.
      */
-    bool remove(Expense exp, int idx);
+    bool remove(QString category, QString date, int idx);
 
     /**
      * @brief Finds and returns the first index of a given expense.
      */
-    int find(Expense exp);
+    int find(QString category, QString date);
 
     /**
      * @brief Returns an array of current monthly expenses.

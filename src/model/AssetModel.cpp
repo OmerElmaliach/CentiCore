@@ -23,24 +23,24 @@ AssetModel& AssetModel::getInstance() {
     return instance;
 }
 
-bool AssetModel::add(Asset item) {
+bool AssetModel::add(QString symbol, double quantity, double currPrice, QString lastUpdated, int type) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new asset: %s, amount: %.2f", item.getSymbol().c_str(), item.getShares());
+    sprintf(buff, "Appending new asset: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
-    int idx = find(item.getSymbol());
+    int idx = find(symbol);
     if (idx == -1) {
         // Create new asset and append to array data
         QJsonObject jsonAsset;
-        jsonAsset["symbol"] = QJsonValue(item.getSymbol().c_str());
-        jsonAsset["shares"] = QJsonValue(item.getShares());
-        jsonAsset["current_price"] = QJsonValue(item.getCurrPrice());
-        jsonAsset["last_updated"] = QJsonValue(item.getLastUpdated());
-        jsonAsset["type"] = QJsonValue(item.getType());
+        jsonAsset["symbol"] = QJsonValue(symbol);
+        jsonAsset["quantity"] = QJsonValue(quantity);
+        jsonAsset["current_price"] = QJsonValue(currPrice);
+        jsonAsset["last_updated"] = QJsonValue(lastUpdated);
+        jsonAsset["type"] = QJsonValue(type);
         m_data.append(jsonAsset);
     } else {
         // Update existing asset
-        m_data[idx].toObject()["shares"] = QJsonValue(m_data[idx].toObject()["shares"].toDouble() + item.getShares());
+        m_data[idx].toObject()["quantity"] = QJsonValue(m_data[idx].toObject()["quantity"].toDouble() + quantity);
     }
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
@@ -55,16 +55,18 @@ bool AssetModel::add(Asset item) {
     return true;
 }
 
-bool AssetModel::remove(string symbol, double shares, int idx) {
+bool AssetModel::remove(QString symbol, double quantity, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing asset: name: %s, amount: %.2f", symbol.c_str(), shares);
+    sprintf(buff, "Removing asset: name: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Check if should remove asset completely or partially
-    if (m_data[idx].toObject()["shares"].toDouble() == shares) {
+    QJsonObject obj = m_data[idx].toObject();
+    if (obj["quantity"].toDouble() == quantity) {
         m_data.removeAt(idx);
     } else {
-        m_data[idx].toObject()["shares"] = QJsonValue(m_data[idx].toObject()["shares"].toDouble() - shares);
+        obj["quantity"] = QJsonValue(obj["quantity"].toDouble() - quantity);
+        m_data[idx] = obj;
     }
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
@@ -79,10 +81,10 @@ bool AssetModel::remove(string symbol, double shares, int idx) {
     return true;
 }
 
-bool AssetModel::update(std::string symbol, double currPrice) {
+bool AssetModel::update(QString symbol, double currPrice) {
     int idx = find(symbol);
     if (idx == -1) {
-        m_logger.debugLog("Unable to find symbol: " + symbol, "MODEL", "ERR");
+        m_logger.debugLog("Unable to find symbol: " + symbol.toStdString(), "MODEL", "ERR");
         return false;
     }
 
@@ -102,11 +104,11 @@ bool AssetModel::update(std::string symbol, double currPrice) {
     return true;
 }
 
-int AssetModel::find(string symbol) {
+int AssetModel::find(QString symbol) {
     // Loop and find the asset index
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();
-        if (!item["symbol"].toString().toStdString().compare(symbol))
+        if (item["symbol"].toString() == symbol)
             return i;
     }
 

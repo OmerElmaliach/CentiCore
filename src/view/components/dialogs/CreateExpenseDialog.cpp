@@ -43,7 +43,7 @@ void CreateExpenseDialog::accept() {
         return;
     }
 
-    bool wasAdded = ExpensesController::getInstance().add(QDateTime().currentDateTime().toString("dd").toStdString(), category.toStdString(), amount.toDouble());
+    bool wasAdded = ExpensesController::getInstance().add(category, amount.toDouble(), QDateTime().currentDateTime().toString("dd"));
 
     if (wasAdded) {
         emit expenseCreated(category, amount); 

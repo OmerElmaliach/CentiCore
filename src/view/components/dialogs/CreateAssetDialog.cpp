@@ -44,7 +44,7 @@ void CreateAssetDialog::accept() {
         return;
     }
 
-    bool wasAdded = AssetsController::getInstance().add(symbol.toStdString(), quant.toDouble(), 0, m_type);
+    bool wasAdded = AssetsController::getInstance().add(symbol, quant.toDouble(), 0, m_type);
 
     if (wasAdded) {
         emit assetCreated(symbol, quant, m_type); 

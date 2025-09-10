@@ -51,7 +51,7 @@ public:
      * 
      * @param type 0 for stock, 1 for crypto
      */
-    void onAssetCreate(const QString symbol, QString shares, int type);
+    void onAssetCreate(const QString symbol, QString quantity, int type);
 
     /**
      * @brief Loads up existing assets to the item widget

@@ -7,20 +7,19 @@ AssetsController& AssetsController::getInstance() {
     return instance;
 }
 
-bool AssetsController::add(string symbol, double shares, double currPrice, int type) {
-    m_logger.debugLog("Signal for add asset shares received", "CONTROLLER", "INFO");
+bool AssetsController::add(QString symbol, double quantity, double currPrice, int type) {
+    m_logger.debugLog("Signal for add asset quantity received", "CONTROLLER", "INFO");
     // TODO: Add symbol verifier
-    Asset item(symbol, shares, currPrice, type);
-    return m_model.add(item);
+    return m_model.add(symbol, quantity, currPrice, QDateTime::currentDateTime().toString("hh:mm:ss"), type);
 }
 
-bool AssetsController::remove(string symbol, double shares) {
-    m_logger.debugLog("Signal for removing asset shares received", "CONTROLLER", "INFO");
+bool AssetsController::remove(QString symbol, double quantity) {
+    m_logger.debugLog("Signal for removing asset quantity received", "CONTROLLER", "INFO");
     int idx = m_model.find(symbol);
     if (idx != -1)
-        return m_model.remove(symbol, shares, idx);
+        return m_model.remove(symbol, quantity, idx);
 
-    m_logger.debugLog("Couldn't find given asset: " + symbol, "CONTROLLER", "WARN");
+    m_logger.debugLog("Couldn't find given asset: " + symbol.toStdString(), "CONTROLLER", "WARN");
     return false;
 }
 
@@ -30,7 +29,7 @@ void AssetsController::update() {
         ApiServices& api = ApiServices::getInstance();
         connect(&api, &ApiServices::assetDataReceived, this, [this](const QString& symbol, const QJsonDocument& data) {
             // Update model
-            if (!m_model.update(symbol.toStdString(), data["c"].toDouble()))
+            if (!m_model.update(symbol, data["c"].toDouble()))
                 m_logger.debugLog("Failed to update asset: " + symbol.toStdString(), "CONTROLLER", "ERR");
             
             // Update view

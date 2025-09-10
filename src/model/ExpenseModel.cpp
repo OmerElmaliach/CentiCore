@@ -23,16 +23,16 @@ ExpenseModel& ExpenseModel::getInstance() {
     return instance;
 }
 
-bool ExpenseModel::add(Expense exp) {
+bool ExpenseModel::add(QString category, double amount, QString date) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new expense: %s, amount: %.2f", exp.getCategory().c_str(), exp.getAmount());
+    sprintf(buff, "Appending new expense: %s, amount: %.2f", category.toStdString().c_str(), amount);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Create new expense and append to array data
     QJsonObject jsonExpense;
-    jsonExpense["date"] = QJsonValue(exp.getDate().c_str());
-    jsonExpense["category"] = QJsonValue(exp.getCategory().c_str());
-    jsonExpense["amount"] = QJsonValue(exp.getAmount());
+    jsonExpense["date"] = QJsonValue(date);
+    jsonExpense["category"] = QJsonValue(category);
+    jsonExpense["amount"] = QJsonValue(amount);
     m_data.append(jsonExpense);
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
@@ -47,9 +47,9 @@ bool ExpenseModel::add(Expense exp) {
     return true;
 }
 
-bool ExpenseModel::remove(Expense exp, int idx) {
+bool ExpenseModel::remove(QString category, QString date, int idx) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Removing expense: name: %s, date: %s", exp.getDate().c_str(), exp.getCategory().c_str());
+    sprintf(buff, "Removing expense: name: %s, date: %s", date.toStdString().c_str(), category.toStdString().c_str());
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     m_data.removeAt(idx);
@@ -65,11 +65,11 @@ bool ExpenseModel::remove(Expense exp, int idx) {
     return true;
 }
 
-int ExpenseModel::find(Expense exp) {
+int ExpenseModel::find(QString category, QString date) {
     // Loop and find the expense index.
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();
-        if ((!item["date"].toString().toStdString().compare(exp.getDate())) && (!item["name"].toString().toStdString().compare(exp.getCategory())))
+        if ((item["date"].toString() == date) && (item["category"].toString() == category))
             return i;
     }
 

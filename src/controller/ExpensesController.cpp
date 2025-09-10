@@ -7,22 +7,20 @@ ExpensesController& ExpensesController::getInstance() {
     return instance;
 }
 
-bool ExpensesController::add(string date, string category, double amount) {
+bool ExpensesController::add(QString category, double amount, QString date) {
     m_logger.debugLog("Signal for add expense received", "CONTROLLER", "INFO");
-    Expense exp(date, category, amount);
-    if (m_model.find(exp) == -1)
-        return m_model.add(exp);
+    if (m_model.find(category, date) == -1)
+        return m_model.add(category, amount, date);
 
     m_logger.debugLog("Expense with given category and date already exists", "CONTROLLER", "WARN");
     return false;
 }
 
-bool ExpensesController::remove(string date, string category, double amount) {
+bool ExpensesController::remove(QString category, double amount, QString date) {
     m_logger.debugLog("Signal for removing expense received", "CONTROLLER", "INFO");
-    Expense exp(date, category, amount);
-    int idx = m_model.find(exp);
+    int idx = m_model.find(category, date);
     if (idx != -1)
-        return m_model.remove(exp, idx);
+        return m_model.remove(category, date, idx);
 
     m_logger.debugLog("Couldn't find given expense", "CONTROLLER", "WARN");
     return false;
