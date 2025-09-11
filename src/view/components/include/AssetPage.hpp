@@ -31,7 +31,8 @@ private:
         PRICE = 2,
         DAILY_CHANGE_PERCENT = 3,
         DAILY_CHANGE_DOLLAR = 4,
-        TOTAL_VALUE = 5
+        TOTAL_VALUE = 5,
+        COLUMN_COUNT = 6
     };
 
 public:
@@ -86,6 +87,16 @@ public:
      * @brief utility function to setup tables
      */
     void setupAssetModel(QStandardItemModel*& model, QTableView* view);
+
+    /**
+     * @brief Formats a given number with comma separators
+     */
+    QString formatNumberWithCommas(const double num);
+
+    /**
+     * @brief Update page stats
+     */
+    void updateStats();
 
 signals:
     void switchPage(int index);

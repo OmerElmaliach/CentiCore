@@ -28,6 +28,7 @@ AssetPage::AssetPage(QWidget *parent) :
     m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
 
     connect(&AssetsController::getInstance(), &AssetsController::updateAsset, this, &AssetPage::updateAsset);
+    connect(&AssetsController::getInstance(), &AssetsController::updateStats, this, &AssetPage::updateStats);
 
     // Start regulary updating data
     AssetsController::getInstance().update();
@@ -93,7 +94,15 @@ void AssetPage::onAssetCreate(const QString symbol, QString quantity, int type) 
     QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
     int currRow = model->rowCount();
     model->setItem(currRow, SYMBOL, new QStandardItem(symbol));
-    model->setItem(currRow, QUANTITY, new QStandardItem(quantity));
+    model->setItem(currRow, QUANTITY, new QStandardItem(formatNumberWithCommas(quantity.toDouble())));
+    model->setItem(currRow, PRICE, new QStandardItem("N/A"));
+    model->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("N/A"));
+    model->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("N/A"));
+    model->setItem(currRow, TOTAL_VALUE, new QStandardItem("N/A"));
+
+    for (int i = 0; i < COLUMN_COUNT; ++i) {
+        model->item(currRow, i)->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
+    }
 
     m_logger.debugLog("AssetPage: Added asset to list", "VIEW", "INFO");
 }
@@ -106,13 +115,20 @@ void AssetPage::loadAssets() {
         QJsonObject item = data[i].toObject();
         QStandardItemModel* model = (item["type"].toInt()) ? m_crypto_model : m_stock_model;
         int currRow = model->rowCount();
-        model->setItem(currRow, SYMBOL, new QStandardItem(item["symbol"].toString()));
-        model->setItem(currRow, QUANTITY, new QStandardItem(QString::number(item["quantity"].toDouble())));
-        // TODO: ADD VALUES WITH JSON REQUEST
+        QString symbol = item["symbol"].toString().contains(':') ? item["symbol"].toString().section(':', 1, 1) : item["symbol"].toString();
+
+        model->setItem(currRow, SYMBOL, new QStandardItem(symbol));
+        model->setItem(currRow, QUANTITY, new QStandardItem(formatNumberWithCommas(item["quantity"].toDouble())));
+        // TODO: ADD VALUES WITH SJON REQUEST
         model->setItem(currRow, PRICE, new QStandardItem("N/A"));
         model->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("N/A"));
         model->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("N/A"));
         model->setItem(currRow, TOTAL_VALUE, new QStandardItem("N/A"));
+
+        // Cell settings
+        for (int i = 0; i < COLUMN_COUNT; ++i) {
+            model->item(currRow, i)->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
+        }
     }
 
     m_logger.debugLog("AssetPage: Loaded previous assets", "VIEW", "INFO");
@@ -120,18 +136,23 @@ void AssetPage::loadAssets() {
 
 void AssetPage::updateAsset(QString symbol, double currPrice, double d, double dp, int type) {
     QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
+    QString newSym = symbol.contains(':') ? symbol.section(':', 1, 1) : symbol;
+
     for (int i = 0; i < model->rowCount(); i++) {
-        QStandardItem* item = model->item(i, SYMBOL);
-        if (item && item->text() == symbol) {
-            model->setItem(i, PRICE, new QStandardItem(QString::number(currPrice)));
-            model->setItem(i, DAILY_CHANGE_PERCENT, new QStandardItem(QString::number(dp)));
-            model->setItem(i, DAILY_CHANGE_DOLLAR, new QStandardItem(QString::number(d)));
+        if (model->item(i, SYMBOL)->text() == newSym) {
+            model->item(i, PRICE)->setText(formatNumberWithCommas(currPrice) + "  $");
+            model->item(i, DAILY_CHANGE_PERCENT)->setText(QString::number(dp, 'f', 2) + "  %");
+            model->item(i, DAILY_CHANGE_DOLLAR)->setText(formatNumberWithCommas(d * model->item(i, QUANTITY)->text().toDouble()) + "  $");
             QStandardItem* quantityItem = model->item(i, QUANTITY);
             if (quantityItem) {
                 bool ok;
                 double quantity = quantityItem->text().toDouble(&ok);
                 if (ok) {
-                    model->setItem(i, TOTAL_VALUE, new QStandardItem(QString::number(currPrice * quantity)));
+                    model->item(i, TOTAL_VALUE)->setText(formatNumberWithCommas(currPrice * quantity) + "  $");
+                    
+                    QColor color = (d > 0) ? Qt::darkGreen : Qt::darkRed;
+                    model->item(i, DAILY_CHANGE_PERCENT)->setData(QBrush(color), Qt::ForegroundRole);
+                    model->item(i, DAILY_CHANGE_DOLLAR)->setData(QBrush(color), Qt::ForegroundRole);
                     break;
                 }
             }
@@ -179,4 +200,26 @@ void AssetPage::setupAssetModel(QStandardItemModel*& model, QTableView* view) {
     view->setModel(model);
     model->setHorizontalHeaderLabels(headers);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+}
+
+QString AssetPage::formatNumberWithCommas(const double num) {
+    QLocale locale(QLocale::English, QLocale::UnitedStates);
+    return locale.toString(num, 'f', 2);
+}
+
+void AssetPage::updateStats() {
+    double pvalue = 0, dchange = 0, invests = InvestsController::getInstance().getSum();
+    for (int i = 0; i < m_stock_model->rowCount(); i++) {
+        pvalue += m_stock_model->item(i, TOTAL_VALUE)->text().remove("$").remove(",").toDouble();
+        dchange += m_stock_model->item(i, DAILY_CHANGE_DOLLAR)->text().remove("$").remove(",").toDouble();
+    }
+
+    for (int i = 0; i < m_crypto_model->rowCount(); i++) {
+        pvalue += m_crypto_model->item(i, TOTAL_VALUE)->text().remove("$").remove(",").toDouble();
+        dchange += m_crypto_model->item(i, DAILY_CHANGE_DOLLAR)->text().remove("$").remove(",").toDouble();
+    }
+
+    m_ui->valueNum->setText(formatNumberWithCommas(pvalue) + " $");
+    m_ui->balanceNum->setText(formatNumberWithCommas(pvalue - invests) + " $");
+    m_ui->changeNum->setText(formatNumberWithCommas(dchange) + " $");
 }

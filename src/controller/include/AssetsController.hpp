@@ -55,4 +55,5 @@ public:
 
 signals:
     void updateAsset(QString symbol, double currPrice, double d, double dp, int type);
+    void updateStats();
 };

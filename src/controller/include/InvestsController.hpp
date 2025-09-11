@@ -31,6 +31,11 @@ public:
      */
     QJsonArray getInvestments();
 
+    /**
+     * @brief Return sum of all investments
+     */
+    double getSum();
+
     InvestsController(const InvestsController&) = delete;
     
     InvestsController& operator=(const InvestsController&) = delete;

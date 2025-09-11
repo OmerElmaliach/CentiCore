@@ -15,3 +15,13 @@ bool InvestsController::add(double amount, QString date) {
 QJsonArray InvestsController::getInvestments() {
     return m_model.getInvestments();
 }
+
+double InvestsController::getSum() {
+    double sum = 0;
+    QJsonArray data = m_model.getInvestments();
+    for (QJsonValue item : data) {
+        sum += item["amount"].toDouble();
+    }
+
+    return sum;
+}

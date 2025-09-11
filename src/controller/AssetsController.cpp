@@ -28,14 +28,17 @@ void AssetsController::update() {
     connect(timer, &QTimer::timeout, [this] {
         ApiServices& api = ApiServices::getInstance();
         connect(&api, &ApiServices::assetDataReceived, this, [this](const QString& symbol, const QJsonDocument& data) {
-            // Update model
-            if (!m_model.update(symbol, data["c"].toDouble()))
-                m_logger.debugLog("AssetsController: Failed to update asset: " + symbol.toStdString(), "CONTROLLER", "ERR");
-            
-            // Update view
             int type = getType(symbol);
-            if (type != -1)
+            if (type != -1) {
+                // Update model
+                if (!m_model.update(symbol, data["c"].toDouble()))
+                    m_logger.debugLog("AssetsController: Failed to update asset: " + symbol.toStdString(), "CONTROLLER", "ERR");
+                
+                // Update view
                 emit updateAsset(symbol, data["c"].toDouble(), data["d"].toDouble(), data["dp"].toDouble(), type);
+            } else {
+                m_logger.debugLog("AssetsController: Unable to determine type: " + symbol.toStdString(), "CONTROLLER", "ERR");
+            }
         });
 
         connect(&api, &ApiServices::assetRequestFailed, this, [this](const QString& symbol, const QString& error) {
@@ -46,9 +49,10 @@ void AssetsController::update() {
         for (int i = 0; i < assetArr.size(); i++) {
             api.getAsset(assetArr[i].toObject()["symbol"].toString());
         }
+        emit updateStats();
     });
 
-    timer->start(5000);
+    timer->start(6000);
 }
 
 QJsonArray AssetsController::getAssets() {
