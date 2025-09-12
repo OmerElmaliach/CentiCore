@@ -44,10 +44,9 @@ void CreateAssetDialog::accept() {
         return;
     }
 
-    bool wasAdded = AssetsController::getInstance().add(symbol, quant.toDouble(), 0, m_type);
-
+    bool wasAdded = AssetsController::getInstance()->add(symbol, quant.toDouble(), m_type);
     if (wasAdded) {
-        emit assetCreated(symbol, quant, m_type); 
+        m_logger.debugLog("CreateAssetDialog: Failed to create new asset: " + symbol.toStdString(), "VIEW", "WARN");
     }
 
     QDialog::accept();

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QStandardItemModel>
 #include <QStringListModel>
 #include <QTableView>
+#include "GeneralUtils.hpp"
 #include "CreateAssetDialog.hpp"
 #include "CreateInvestDialog.hpp"
 #include "DebugUtils.hpp"
@@ -22,9 +22,9 @@ private:
     const char* PAGE_UI = ":/styles/qss/asset_page.qss";
     Ui::AssetPage *m_ui;
     DebugUtils& m_logger;
-    QStandardItemModel* m_stock_model;
-    QStandardItemModel* m_crypto_model;
-    QStringListModel *m_invest_model;
+    AssetsController* m_asset_cont;
+    QStringListModel* m_invest_model;
+    GeneralUtils* m_utils;
     enum AssetColumns {
         SYMBOL = 0,
         QUANTITY = 1, 
@@ -42,6 +42,11 @@ public:
     explicit AssetPage(QWidget *parent = nullptr);
 
     /**
+     * @brief Deconstructor function for asset page
+     */
+    ~AssetPage();
+
+    /**
      * @brief Loads the qss into the ui file
      */
     void loadStyles(const char* stylePath);
@@ -51,12 +56,7 @@ public:
      */
     void loadBtns();
 
-    /**
-     * @brief Adds an asset to the display widget
-     * 
-     * @param type 0 for stock, 1 for crypto
-     */
-    void onAssetCreate(const QString symbol, QString quantity, int type);
+    void onAssetUpdate();
 
     /**
      * @brief Loads up existing assets to the item widget
@@ -79,19 +79,9 @@ public:
     void loadInvests();
 
     /**
-     * @brief utility function to setup tables
-     */
-    void setupAssetModel(QStandardItemModel*& model, QTableView* view);
-
-    /**
-     * @brief Formats a given number with comma separators
-     */
-    QString formatNumberWithCommas(const double num);
-
-    /**
      * @brief Update page stats
      */
-    void updateStats();
+    void updateStats(double pvalue, double dchange, double invests);
 
 signals:
     void switchPage(int index);

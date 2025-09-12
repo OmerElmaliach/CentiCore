@@ -4,13 +4,15 @@
 AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::AssetPage),
-        m_logger(DebugUtils::getInstance()) {
+        m_logger(DebugUtils::getInstance()),
+        m_asset_cont(AssetsController::getInstance()),
+        m_utils(GeneralUtils::getInstance()) {
     m_logger.debugLog("AssetPage: Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
     // Setup assets model
-    setupAssetModel(m_stock_model, m_ui->stocksView);
-    setupAssetModel(m_crypto_model, m_ui->cryptoView);
+    m_asset_cont->setupAssetTable(m_asset_cont->getStockTable(), m_ui->stocksView);
+    m_asset_cont->setupAssetTable(m_asset_cont->getCryptoTable(), m_ui->cryptoView);
 
     m_invest_model = new QStringListModel(this);
     m_ui->investsView->setModel(m_invest_model);
@@ -18,7 +20,6 @@ AssetPage::AssetPage(QWidget *parent) :
     // Load functions and styles
     loadBtns();
     loadStyles(PAGE_UI);
-    loadAssets();
     loadInvests();
 
     // Load events
@@ -27,11 +28,15 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
 
-    connect(&AssetsController::getInstance(), &AssetsController::updateAsset, this, &AssetPage::updateAsset);
-    connect(&AssetsController::getInstance(), &AssetsController::updateStats, this, &AssetPage::updateStats);
+    connect(m_asset_cont, &AssetsController::updatedAsset, this, &AssetPage::onAssetUpdate);
+    connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::updateStats);
 
-    // Start regulary updating data
-    AssetsController::getInstance().update();
+    // Start dynamically updating data
+    m_asset_cont->enableLiveUpdates(6000);
+}
+
+AssetPage::~AssetPage() {
+    m_asset_cont->disableLiveUpdates();
 }
 
 void AssetPage::loadStyles(const char* stylePath) {
@@ -66,14 +71,12 @@ void AssetPage::loadBtns() {
     // Add stock button
     connect(m_ui->addStock_btn, &QPushButton::clicked, this, [this] {
         CreateAssetDialog dialog(0, this);
-        connect(&dialog, &CreateAssetDialog::assetCreated, this, &AssetPage::onAssetCreate);
         dialog.exec();
     });
 
     // Add crypto button
     connect(m_ui->addCrypto_btn, &QPushButton::clicked, this, [this] {
         CreateAssetDialog dialog(1, this);
-        connect(&dialog, &CreateAssetDialog::assetCreated, this, &AssetPage::onAssetCreate);
         dialog.exec();
     });
 
@@ -85,78 +88,8 @@ void AssetPage::loadBtns() {
     });
 }
 
-void AssetPage::onAssetCreate(const QString symbol, QString quantity, int type) {
-    // Update assets list
-    QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
-    int currRow = model->rowCount();
-    model->setItem(currRow, SYMBOL, new QStandardItem(symbol));
-    model->setItem(currRow, QUANTITY, new QStandardItem(formatNumberWithCommas(quantity.toDouble())));
-    model->setItem(currRow, PRICE, new QStandardItem("N/A"));
-    model->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("N/A"));
-    model->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("N/A"));
-    model->setItem(currRow, TOTAL_VALUE, new QStandardItem("N/A"));
-
-    for (int i = 0; i < COLUMN_COUNT; ++i) {
-        model->item(currRow, i)->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
-    }
-
-    m_logger.debugLog("AssetPage: Added asset to list", "VIEW", "INFO");
-}
-
-void AssetPage::loadAssets() {
-    QJsonArray data = AssetsController::getInstance().getAssets();
-
-    // Add each asset
-    for (int i = 0; i < data.size(); i++) {
-        QJsonObject item = data[i].toObject();
-        QStandardItemModel* model = (item["type"].toInt()) ? m_crypto_model : m_stock_model;
-        int currRow = model->rowCount();
-        QString symbol = item["symbol"].toString().contains(':') ? item["symbol"].toString().section(':', 1, 1) : item["symbol"].toString();
-
-        model->setItem(currRow, SYMBOL, new QStandardItem(symbol));
-        model->setItem(currRow, QUANTITY, new QStandardItem(formatNumberWithCommas(item["quantity"].toDouble())));
-        // TODO: ADD VALUES WITH SJON REQUEST
-        model->setItem(currRow, PRICE, new QStandardItem("N/A"));
-        model->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("N/A"));
-        model->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("N/A"));
-        model->setItem(currRow, TOTAL_VALUE, new QStandardItem("N/A"));
-
-        // Cell settings
-        for (int i = 0; i < COLUMN_COUNT; ++i) {
-            model->item(currRow, i)->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
-        }
-    }
-
-    m_logger.debugLog("AssetPage: Loaded previous assets", "VIEW", "INFO");
-}
-
-void AssetPage::updateAsset(QString symbol, double currPrice, double d, double dp, int type) {
-    QStandardItemModel* model = (type) ? m_crypto_model : m_stock_model;
-    QString newSym = symbol.contains(':') ? symbol.section(':', 1, 1) : symbol;
-
-    for (int i = 0; i < model->rowCount(); i++) {
-        if (model->item(i, SYMBOL)->text() == newSym) {
-            model->item(i, PRICE)->setText(formatNumberWithCommas(currPrice) + "  $");
-            model->item(i, DAILY_CHANGE_PERCENT)->setText(QString::number(dp, 'f', 2) + "  %");
-            model->item(i, DAILY_CHANGE_DOLLAR)->setText(formatNumberWithCommas(d * model->item(i, QUANTITY)->text().toDouble()) + "  $");
-            QStandardItem* quantityItem = model->item(i, QUANTITY);
-            if (quantityItem) {
-                bool ok;
-                double quantity = quantityItem->text().toDouble(&ok);
-                if (ok) {
-                    model->item(i, TOTAL_VALUE)->setText(formatNumberWithCommas(currPrice * quantity) + "  $");
-                    
-                    QColor color = (d > 0) ? Qt::darkGreen : Qt::darkRed;
-                    model->item(i, DAILY_CHANGE_PERCENT)->setData(QBrush(color), Qt::ForegroundRole);
-                    model->item(i, DAILY_CHANGE_DOLLAR)->setData(QBrush(color), Qt::ForegroundRole);
-                    break;
-                }
-            }
-
-            model->setItem(i, TOTAL_VALUE, new QStandardItem("N/A"));
-            break;
-        }
-    }
+void AssetPage::onAssetUpdate() {
+    // TODO: Add animation
 }
 
 void AssetPage::onInvestCreate(double amount) {
@@ -189,33 +122,18 @@ void AssetPage::loadInvests() {
     m_logger.debugLog("AssetPage: Loaded previous investments", "VIEW", "INFO");
 }
 
-void AssetPage::setupAssetModel(QStandardItemModel*& model, QTableView* view) {
-    QStringList headers = {"Symbol", "Quantity", "Price per Unit", 
-                          "Daily change (%)", "Daily change ($)", "Total Value"};
-    model = new QStandardItemModel(this);
-    view->setModel(model);
-    model->setHorizontalHeaderLabels(headers);
-    view->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-}
+void AssetPage::updateStats(double pvalue, double dchange, double invests) {
+    m_ui->valueNum->setText(m_utils->formatNumberWithCommas(pvalue, 2) + " $");
+    m_ui->balanceNum->setText(m_utils->formatNumberWithCommas(pvalue - invests, 2) + " $");
+    m_ui->changeNum->setText(m_utils->formatNumberWithCommas(dchange, 2) + " $");
 
-QString AssetPage::formatNumberWithCommas(const double num) {
-    QLocale locale(QLocale::English, QLocale::UnitedStates);
-    return locale.toString(num, 'f', 2);
-}
+    // Set appropriate colors
+    QString color = (pvalue > 0) ? "#00be6f;" : "#a83420ff;";
+    m_ui->valueNum->setStyleSheet("color: " + color);
 
-void AssetPage::updateStats() {
-    double pvalue = 0, dchange = 0, invests = InvestsController::getInstance().getSum();
-    for (int i = 0; i < m_stock_model->rowCount(); i++) {
-        pvalue += m_stock_model->item(i, TOTAL_VALUE)->text().remove("$").remove(",").toDouble();
-        dchange += m_stock_model->item(i, DAILY_CHANGE_DOLLAR)->text().remove("$").remove(",").toDouble();
-    }
+    color = (dchange > 0) ? "#00be6f;" : "#a83420ff;";
+    m_ui->balanceNum->setStyleSheet("color: " + color);
 
-    for (int i = 0; i < m_crypto_model->rowCount(); i++) {
-        pvalue += m_crypto_model->item(i, TOTAL_VALUE)->text().remove("$").remove(",").toDouble();
-        dchange += m_crypto_model->item(i, DAILY_CHANGE_DOLLAR)->text().remove("$").remove(",").toDouble();
-    }
-
-    m_ui->valueNum->setText(formatNumberWithCommas(pvalue) + " $");
-    m_ui->balanceNum->setText(formatNumberWithCommas(pvalue - invests) + " $");
-    m_ui->changeNum->setText(formatNumberWithCommas(dchange) + " $");
+    color = (pvalue - invests > 0) ? "#00be6f;" : "#a83420ff;";
+    m_ui->changeNum->setStyleSheet("color: " + color);
 }

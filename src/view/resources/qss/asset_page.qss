@@ -154,7 +154,6 @@ QLabel {
 #valueNum,
 #balanceNum,
 #changeNum {
-    color: #00be6f;
     font-family: "Consolas", "Courier New", monospace;
     font-size: 20px;
     font-weight: bold;

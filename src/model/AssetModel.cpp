@@ -40,7 +40,9 @@ bool AssetModel::add(QString symbol, double quantity, double currPrice, QString 
         m_data.append(jsonAsset);
     } else {
         // Update existing asset
-        m_data[idx].toObject()["quantity"] = QJsonValue(m_data[idx].toObject()["quantity"].toDouble() + quantity);
+        QJsonObject obj = m_data[idx].toObject();
+        obj["quantity"] = QJsonValue(m_data[idx].toObject()["quantity"].toDouble() + quantity);
+        m_data[idx] = obj;
     }
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
