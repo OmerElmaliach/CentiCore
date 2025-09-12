@@ -42,11 +42,6 @@ public:
     explicit AssetPage(QWidget *parent = nullptr);
 
     /**
-     * @brief Deconstructor function for asset page
-     */
-    ~AssetPage();
-
-    /**
      * @brief Loads the qss into the ui file
      */
     void loadStyles(const char* stylePath);

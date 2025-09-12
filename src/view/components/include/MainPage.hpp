@@ -27,11 +27,6 @@ public:
     explicit MainPage(QWidget *parent = nullptr);
 
     /**
-     * @brief Deconstructor function for main page.
-     */
-    ~MainPage();
-
-    /**
      * @brief Loads the qss into the ui file.
      */
     void loadStyles(const char* stylePath);

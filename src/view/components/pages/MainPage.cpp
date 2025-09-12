@@ -24,10 +24,6 @@ MainPage::MainPage(QWidget *parent) :
     m_logger.debugLog("MainPage: UI setup completed", "VIEW", "INFO");
 }
 
-MainPage::~MainPage() {
-    delete m_ui;
-}
-
 void MainPage::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {

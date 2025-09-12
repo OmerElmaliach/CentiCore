@@ -34,10 +34,6 @@ AssetPage::AssetPage(QWidget *parent) :
     AssetsController::getInstance().update();
 }
 
-AssetPage::~AssetPage() {
-    delete m_ui;
-}
-
 void AssetPage::loadStyles(const char* stylePath) {
     QFile styleFile(stylePath);
     if (styleFile.open(QFile::ReadOnly)) {
