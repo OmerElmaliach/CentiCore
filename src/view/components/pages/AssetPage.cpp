@@ -1,6 +1,11 @@
 #include "AssetPage.hpp"
 #include "../../ui/ui_asset_page.h"
 
+constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 6000;
+const QString AssetPage::POSITIVE_COLOR = "#00be6f";
+const QString AssetPage::NEGATIVE_COLOR = "#a83420ff";
+const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";
+
 AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::AssetPage),
@@ -16,9 +21,11 @@ AssetPage::AssetPage(QWidget *parent) :
     m_asset_cont->setupAssetTable(m_asset_cont->getCryptoTable(), m_ui->cryptoView);
     m_ui->investsView->setModel(m_invest_cont->getInstance()->getList());
 
-    // Load functions and styles
-    loadBtns();
-    loadStyles(PAGE_UI);
+    // Load connections and styles
+    if (!m_utils->loadStyles(this, PAGE_UI))
+        m_logger.debugLog("AssetPage: Failed to load style file stocks.ui", "VIEW", "ERR");
+    
+    setupConnections();
     loadTotalInvests();
 
     // Load events
@@ -27,29 +34,15 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
 
-    connect(m_asset_cont, &AssetsController::updatedAsset, this, &AssetPage::onAssetUpdate);
-    connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::onUpdateStats);
-    connect(m_invest_cont, &InvestsController::investCreated, this, &AssetPage::onInvestCreate);
-
     // Start dynamically updating data
-    m_asset_cont->enableLiveUpdates(6000);
+    m_asset_cont->enableLiveUpdates(LIVE_UPDATE_INTERVAL);
 }
 
 AssetPage::~AssetPage() {
     m_asset_cont->disableLiveUpdates();
 }
 
-void AssetPage::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);
-    if (styleFile.open(QFile::ReadOnly)) {
-        setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        m_logger.debugLog("AssetPage: Failed to load style file stocks.ui", "VIEW", "ERR");
-    }
-}
-
-void AssetPage::loadBtns() {
+void AssetPage::setupConnections() {
     // Exit window button
     connect(m_ui->exit_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("AssetPage: Exit pressed, program shutdown...", "VIEW", "INFO");
@@ -85,6 +78,10 @@ void AssetPage::loadBtns() {
         CreateInvestDialog dialog(this);
         dialog.exec();
     });
+
+    connect(m_asset_cont, &AssetsController::updatedAsset, this, &AssetPage::onAssetUpdate);
+    connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::onUpdateStats);
+    connect(m_invest_cont, &InvestsController::investCreated, this, &AssetPage::onInvestCreate);
 }
 
 void AssetPage::onAssetUpdate() {
@@ -96,20 +93,15 @@ void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
     m_ui->balanceNum->setText(m_utils->formatNumberWithCommas(pvalue - invests, 2) + " $");
     m_ui->changeNum->setText(m_utils->formatNumberWithCommas(dchange, 2) + " $");
 
-    // Set appropriate colors
-    QString color = (pvalue > 0) ? "#00be6f;" : "#a83420ff;";
-    m_ui->valueNum->setStyleSheet("color: " + color);
-
-    color = (dchange > 0) ? "#00be6f;" : "#a83420ff;";
-    m_ui->balanceNum->setStyleSheet("color: " + color);
-
-    color = (pvalue - invests > 0) ? "#00be6f;" : "#a83420ff;";
-    m_ui->changeNum->setStyleSheet("color: " + color);
+    double balance = pvalue - invests;
+    m_ui->valueNum->setStyleSheet("color: " + ((pvalue > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+    m_ui->balanceNum->setStyleSheet("color: " + ((balance > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+    m_ui->changeNum->setStyleSheet("color: " + ((dchange > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
 }
 
 void AssetPage::onInvestCreate(double amount) {
     double currTot = m_ui->investsNum->text().remove('$').toDouble();
-    m_ui->investsNum->setText(QString::number(currTot + amount) + "$");
+    m_ui->investsNum->setText(QString::number(currTot + amount) + " $");
     m_logger.debugLog("AssetPage: Updated total sum of investments", "VIEW", "INFO");
 }
 

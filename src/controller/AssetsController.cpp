@@ -67,14 +67,16 @@ bool AssetsController::add(const QString& symbol, double quantity, int type) {
     tableModel->insertRow(currRow);
     tableModel->setItem(currRow, SYMBOL, new QStandardItem(symbol));
     tableModel->setItem(currRow, QUANTITY, new QStandardItem(m_utils->formatNumberWithCommas(quantity, 2)));
-    tableModel->setItem(currRow, PRICE, new QStandardItem("N/A"));
-    tableModel->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("N/A"));
-    tableModel->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("N/A"));
-    tableModel->setItem(currRow, TOTAL_VALUE, new QStandardItem("N/A"));
+    tableModel->setItem(currRow, PRICE, new QStandardItem("Loading..."));
+    tableModel->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("Loading..."));
+    tableModel->setItem(currRow, DAILY_CHANGE_DOLLAR, new QStandardItem("Loading..."));
+    tableModel->setItem(currRow, TOTAL_VALUE, new QStandardItem("Loading..."));
 
     for (int i = 0; i < COLUMN_COUNT; ++i)
         tableModel->item(currRow, i)->setData(Qt::AlignCenter, Qt::TextAlignmentRole);
 
+    // Fetch data
+    m_api.getAsset(symbol);
     return true;
 }
 
