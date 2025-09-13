@@ -38,7 +38,4 @@ public:
      * @brief Handles asset creation upon accept.
      */
     void accept() override;
-
-signals:
-    void assetCreated(const QString symbol, QString shares, int type);
 };

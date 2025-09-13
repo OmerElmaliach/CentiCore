@@ -137,7 +137,7 @@ void AssetsController::setupAssetTable(QStandardItemModel* model, QTableView* vi
 }
 
 void AssetsController::updateStats() {
-    double pvalue = 0, dchange = 0, invests = InvestsController::getInstance().getSum();
+    double pvalue = 0, dchange = 0, invests = InvestsController::getInstance()->getSum();
     for (int i = 0; i < m_stockTable->rowCount(); i++) {
         pvalue += m_stockTable->item(i, TOTAL_VALUE)->text().remove("$").remove(",").toDouble();
         dchange += m_stockTable->item(i, DAILY_CHANGE_DOLLAR)->text().remove("$").remove(",").toDouble();

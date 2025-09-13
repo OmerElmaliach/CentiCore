@@ -44,10 +44,9 @@ void CreateInvestDialog::accept() {
         return;
     }
 
-    bool wasAdded = InvestsController::getInstance().add(amount.toDouble(), m_ui->dateInput->dateTime().toString("dd/MM/yy"));
-
-    if (wasAdded) {
-        emit investCreated(amount.toDouble()); 
+    bool wasAdded = InvestsController::getInstance()->add(amount.toDouble(), m_ui->dateInput->dateTime().toString("dd/MM/yy"));
+    if (!wasAdded) {
+        m_logger.debugLog("CreateInvestDialog: Failed to add investment", "VIEW", "WARN");
     }
 
     QDialog::accept();

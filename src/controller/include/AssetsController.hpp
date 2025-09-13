@@ -40,7 +40,7 @@ private:
     AssetsController();
 
     /**
-     * @brief Once time setup of connections
+     * @brief One time setup of connections
      */
     void setupConnections();
 
@@ -79,10 +79,6 @@ public:
     QStandardItemModel* getStockTable();
     QStandardItemModel* getCryptoTable();
     QJsonArray getAssets();
-
-    /**
-     * @brief Returns type of asset
-     */
     int getType(const QString& symbol);
 
     /**

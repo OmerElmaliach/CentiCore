@@ -45,7 +45,7 @@ void CreateAssetDialog::accept() {
     }
 
     bool wasAdded = AssetsController::getInstance()->add(symbol, quant.toDouble(), m_type);
-    if (wasAdded) {
+    if (!wasAdded) {
         m_logger.debugLog("CreateAssetDialog: Failed to create new asset: " + symbol.toStdString(), "VIEW", "WARN");
     }
 

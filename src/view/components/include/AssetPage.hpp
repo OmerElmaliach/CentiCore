@@ -23,7 +23,7 @@ private:
     Ui::AssetPage *m_ui;
     DebugUtils& m_logger;
     AssetsController* m_asset_cont;
-    QStringListModel* m_invest_model;
+    InvestsController* m_invest_cont;
     GeneralUtils* m_utils;
     enum AssetColumns {
         SYMBOL = 0,
@@ -56,6 +56,9 @@ public:
      */
     void loadBtns();
 
+    /**
+     * @brief Perform ui changes once an asset data is changed
+     */
     void onAssetUpdate();
 
     /**
@@ -64,9 +67,9 @@ public:
     void loadAssets();
 
     /**
-     * @brief Updates asset stats in view
+     * @brief Update page stats
      */
-    void updateAsset(QString symbol, double currPrice, double d, double dp, int type);
+    void onUpdateStats(double pvalue, double dchange, double invests);
 
     /**
      * @brief Adds an investment to the item list
@@ -74,14 +77,9 @@ public:
     void onInvestCreate(double amount);
 
     /**
-     * @brief Loads up existing investments to the item list
+     * @brief Loads total sum of investments to ui
      */
-    void loadInvests();
-
-    /**
-     * @brief Update page stats
-     */
-    void updateStats(double pvalue, double dchange, double invests);
+    void loadTotalInvests();
 
 signals:
     void switchPage(int index);

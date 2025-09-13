@@ -6,21 +6,20 @@ AssetPage::AssetPage(QWidget *parent) :
         m_ui(new Ui::AssetPage),
         m_logger(DebugUtils::getInstance()),
         m_asset_cont(AssetsController::getInstance()),
+        m_invest_cont(InvestsController::getInstance()),
         m_utils(GeneralUtils::getInstance()) {
     m_logger.debugLog("AssetPage: Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
-    // Setup assets model
+    // Setup models
     m_asset_cont->setupAssetTable(m_asset_cont->getStockTable(), m_ui->stocksView);
     m_asset_cont->setupAssetTable(m_asset_cont->getCryptoTable(), m_ui->cryptoView);
-
-    m_invest_model = new QStringListModel(this);
-    m_ui->investsView->setModel(m_invest_model);
+    m_ui->investsView->setModel(m_invest_cont->getInstance()->getList());
 
     // Load functions and styles
     loadBtns();
     loadStyles(PAGE_UI);
-    loadInvests();
+    loadTotalInvests();
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
@@ -29,7 +28,8 @@ AssetPage::AssetPage(QWidget *parent) :
     m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
 
     connect(m_asset_cont, &AssetsController::updatedAsset, this, &AssetPage::onAssetUpdate);
-    connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::updateStats);
+    connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::onUpdateStats);
+    connect(m_invest_cont, &InvestsController::investCreated, this, &AssetPage::onInvestCreate);
 
     // Start dynamically updating data
     m_asset_cont->enableLiveUpdates(6000);
@@ -83,7 +83,6 @@ void AssetPage::loadBtns() {
     // Add investment button
     connect(m_ui->addInvest_btn, &QPushButton::clicked, this, [this] {
         CreateInvestDialog dialog(this);
-        connect(&dialog, &CreateInvestDialog::investCreated, this, &AssetPage::onInvestCreate);
         dialog.exec();
     });
 }
@@ -92,37 +91,7 @@ void AssetPage::onAssetUpdate() {
     // TODO: Add animation
 }
 
-void AssetPage::onInvestCreate(double amount) {
-    QStringList currList = m_invest_model->stringList();
-    double currTot = m_ui->investsNum->text().remove('$').toDouble();
-
-    // Update investment list
-    currList.append(QString::number(amount) + "$");
-    m_invest_model->setStringList(currList);
-    m_ui->investsNum->setText(QString::number(currTot + amount) + "$");
-
-    m_logger.debugLog("AssetPage: Added investment to list", "VIEW", "INFO");
-}
-
-void AssetPage::loadInvests() {
-    double sumInv = 0;
-    m_ui->investsNum->setText("0");
-    QJsonArray data = InvestsController::getInstance().getInvestments();
-    QStringList curr = m_invest_model->stringList();
-
-    // Add each investment made
-    for (int i = 0; i < data.size(); i++) {
-        QJsonObject item = data[i].toObject();
-        curr.append(QString::number(item["amount"].toDouble()) + "$");
-        sumInv += item["amount"].toDouble();
-    }
-
-    m_ui->investsNum->setText(QString::number(sumInv) + "$");
-    m_invest_model->setStringList(curr);
-    m_logger.debugLog("AssetPage: Loaded previous investments", "VIEW", "INFO");
-}
-
-void AssetPage::updateStats(double pvalue, double dchange, double invests) {
+void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
     m_ui->valueNum->setText(m_utils->formatNumberWithCommas(pvalue, 2) + " $");
     m_ui->balanceNum->setText(m_utils->formatNumberWithCommas(pvalue - invests, 2) + " $");
     m_ui->changeNum->setText(m_utils->formatNumberWithCommas(dchange, 2) + " $");
@@ -136,4 +105,14 @@ void AssetPage::updateStats(double pvalue, double dchange, double invests) {
 
     color = (pvalue - invests > 0) ? "#00be6f;" : "#a83420ff;";
     m_ui->changeNum->setStyleSheet("color: " + color);
+}
+
+void AssetPage::onInvestCreate(double amount) {
+    double currTot = m_ui->investsNum->text().remove('$').toDouble();
+    m_ui->investsNum->setText(QString::number(currTot + amount) + "$");
+    m_logger.debugLog("AssetPage: Updated total sum of investments", "VIEW", "INFO");
+}
+
+void AssetPage::loadTotalInvests() {
+    m_ui->investsNum->setText(QString::number(m_invest_cont->getSum()) + " $");
 }

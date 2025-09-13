@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QStringListModel>
 #include <string>
 #include "InvestModel.hpp"
 #include "DebugUtils.hpp"
@@ -11,6 +12,7 @@ class InvestsController : public QObject {
 private:
     InvestModel& m_model;
     DebugUtils& m_logger;
+    QStringListModel* m_investList;
 
     /**
      * @brief Constructor for InvestsController
@@ -19,7 +21,7 @@ private:
 
 public:
 
-    static InvestsController& getInstance();
+    static InvestsController* getInstance();
 
     /**
      * @brief Adds an investment.
@@ -32,11 +34,24 @@ public:
     QJsonArray getInvestments();
 
     /**
+     * @brief Returns the model list
+     */
+    QStringListModel* getList();
+
+    /**
      * @brief Return sum of all investments
      */
     double getSum();
 
+    /**
+     * @brief Loads up existing investments to the item list
+     */
+    void loadInvests();
+
     InvestsController(const InvestsController&) = delete;
     
     InvestsController& operator=(const InvestsController&) = delete;
+
+signals:
+    void investCreated(double amount);
 };
