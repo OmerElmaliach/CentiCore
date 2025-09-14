@@ -38,7 +38,4 @@ public:
      * @brief Handles expense creation upon accept.
      */
     void accept() override;
-
-signals:
-    void investCreated(double amount);
 };

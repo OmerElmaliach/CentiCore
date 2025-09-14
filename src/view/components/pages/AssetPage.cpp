@@ -106,5 +106,5 @@ void AssetPage::onInvestCreate(double amount) {
 }
 
 void AssetPage::loadTotalInvests() {
-    m_ui->investsNum->setText(QString::number(m_invest_cont->getSum()) + " $");
+    m_ui->investsNum->setText(QString::number(m_invest_cont->getTotal()) + " $");
 }

@@ -39,9 +39,9 @@ public:
     QStringListModel* getList();
 
     /**
-     * @brief Return sum of all investments
+     * @brief Return total of all investments
      */
-    double getSum();
+    double getTotal();
 
     /**
      * @brief Loads up existing investments to the item list

@@ -32,7 +32,7 @@ QStringListModel* InvestsController::getList() {
     return m_investList;
 }
 
-double InvestsController::getSum() {
+double InvestsController::getTotal() {
     double sum = 0;
     QJsonArray data = m_model.getInvestments();
     for (QJsonValue item : data) {

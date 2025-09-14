@@ -43,10 +43,9 @@ void CreateExpenseDialog::accept() {
         return;
     }
 
-    bool wasAdded = ExpensesController::getInstance().add(category, amount.toDouble(), QDateTime().currentDateTime().toString("dd"));
-
-    if (wasAdded) {
-        emit expenseCreated(category, amount); 
+    bool wasAdded = ExpensesController::getInstance()->add(category, amount.toDouble(), QDateTime().currentDateTime().toString("dd"));
+    if (!wasAdded) {
+        m_logger.debugLog("CreateExpenseDialog: Failed to create new expense: " + category.toStdString(), "VIEW", "WARN");
     }
 
     QDialog::accept();
