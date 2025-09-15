@@ -10,7 +10,7 @@ InvestModel::InvestModel() : m_logger(DebugUtils::getInstance()) {
     m_dataFile.setFileName(dataPath + "Investments.json");
     if (m_dataFile.exists()) {
         if (!m_dataFile.open(QIODevice::ReadOnly | QIODevice::Text))
-            m_logger.debugLog("Failed to open investment file", "MODEL", "ERR");
+            m_logger.debugLog("InvestModel: Failed to open investment file", "MODEL", "ERR");
         
         // Extract available data from the json file.
         m_data = QJsonDocument().fromJson(m_dataFile.readAll()).array();
@@ -23,9 +23,9 @@ InvestModel& InvestModel::getInstance() {
     return instance;
 }
 
-bool InvestModel::add(double amount, QString date) {
+bool InvestModel::add(double amount, const QString& date) {
     char buff[LOG_MSG_LENGTH];
-    sprintf(buff, "Appending new investment, amount: %.2f", amount);
+    sprintf(buff, "InvestModel: Appending new investment, amount: %.2f", amount);
     m_logger.debugLog(buff, "MODEL", "INFO");
 
     // Create new investment and append to array data
@@ -35,7 +35,7 @@ bool InvestModel::add(double amount, QString date) {
     m_data.append(jsonInv);
 
     if (!m_dataFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
-        m_logger.debugLog("Failed to open investment file", "MODEL", "ERR");
+        m_logger.debugLog("InvestModel: Failed to open investment file", "MODEL", "ERR");
         return false;
     }
     

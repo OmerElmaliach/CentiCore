@@ -2,33 +2,19 @@
 #include "../../ui/ui_create_asset.h"
 
 CreateAssetDialog::CreateAssetDialog(int type, QWidget *parent) :
-        m_type(type),
         QDialog(parent),
         m_ui(new Ui::CreateAssetDialog),
-        m_logger(DebugUtils::getInstance()) {
-    m_logger.debugLog("Creating QDialog Asset...", "VIEW", "INFO");
+        m_logger(DebugUtils::getInstance()), 
+        m_type(type) {
+    m_logger.debugLog("CreateAssetDialog: Creating QDialog Asset...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    loadStyles(DIALOG_UI);
+    GeneralUtils::getInstance()->loadStyles(this, DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);
     connect(m_ui->createBtn, &QPushButton::clicked, this, &QDialog::accept);
     connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
-}
-
-CreateAssetDialog::~CreateAssetDialog() {
-    delete m_ui;
-}
-
-void CreateAssetDialog::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);  
-    if (styleFile.open(QFile::ReadOnly)) {
-        setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        m_logger.debugLog("Failed to load style file for Asset Dialog", "VIEW", "ERR");
-    }
 }
 
 void CreateAssetDialog::accept() {
@@ -39,16 +25,14 @@ void CreateAssetDialog::accept() {
 
     // Check if fields are invalid
     if (symbol.isEmpty() || !isNumber) {
-        m_logger.debugLog("Fields do not meet the requirements", "VIEW", "WARN");
+        m_logger.debugLog("CreateAssetDialog: Fields do not meet the requirements", "VIEW", "WARN");
         QDialog::accept();
         return;
     }
 
-    bool wasAdded = AssetsController::getInstance().add(symbol.toStdString(), quant.toDouble(), 0, m_type);
-
-    if (wasAdded) {
-        emit assetCreated(symbol, quant, m_type); 
-    }
+    bool wasAdded = AssetsController::getInstance()->add(symbol, quant.toDouble(), m_type);
+    if (!wasAdded)
+        m_logger.debugLog("CreateAssetDialog: Failed to create new asset: " + symbol.toStdString(), "VIEW", "WARN");
 
     QDialog::accept();
 }

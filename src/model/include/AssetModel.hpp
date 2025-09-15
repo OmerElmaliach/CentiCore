@@ -8,7 +8,6 @@
 #include <QJsonObject>
 #include <QDateTime>
 #include <string>
-#include "Asset.hpp"
 #include "DebugUtils.hpp"
 #define LOG_MSG_LENGTH 256
 using namespace std;
@@ -34,17 +33,27 @@ public:
     /**
      * @brief Adds an asset to the db.
      */
-    bool add(Asset st);
+    bool add(const QString& symbol, double quantity, double currPrice, const QString& lastUpdated, int type);
 
     /**
-     * @brief removes an asset from the db.
+     * @brief Removes an asset from the db.
      */
-    bool remove(string symbol, double shares, int idx);
+    bool remove(const QString& symbol, double quantity, int idx);
+
+    /**
+     * @brief Updates the current price of an asset
+     */
+    bool update(const QString& symbol, double currPrice);
 
     /**
      * @brief Finds and returns the first index of a given asset.
      */
-    int find(string symbol);
+    int find(const QString& symbol);
+
+    /**
+     * @brief Returns type of asset
+     */
+    int getType(const QString& symbol);
 
     /**
      * @brief Returns an array of current monthly assets.

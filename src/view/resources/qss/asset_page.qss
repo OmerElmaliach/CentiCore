@@ -135,22 +135,29 @@ QLabel {
     background-position: center;
     background-repeat: no-repeat;
     background-color: transparent;
-}
-
-#valueWidget,
-#balanceWidget,
-#changeWidget {
-    font-size: 16px;
+    font-size: 20px;
     color: white;
 }
 
-#valueWidget,
-#balanceWidget,
-#changeWidget {
-    color: #00be6f;
+#valueText,
+#balanceText,
+#changeText {
+    color: #b0b0b0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+#valueNum,
+#balanceNum,
+#changeNum {
     font-family: "Consolas", "Courier New", monospace;
     font-size: 20px;
     font-weight: bold;
+    letter-spacing: 0.5px;
 }
 
 /* --> Asset Tables <-- */

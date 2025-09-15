@@ -4,14 +4,24 @@
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 #include "AssetsController.hpp"
+#include "GeneralUtils.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CreateAssetDialog; }
 QT_END_NAMESPACE
 
+/**
+ * @class CreateAssetDialog
+ * @brief Modal dialog for creating new assets within the application.
+ * 
+ * CreateAssetDialog provides a user interface for creating different types of assets
+ * based on the specified asset type. The dialog includes validation, error handling,
+ * and integrates with the application's asset management system. It features custom
+ * styling through QSS and supports window dragging functionality.
+ */
 class CreateAssetDialog : public QDialog {
     Q_OBJECT
-
+    
 private:
     const char* DIALOG_UI = ":/styles/qss/dialog_box.qss";
     Ui::CreateAssetDialog *m_ui;
@@ -20,25 +30,27 @@ private:
 
 public:
     /**
-     * @brief Constructor function for qdialog.
+     * @brief Constructs a new asset creation dialog.
+     * 
+     * Initializes the dialog for creating assets of the specified type.
+     * Sets up the user interface, applies custom styling, configures
+     * window properties, and establishes necessary connections.
+     * 
+     * @param type Integer specifying the asset type to create. Different
+     *             values determine dialog behavior and available options.
+     * @param parent Optional parent widget for proper dialog positioning
+     *               and memory management. Defaults to nullptr for
+     *               application-level modal behavior.
      */
-    explicit CreateAssetDialog(int type, QWidget *parent = nullptr);
-
+    CreateAssetDialog(int type, QWidget *parent = nullptr);
+    
     /**
-     * @brief Deconstructor function for qdialog.
-     */
-    ~CreateAssetDialog();
-
-    /**
-     * @brief Loads the qss into the ui file.
-     */
-    void loadStyles(const char* stylePath);
-
-    /**
-     * @brief Handles asset creation upon accept.
+     * @brief Handles dialog acceptance and initiates asset creation.
+     * 
+     * Overrides QDialog::accept() to perform custom validation and asset
+     * creation logic before closing the dialog. Validates user input,
+     * creates the asset through AssetsController, handles errors, and
+     * provides appropriate user feedback.
      */
     void accept() override;
-
-signals:
-    void assetCreated(const QString symbol, QString shares, int type);
 };

@@ -1,72 +1,99 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QStandardItemModel>
 #include <QStringListModel>
+#include <QTableView>
+#include "GeneralUtils.hpp"
 #include "CreateAssetDialog.hpp"
 #include "CreateInvestDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 #include "InvestsController.hpp"
+#include "AssetsController.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class AssetPage; }
 QT_END_NAMESPACE
 
+/**
+ * @brief Asset management page for stocks and cryptocurrencies
+ * 
+ * This class provides a comprehensive interface for managing user assets including
+ * stocks, cryptocurrencies, and investments with real-time price updates and
+ * portfolio statistics visualization.
+ */
 class AssetPage : public QMainWindow {
     Q_OBJECT
 
 private:
-    const char* PAGE_UI = ":/styles/qss/asset_page.qss";
     Ui::AssetPage *m_ui;
     DebugUtils& m_logger;
-    QStandardItemModel* m_stock_model;
-    QStandardItemModel* m_crypto_model;
-    QStringListModel *m_invest_model;
+    AssetsController* m_asset_cont;
+    InvestsController* m_invest_cont;
+    GeneralUtils* m_utils;
+    
+    static const int LIVE_UPDATE_INTERVAL;
+    static const QString POSITIVE_COLOR;
+    static const QString NEGATIVE_COLOR;
+    static const QString PAGE_UI;
 
 public:
     /**
-     * @brief Constructor function for asset page
+     * @brief Constructs the asset page with parent widget
+     * @param parent Parent widget, used for proper Qt ownership hierarchy (default: nullptr)
      */
     explicit AssetPage(QWidget *parent = nullptr);
-
+    
     /**
-     * @brief Deconstructor function for asset page
+     * @brief Destructor - cleans up UI resources and stops live data updates
      */
     ~AssetPage();
 
     /**
-     * @brief Loads the qss into the ui file
+     * @brief Initializes and connects all UI signals to their respective slots
+     * @details Sets up window controls, navigation buttons, dialog connections, and controller signals
      */
-    void loadStyles(const char* stylePath);
-
+    void setupConnections();
+    
     /**
-     * @brief Define and load buttons functionality
-     */
-    void loadBtns();
-
-    /**
-     * @brief Adds an asset to the display widget
-     * 
-     * @param type 0 for stock, 1 for crypto
-     */
-    void onAssetCreate(const QString symbol, QString shares, int type);
-
-    /**
-     * @brief Loads up existing assets to the item widget
+     * @brief Loads existing assets from persistent storage into the UI tables
+     * @details Populates both stock and cryptocurrency tables with saved user assets
      */
     void loadAssets();
-
+    
     /**
-     * @brief Adds an investment to the item list
+     * @brief Loads and displays the total sum of all investments
+     * @details Updates the investment total display from the InvestsController
+     */
+    void loadTotalInvests();
+
+public slots:
+    /**
+     * @brief Handles real-time asset data updates from the controller
+     * @details Performs UI animations and visual feedback when asset prices change
+     */
+    void onAssetUpdate();
+    
+    /**
+     * @brief Updates the portfolio statistics display with current values
+     * @param pvalue Total portfolio value in USD
+     * @param dchange Daily change amount in USD (can be negative)
+     * @param invests Total amount of investments made in USD
+     * @details Updates portfolio value, balance, and daily change with appropriate color coding
+     */
+    void onUpdateStats(double pvalue, double dchange, double invests);
+    
+    /**
+     * @brief Handles the creation of a new investment entry
+     * @param amount Investment amount in USD to add to the portfolio
+     * @details Updates the total investment display and refreshes the investment list
      */
     void onInvestCreate(double amount);
 
-    /**
-     * @brief Loads up existing investments to the item list
-     */
-    void loadInvests();
-
 signals:
+    /**
+     * @brief Emitted when user requests navigation to a different page
+     * @param index Target page index in the main application stack (0 = dashboard)
+     */
     void switchPage(int index);
 };
