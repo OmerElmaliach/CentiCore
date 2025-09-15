@@ -32,17 +32,17 @@ public:
     /**
      * @brief Adds an expense to the db.
      */
-    bool add(QString category, double amount, QString date);
+    bool add(const QString& category, double amount, const QString& date);
 
     /**
      * @brief removes an expense from the db.
      */
-    bool remove(QString category, QString date, int idx);
+    bool remove(const QString& category, const QString& date, int idx);
 
     /**
      * @brief Finds and returns the first index of a given expense.
      */
-    int find(QString category, QString date);
+    int find(const QString& category, const QString& date);
 
     /**
      * @brief Returns an array of current monthly expenses.

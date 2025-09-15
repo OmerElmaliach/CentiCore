@@ -23,7 +23,7 @@ ExpenseModel& ExpenseModel::getInstance() {
     return instance;
 }
 
-bool ExpenseModel::add(QString category, double amount, QString date) {
+bool ExpenseModel::add(const QString& category, double amount, const QString& date) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "ExpenseModel: Appending new expense: %s, amount: %.2f", category.toStdString().c_str(), amount);
     m_logger.debugLog(buff, "MODEL", "INFO");
@@ -47,7 +47,7 @@ bool ExpenseModel::add(QString category, double amount, QString date) {
     return true;
 }
 
-bool ExpenseModel::remove(QString category, QString date, int idx) {
+bool ExpenseModel::remove(const QString& category, const QString& date, int idx) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "ExpenseModel: Removing expense: name: %s, date: %s", date.toStdString().c_str(), category.toStdString().c_str());
     m_logger.debugLog(buff, "MODEL", "INFO");
@@ -65,7 +65,7 @@ bool ExpenseModel::remove(QString category, QString date, int idx) {
     return true;
 }
 
-int ExpenseModel::find(QString category, QString date) {
+int ExpenseModel::find(const QString& category, const QString& date) {
     // Loop and find the expense index.
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();

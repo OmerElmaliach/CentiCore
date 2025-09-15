@@ -9,26 +9,12 @@ CreateInvestDialog::CreateInvestDialog(QWidget *parent) :
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     m_ui->dateInput->setDate(QDate::currentDate());
-    loadStyles(DIALOG_UI);
+    GeneralUtils::getInstance()->loadStyles(this, DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);
     connect(m_ui->createBtn, &QPushButton::clicked, this, &QDialog::accept);
     connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
-}
-
-CreateInvestDialog::~CreateInvestDialog() {
-    delete m_ui;
-}
-
-void CreateInvestDialog::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);  
-    if (styleFile.open(QFile::ReadOnly)) {
-        setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        m_logger.debugLog("CreateInvestDialog: Failed to load style file for Expense Dialog", "VIEW", "ERR");
-    }
 }
 
 void CreateInvestDialog::accept() {
@@ -45,9 +31,8 @@ void CreateInvestDialog::accept() {
     }
 
     bool wasAdded = InvestsController::getInstance()->add(amount.toDouble(), m_ui->dateInput->dateTime().toString("dd/MM/yy"));
-    if (!wasAdded) {
+    if (!wasAdded)
         m_logger.debugLog("CreateInvestDialog: Failed to add investment", "VIEW", "WARN");
-    }
 
     QDialog::accept();
 }

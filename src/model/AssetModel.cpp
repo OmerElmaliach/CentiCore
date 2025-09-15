@@ -23,7 +23,7 @@ AssetModel& AssetModel::getInstance() {
     return instance;
 }
 
-bool AssetModel::add(QString symbol, double quantity, double currPrice, QString lastUpdated, int type) {
+bool AssetModel::add(const QString& symbol, double quantity, double currPrice, const QString& lastUpdated, int type) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "AssetModel: Appending new asset: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
@@ -57,7 +57,7 @@ bool AssetModel::add(QString symbol, double quantity, double currPrice, QString 
     return true;
 }
 
-bool AssetModel::remove(QString symbol, double quantity, int idx) {
+bool AssetModel::remove(const QString& symbol, double quantity, int idx) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "AssetModel: Removing asset: name: %s, amount: %.2f", symbol.toStdString().c_str(), quantity);
     m_logger.debugLog(buff, "MODEL", "INFO");
@@ -83,7 +83,7 @@ bool AssetModel::remove(QString symbol, double quantity, int idx) {
     return true;
 }
 
-bool AssetModel::update(QString symbol, double currPrice) {
+bool AssetModel::update(const QString& symbol, double currPrice) {
     int idx = find(symbol);
     if (idx == -1) {
         m_logger.debugLog("AssetModel: Unable to find symbol: " + symbol.toStdString(), "MODEL", "ERR");
@@ -106,7 +106,7 @@ bool AssetModel::update(QString symbol, double currPrice) {
     return true;
 }
 
-int AssetModel::find(QString symbol) {
+int AssetModel::find(const QString& symbol) {
     // Loop and find the asset index
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();
@@ -121,7 +121,7 @@ QJsonArray AssetModel::getAssets() {
     return m_data;
 }
 
-int AssetModel::getType(QString symbol) {
+int AssetModel::getType(const QString& symbol) {
     for (int i = 0; i < m_data.size(); i++) {
         QJsonObject item = m_data[i].toObject();
         if (item["symbol"].toString() == symbol)

@@ -64,7 +64,7 @@ public:
      * The removal affects both persistent storage and the UI display model.
      * 
      * @param category The category of the expense to remove
-     * @param amount The amount of the expense to remove (used for verification)
+     * @param amount The amount of the expense to remove
      * @param date The date of the expense to remove
      */
     bool remove(const QString& category, double amount, const QString& date);

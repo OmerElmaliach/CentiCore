@@ -33,27 +33,27 @@ public:
     /**
      * @brief Adds an asset to the db.
      */
-    bool add(QString symbol, double quantity, double currPrice, QString lastUpdated, int type);
+    bool add(const QString& symbol, double quantity, double currPrice, const QString& lastUpdated, int type);
 
     /**
      * @brief Removes an asset from the db.
      */
-    bool remove(QString symbol, double quantity, int idx);
+    bool remove(const QString& symbol, double quantity, int idx);
 
     /**
      * @brief Updates the current price of an asset
      */
-    bool update(QString symbol, double currPrice);
+    bool update(const QString& symbol, double currPrice);
 
     /**
      * @brief Finds and returns the first index of a given asset.
      */
-    int find(QString symbol);
+    int find(const QString& symbol);
 
     /**
      * @brief Returns type of asset
      */
-    int getType(QString symbol);
+    int getType(const QString& symbol);
 
     /**
      * @brief Returns an array of current monthly assets.

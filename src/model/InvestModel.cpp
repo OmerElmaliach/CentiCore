@@ -23,7 +23,7 @@ InvestModel& InvestModel::getInstance() {
     return instance;
 }
 
-bool InvestModel::add(double amount, QString date) {
+bool InvestModel::add(double amount, const QString& date) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "InvestModel: Appending new investment, amount: %.2f", amount);
     m_logger.debugLog(buff, "MODEL", "INFO");

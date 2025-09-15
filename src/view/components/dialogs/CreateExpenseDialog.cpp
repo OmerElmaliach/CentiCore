@@ -8,26 +8,12 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
     m_logger.debugLog("CreateExpenseDialog: Creating QDialog Expense...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    loadStyles(DIALOG_UI);
+    GeneralUtils::getInstance()->loadStyles(this, DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);
     connect(m_ui->createBtn, &QPushButton::clicked, this, &QDialog::accept);
     connect(m_ui->cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
-}
-
-CreateExpenseDialog::~CreateExpenseDialog() {
-    delete m_ui;
-}
-
-void CreateExpenseDialog::loadStyles(const char* stylePath) {
-    QFile styleFile(stylePath);  
-    if (styleFile.open(QFile::ReadOnly)) {
-        setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        m_logger.debugLog("CreateExpenseDialog: Failed to load style file for Expense Dialog", "VIEW", "ERR");
-    }
 }
 
 void CreateExpenseDialog::accept() {
@@ -44,9 +30,8 @@ void CreateExpenseDialog::accept() {
     }
 
     bool wasAdded = ExpensesController::getInstance()->add(category, amount.toDouble(), QDateTime().currentDateTime().toString("dd"));
-    if (!wasAdded) {
+    if (!wasAdded)
         m_logger.debugLog("CreateExpenseDialog: Failed to create new expense: " + category.toStdString(), "VIEW", "WARN");
-    }
 
     QDialog::accept();
 }
