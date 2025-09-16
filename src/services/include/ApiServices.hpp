@@ -5,8 +5,8 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QSettings>
 #include "DebugUtils.hpp"
+#include "EnvLoader.hpp"
 
 class ApiServices : public QObject {
     Q_OBJECT

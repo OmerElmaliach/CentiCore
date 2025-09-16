@@ -18,6 +18,7 @@ AssetsController::AssetsController() :
 void AssetsController::setupConnections() {
     // Data received from API
     connect(&m_api, &ApiServices::assetDataReceived, this, [this](const QString& symbol, const QJsonDocument& data) {
+        QString newSym = symbol.contains(':') ? symbol.section(':', 1, 1) : symbol;
         int type = getType(symbol);
         if (type != -1) {
             // Update model
@@ -25,7 +26,7 @@ void AssetsController::setupConnections() {
                 m_logger.debugLog("AssetsController: Failed to update asset: " + symbol.toStdString(), "CONTROLLER", "ERR");
             
             // Update view
-            updateTable(symbol, data["c"].toDouble(), data["d"].toDouble(), data["dp"].toDouble(), type);
+            updateTable(newSym, data["c"].toDouble(), data["d"].toDouble(), data["dp"].toDouble(), type);
         } else {
             m_logger.debugLog("AssetsController: Unable to determine type: " + symbol.toStdString(), "CONTROLLER", "ERR");
         }
@@ -65,7 +66,7 @@ bool AssetsController::add(const QString& symbol, double quantity, int type) {
 
     int currRow = tableModel->rowCount();
     tableModel->insertRow(currRow);
-    tableModel->setItem(currRow, SYMBOL, new QStandardItem(symbol));
+    tableModel->setItem(currRow, SYMBOL, new QStandardItem(newSym));
     tableModel->setItem(currRow, QUANTITY, new QStandardItem(m_utils->formatNumberWithCommas(quantity, 2)));
     tableModel->setItem(currRow, PRICE, new QStandardItem("Loading..."));
     tableModel->setItem(currRow, DAILY_CHANGE_PERCENT, new QStandardItem("Loading..."));

@@ -50,7 +50,7 @@
       <x>30</x>
       <y>80</y>
       <width>201</width>
-      <height>571</height>
+      <height>601</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -206,8 +206,18 @@
       <height>291</height>
      </rect>
     </property>
+    <widget class="QGraphicsView" name="graph">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>671</width>
+       <height>251</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="numsWidget" native="true">
+   <widget class="QWidget" name="statsWidget" native="true">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -216,7 +226,7 @@
       <height>101</height>
      </rect>
     </property>
-    <widget class="QWidget" name="investWidget" native="true">
+    <widget class="QWidget" name="balanceWidget" native="true">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -225,7 +235,7 @@
        <height>101</height>
       </rect>
      </property>
-     <widget class="QLabel" name="investedNum">
+     <widget class="QLabel" name="balanceNum">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -241,17 +251,17 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="investedText">
+     <widget class="QLabel" name="balanceText">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>40</x>
         <y>10</y>
-        <width>131</width>
+        <width>151</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Invested</string>
+       <string>Monthly Balance</string>
       </property>
       <property name="scaledContents">
        <bool>false</bool>
@@ -261,7 +271,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="gainedWidget" native="true">
+    <widget class="QWidget" name="cashWidget" native="true">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -270,23 +280,23 @@
        <height>101</height>
       </rect>
      </property>
-     <widget class="QLabel" name="gainedText">
+     <widget class="QLabel" name="cashText">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>40</x>
         <y>10</y>
-        <width>131</width>
+        <width>151</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string>Gained</string>
+       <string>Available Cash</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="gainedNum">
+     <widget class="QLabel" name="cashNum">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -331,9 +341,9 @@
      <widget class="QLabel" name="networthText">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>40</x>
         <y>10</y>
-        <width>131</width>
+        <width>151</width>
         <height>31</height>
        </rect>
       </property>
@@ -355,7 +365,7 @@
       <x>1020</x>
       <y>80</y>
       <width>231</width>
-      <height>571</height>
+      <height>601</height>
      </rect>
     </property>
     <widget class="QLabel" name="expensesLabel">
@@ -377,8 +387,8 @@
     <widget class="QLabel" name="totExpStr">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>530</y>
+       <x>20</x>
+       <y>560</y>
        <width>111</width>
        <height>41</height>
       </rect>
@@ -393,9 +403,9 @@
     <widget class="QLabel" name="totExpNum">
      <property name="geometry">
       <rect>
-       <x>130</x>
-       <y>530</y>
-       <width>101</width>
+       <x>150</x>
+       <y>560</y>
+       <width>81</width>
        <height>41</height>
       </rect>
      </property>
@@ -435,7 +445,7 @@
        <x>0</x>
        <y>50</y>
        <width>231</width>
-       <height>481</height>
+       <height>511</height>
       </rect>
      </property>
      <property name="editTriggers">
@@ -449,7 +459,7 @@
       <x>270</x>
       <y>510</y>
       <width>711</width>
-      <height>141</height>
+      <height>171</height>
      </rect>
     </property>
    </widget>

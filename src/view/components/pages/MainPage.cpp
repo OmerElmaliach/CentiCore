@@ -18,6 +18,7 @@ MainPage::MainPage(QWidget *parent) :
     if (!m_utils->loadStyles(this, PAGE_UI))
         m_logger.debugLog("MainPage: Failed to load style file main_page.ui", "VIEW", "ERR");
     m_expense_cont->loadExpenses();
+    // m_ui->topbarWidget->setStyleSheet(":/qss/qss/dialog_box.qss");
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);

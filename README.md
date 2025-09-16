@@ -1,3 +1,3 @@
 # CentiCore
 
-REQUIRES AN app.conf FILE TO USE
+REQUIRES AN app.env FILE TO USE

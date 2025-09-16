@@ -17,6 +17,7 @@
  </qresource>
 
  <qresource prefix="/config">
+    <file>config/app.env</file>
     <file>config/app.conf</file>
  </qresource>
 </RCC>

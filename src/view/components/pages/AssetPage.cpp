@@ -100,8 +100,7 @@ void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
 }
 
 void AssetPage::onInvestCreate(double amount) {
-    double currTot = m_ui->investsNum->text().remove('$').toDouble();
-    m_ui->investsNum->setText(QString::number(currTot + amount) + " $");
+    m_ui->investsNum->setText(QString::number(m_ui->investsNum->text().remove('$').toDouble() + amount) + " $");
     m_logger.debugLog("AssetPage: Updated total sum of investments", "VIEW", "INFO");
 }
 

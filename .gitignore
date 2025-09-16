@@ -4,4 +4,4 @@ data/
 
 # Config
 build/
-app.conf
+app.env

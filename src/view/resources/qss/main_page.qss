@@ -59,8 +59,8 @@ QPushButton {
 }
 
 /* --> Statistic Widget <-- */
-#gainedWidget,
-#investWidget,
+#cashWidget,
+#balanceWidget,
 #networthWidget {
     border-radius: 4px;
     border: 1px solid #414141;
@@ -70,15 +70,15 @@ QPushButton {
     background-color: transparent;
 }
 
-#gainedText,
-#investedText,
+#cashText,
+#balanceText,
 #networthText {
     font-size: 16px;
     color: white;
 }
 
-#gainedNum,
-#investedNum,
+#cashNum,
+#balanceNum,
 #networthNum {
     color: #00be6f;
     font-family: "Consolas", "Courier New", monospace;
