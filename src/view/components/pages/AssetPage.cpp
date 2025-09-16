@@ -2,8 +2,8 @@
 #include "../../ui/ui_asset_page.h"
 
 constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 6000;
-const QString AssetPage::POSITIVE_COLOR = "#00be6f";
-const QString AssetPage::NEGATIVE_COLOR = "#a83420ff";
+const QString AssetPage::POSITIVE_COLOR = "#28a745";
+const QString AssetPage::NEGATIVE_COLOR = "#dc3545";
 const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";
 const QString AssetPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
 const QString AssetPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";

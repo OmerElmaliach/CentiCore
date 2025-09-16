@@ -2,6 +2,8 @@
 #include "../../ui/ui_main_page.h"
 
 const int MainPage::STOCKS_PAGE = 1;
+const QString MainPage::POSITIVE_COLOR = "#28a745";
+const QString MainPage::NEGATIVE_COLOR = "#dc3545";
 const QString MainPage::PAGE_UI = ":/styles/qss/main_page.qss";
 const QString MainPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
 const QString MainPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
@@ -27,7 +29,12 @@ MainPage::MainPage(QWidget *parent) :
     if (!m_utils->loadStyles(m_ui->pageWidget, PAGES_WIDGET_UI))
         m_logger.debugLog("MainPage: Failed to load style for pages widget", "VIEW", "ERR");
     
+    // Load page stats and expenses
     m_expense_cont->loadExpenses();
+    EnvLoader env;
+    m_ui->cashNum->setText(m_utils->formatNumberWithCommas(env.getValue("AVAILABLE_CASH").toDouble(), 2) + " $");
+    m_ui->cashNum->setStyleSheet("color: " + POSITIVE_COLOR);
+    m_ui->networthNum->setText("Loading...");
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
@@ -63,6 +70,7 @@ void MainPage::setupConnections() {
 
     connect(m_expense_cont, &ExpensesController::expenseCreated, this, &MainPage::onExpenseCreate);
     connect(m_expense_cont, &ExpensesController::expensesLoaded, this, &MainPage::onLoadExpenses);
+    connect(AssetsController::getInstance(), &AssetsController::updatedStats, this, &MainPage::onUpdateStats);
 }
 
 void MainPage::onExpenseCreate(const QString category, double amount) {
@@ -73,5 +81,19 @@ void MainPage::onExpenseCreate(const QString category, double amount) {
 
 void MainPage::onLoadExpenses(double totalExp) {
     m_ui->totExpNum->setText(QString::number(totalExp) + " $");
+
+    // Update stats
+    QSettings settings(":/config/config/app.conf", QSettings::IniFormat);
+    settings.beginGroup("Finance");
+    double balance = settings.value("monthly_budget").toDouble() - totalExp;
+    m_ui->balanceNum->setText(((balance >= 0) ? "+ " : "- ") + m_utils->formatNumberWithCommas(abs(balance), 2) + " $");
+    m_ui->balanceNum->setStyleSheet("color: " + ((balance >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+
     m_logger.debugLog("MainPage: Loaded total monthly expenses", "VIEW", "INFO");
+}
+
+void MainPage::onUpdateStats(double pvalue) {
+    double networth = pvalue + m_ui->cashNum->text().remove("$").remove(",").toDouble();
+    m_ui->networthNum->setText(m_utils->formatNumberWithCommas(networth, 2) + " $");
+    m_ui->networthNum->setStyleSheet("color: " + ((networth >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
 }

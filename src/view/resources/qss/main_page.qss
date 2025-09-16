@@ -40,23 +40,17 @@ QPushButton {
 #cashNum,
 #balanceNum,
 #networthNum {
+    color: white;
     font-family: "Consolas", "Courier New", monospace;
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
 
-/* --> Graph <-- */
-#graphWidget {
-    background-color: #1d1d1d;
-    border-radius: 4px;
-    border: 1px solid #292929;
-}
-
 QGraphicsView {
-    background-color: #1e1e1e;
-    border: 1px solid #333333;
-    border-radius: 6px;
+    background-color: #1d1d1d;
+    border: 3px solid #360000;
+    border-radius: 4px;
 }
 
 /* --> Leading Stocks <-- */

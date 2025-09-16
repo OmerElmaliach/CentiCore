@@ -2,12 +2,14 @@
 
 #include <QMainWindow>
 #include <QString>
-#include <memory>
+#include <QSettings>
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
 #include "ExpensesController.hpp"
+#include "AssetsController.hpp"
 #include "GeneralUtils.hpp"
+#include "EnvLoader.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainPage; }
@@ -30,6 +32,8 @@ private:
     ExpensesController* m_expense_cont;
     GeneralUtils* m_utils;
     static const int STOCKS_PAGE;
+    static const QString POSITIVE_COLOR;
+    static const QString NEGATIVE_COLOR;
     static const QString PAGE_UI;
     static const QString TOPBAR_UI;
     static const QString PAGES_WIDGET_UI;
@@ -69,11 +73,24 @@ public slots:
      * 
      * Called when the ExpensesController finishes loading expense data (typically
      * during application startup or when refreshing data). Sets the total expense
-     * display to show the calculated total for the current month.
+     * display to show the calculated total for the current month,
+     * Also updates stats regarding monthly balance.
      * 
      * @param totalExp The calculated total of all expenses for the current period
      */
     void onLoadExpenses(double totalExp);
+
+    /**
+     * @brief Updates the net worth statistics display on the main dashboard.
+     * 
+     * This slot function is called when portfolio statistics need to be refreshed
+     * on the main page interface. It updates the net worth display widget with
+     * the current total portfolio value, typically triggered by asset price updates.
+     * 
+     * @param pvalue The current total portfolio value in the base currency.
+     *               Represents the sum of all asset values at current market.
+     */
+    void onUpdateStats(double pvalue);
 
 signals:
     /**
