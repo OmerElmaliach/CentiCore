@@ -29,8 +29,10 @@ private:
     DebugUtils& m_logger;
     ExpensesController* m_expense_cont;
     GeneralUtils* m_utils;
-    static constexpr int STOCKS_PAGE = 1;
-    static constexpr const char* PAGE_UI = ":/styles/qss/main_page.qss";
+    static const int STOCKS_PAGE;
+    static const QString PAGE_UI;
+    static const QString TOPBAR_UI;
+    static const QString PAGES_WIDGET_UI;
 
     /**
      * @brief Initializes all UI signal-slot connections.

@@ -36,6 +36,8 @@ private:
     static const QString POSITIVE_COLOR;
     static const QString NEGATIVE_COLOR;
     static const QString PAGE_UI;
+    static const QString TOPBAR_UI;
+    static const QString PAGES_WIDGET_UI;
 
 public:
     /**

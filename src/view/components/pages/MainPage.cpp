@@ -1,6 +1,11 @@
 #include "MainPage.hpp"
 #include "../../ui/ui_main_page.h"
 
+const int MainPage::STOCKS_PAGE = 1;
+const QString MainPage::PAGE_UI = ":/styles/qss/main_page.qss";
+const QString MainPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
+const QString MainPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
+
 MainPage::MainPage(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::MainPage),
@@ -17,8 +22,12 @@ MainPage::MainPage(QWidget *parent) :
     setupConnections();
     if (!m_utils->loadStyles(this, PAGE_UI))
         m_logger.debugLog("MainPage: Failed to load style file main_page.ui", "VIEW", "ERR");
+    if (!m_utils->loadStyles(m_ui->topbarWidget, TOPBAR_UI))
+        m_logger.debugLog("MainPage: Failed to load style for topbar", "VIEW", "ERR");
+    if (!m_utils->loadStyles(m_ui->pageWidget, PAGES_WIDGET_UI))
+        m_logger.debugLog("MainPage: Failed to load style for pages widget", "VIEW", "ERR");
+    
     m_expense_cont->loadExpenses();
-    // m_ui->topbarWidget->setStyleSheet(":/qss/qss/dialog_box.qss");
 
     // Load events
     WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);

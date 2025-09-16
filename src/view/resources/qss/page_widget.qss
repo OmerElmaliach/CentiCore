@@ -1,0 +1,18 @@
+/* --> Page Widget <-- */
+#pageWidget {
+    background-color: #333333;
+    border-radius: 4px;
+    border: 1px solid #414141;
+}
+
+#pageWidget QPushButton {
+    background-color: #005186;
+}
+
+#pageWidget QPushButton:hover {
+    background-color: #005b97;
+}
+
+#pageWidget QPushButton:pressed {
+    background-color: #0063a5
+}

@@ -15,53 +15,6 @@ QLabel {
     background-color: #252525;
 }
 
-/* --> Page Widget <-- */
-#pageWidget {
-    background-color: #333333;
-    border-radius: 4px;
-    border: 1px solid #414141;
-}
-
-#pageWidget QPushButton {
-    background-color: #005186;
-}
-
-#pageWidget QPushButton:hover {
-    background-color: #005b97;
-}
-
-#pageWidget QPushButton:pressed {
-    background-color: #0063a5
-}
-
-/* --> Topbar <-- */
-#topbarWidget {
-    background-color: #4b4b4b;
-    border-radius: 4px;
-    border: 1px solid #555555;
-}
-
-#topbarWidget QLabel {
-    color: #ffffff;
-    padding: 6px 12px;
-    border-radius: 6px;
-    letter-spacing: 3px;
-    font: bold 16pt 'Segoe UI';
-}
-
-#exit_btn,
-#minimize_btn {
-    background-color: #4b4b4b;
-}
-
-#exit_btn:hover {
-    background-color: #a00000;
-}
-
-#minimize_btn:hover {
-    background-color: #585858;
-}
-
 /* --> Investments List <-- */
 #investsLabel {
     font-size: 16px;

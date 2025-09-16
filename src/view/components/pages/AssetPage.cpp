@@ -5,6 +5,8 @@ constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 6000;
 const QString AssetPage::POSITIVE_COLOR = "#00be6f";
 const QString AssetPage::NEGATIVE_COLOR = "#a83420ff";
 const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";
+const QString AssetPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
+const QString AssetPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
 
 AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
@@ -24,6 +26,10 @@ AssetPage::AssetPage(QWidget *parent) :
     // Load connections and styles
     if (!m_utils->loadStyles(this, PAGE_UI))
         m_logger.debugLog("AssetPage: Failed to load style file stocks.ui", "VIEW", "ERR");
+    if (!m_utils->loadStyles(m_ui->topbarWidget, TOPBAR_UI))
+        m_logger.debugLog("AssetPage: Failed to load style for topbar", "VIEW", "ERR");
+    if (!m_utils->loadStyles(m_ui->pageWidget, PAGES_WIDGET_UI))
+        m_logger.debugLog("AssetPage: Failed to load style for pages widget", "VIEW", "ERR");
     
     setupConnections();
     loadTotalInvests();
