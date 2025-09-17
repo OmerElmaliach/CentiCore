@@ -47,12 +47,6 @@ QPushButton {
     letter-spacing: 0.5px;
 }
 
-QGraphicsView {
-    background-color: #1d1d1d;
-    border: 3px solid #360000;
-    border-radius: 4px;
-}
-
 /* --> Leading Stocks <-- */
 #leadWidget {
     background-color: #1d1d1d;
@@ -121,4 +115,10 @@ QGraphicsView {
 
 #expensesWidget #addExpense_btn:pressed {
     background-color: #414141;
+}
+
+#graphWidget {
+    background-color: #181818;
+    border-radius: 4px;
+    border: 1px solid #292929;
 }

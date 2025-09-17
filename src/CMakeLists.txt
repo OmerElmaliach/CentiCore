@@ -1,9 +1,9 @@
 # <== Project properties ===>
 cmake_minimum_required(VERSION 3.16)
-project(CentiCore VERSION 0.6.2)
+project(CentiCore VERSION 0.6.3)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network Charts)
 qt_standard_project_setup()
 
 # <== General Setup ===>
@@ -51,7 +51,7 @@ target_include_directories(centicore PRIVATE
     ${PROJECT_SOURCE_DIR}/model/include
     ${PROJECT_SOURCE_DIR}/services/include
 )
-target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets Qt6::Network)
+target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets Qt6::Network Qt6::Charts)
 
 if(WIN32)
     set_target_properties(centicore PROPERTIES WIN32_EXECUTABLE ON)

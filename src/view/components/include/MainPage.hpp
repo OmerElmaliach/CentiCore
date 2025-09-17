@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QSettings>
+#include <QVBoxLayout>
 #include "CreateExpenseDialog.hpp"
 #include "DebugUtils.hpp"
 #include "WindowDragFilter.hpp"
@@ -10,6 +11,7 @@
 #include "AssetsController.hpp"
 #include "GeneralUtils.hpp"
 #include "EnvLoader.hpp"
+#include "ExpenseChart.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainPage; }
@@ -48,6 +50,17 @@ private:
      * - ExpensesController event handling
      */
     void setupConnections();
+
+    /**
+     * @brief Initializes and configures the expense chart.
+     * 
+     * Sets up the chart with:
+     * - Chart title and animation options
+     * - Data series and bar sets representing expenses
+     * - Axes and labels for proper display
+     * - Any additional styling or theme adjustments
+     */
+    void setupChart();
 
 public:
     /**

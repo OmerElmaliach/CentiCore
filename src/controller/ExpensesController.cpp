@@ -61,3 +61,23 @@ void ExpensesController::loadExpenses() {
 QJsonArray ExpensesController::getExpenses() {
     return m_model.getExpenses();
 }
+
+double ExpensesController::getMonth(const QString& year, const QString& month) {
+    double total = 0;
+    QJsonArray monthlyData = m_model.getMonth(year, month);
+    for (QJsonValueRef it : monthlyData) {
+        QJsonObject entry = it.toObject();
+        total += entry["amount"].toDouble();
+    }
+
+    return total;
+}
+
+vector<double> ExpensesController::getYear(const QString& year) {
+    vector<double> vec = {0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0};
+    QLocale locale;
+    for (int i = 0; i < vec.size(); i++)
+        vec[i] = getMonth(year, locale.monthName(i + 1));
+
+    return vec;
+}

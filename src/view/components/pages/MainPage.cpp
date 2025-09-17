@@ -22,6 +22,7 @@ MainPage::MainPage(QWidget *parent) :
 
     // Load functions and styles
     setupConnections();
+    setupChart();
     if (!m_utils->loadStyles(this, PAGE_UI))
         m_logger.debugLog("MainPage: Failed to load style file main_page.ui", "VIEW", "ERR");
     if (!m_utils->loadStyles(m_ui->topbarWidget, TOPBAR_UI))
@@ -41,6 +42,16 @@ MainPage::MainPage(QWidget *parent) :
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("MainPage: UI setup completed", "VIEW", "INFO");
+}
+
+void MainPage::setupChart() {
+    QVBoxLayout *layout = new QVBoxLayout(m_ui->graphWidget);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+
+    ExpenseChart *chart = new ExpenseChart(m_expense_cont->getYear("2025"), this);
+    chart->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    layout->addWidget(chart);
 }
 
 void MainPage::setupConnections() {

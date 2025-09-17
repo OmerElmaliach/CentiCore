@@ -49,6 +49,11 @@ public:
      */
     QJsonArray getExpenses();
 
+    /**
+     * @brief Returns an array of a specific month.
+     */
+    QJsonArray getMonth(const QString& year, const QString& month);
+
     ExpenseModel(const ExpenseModel&) = delete;
     
     ExpenseModel& operator=(const ExpenseModel&) = delete;
