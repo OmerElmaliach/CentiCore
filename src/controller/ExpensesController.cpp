@@ -14,7 +14,7 @@ bool ExpensesController::add(const QString& category, double amount, const QStri
     if (m_model.find(category, date) == -1 && m_model.add(category, amount, date)) {
         // Update expense list
         QStringList currList = m_list->stringList();
-        currList.append(category + " " + QString::number(amount) + " $");
+        currList.append("$" + category + " " + QString::number(amount));
         m_list->setStringList(currList);
 
         // Signal to view
@@ -48,7 +48,7 @@ void ExpensesController::loadExpenses() {
     // Add each monthly expense
     for (int i = 0; i < data.size(); i++) {
         QJsonObject item = data[i].toObject();
-        curr.append(item["category"].toString() + " " + QString::number(item["amount"].toDouble()) + " $");
+        curr.append(item["category"].toString() + " $" + QString::number(item["amount"].toDouble()));
         totalExp += item["amount"].toDouble();
     }
 

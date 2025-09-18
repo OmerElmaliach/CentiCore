@@ -95,9 +95,9 @@ void AssetPage::onAssetUpdate() {
 }
 
 void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
-    m_ui->valueNum->setText(m_utils->formatNumberWithCommas(pvalue, 2) + " $");
-    m_ui->balanceNum->setText(m_utils->formatNumberWithCommas(pvalue - invests, 2) + " $");
-    m_ui->changeNum->setText(m_utils->formatNumberWithCommas(dchange, 2) + " $");
+    m_ui->valueNum->setText("$" + m_utils->formatNumberWithCommas(pvalue, 2));
+    m_ui->balanceNum->setText("$" + m_utils->formatNumberWithCommas(pvalue - invests, 2));
+    m_ui->changeNum->setText("$" + m_utils->formatNumberWithCommas(dchange, 2));
 
     double balance = pvalue - invests;
     m_ui->valueNum->setStyleSheet("color: " + ((pvalue > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
@@ -106,10 +106,10 @@ void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
 }
 
 void AssetPage::onInvestCreate(double amount) {
-    m_ui->investsNum->setText(QString::number(m_ui->investsNum->text().remove('$').toDouble() + amount) + " $");
+    m_ui->investsNum->setText("$" + QString::number(m_ui->investsNum->text().remove('$').toDouble() + amount));
     m_logger.debugLog("AssetPage: Updated total sum of investments", "VIEW", "INFO");
 }
 
 void AssetPage::loadTotalInvests() {
-    m_ui->investsNum->setText(QString::number(m_invest_cont->getTotal()) + " $");
+    m_ui->investsNum->setText("$" + QString::number(m_invest_cont->getTotal()));
 }

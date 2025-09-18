@@ -223,6 +223,18 @@ public:
      * application startup to restore previous portfolio state.
      */
     void loadAssets();
+
+    /**
+     * @brief Retrieves the top 3 performing stocks based on daily percentage change
+     * 
+     * Analyzes all stocks in the stock table and returns the top 3 performers
+     * sorted by their daily percentage change in descending order.
+     * 
+     * @return vector<QString> A vector containing 0-3 strings, each formatted as:
+     *         "SYMBOL|PRICE|CHANGE_PERCENT".
+     *         Returns empty vector if no valid stock data is available.
+     */
+    vector<QString> getLeadStocks();
     
     AssetsController(const AssetsController&) = delete;
     AssetsController& operator=(const AssetsController&) = delete;

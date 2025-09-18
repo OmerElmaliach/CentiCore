@@ -40,6 +40,7 @@ private:
     static const QString PAGE_UI;
     static const QString TOPBAR_UI;
     static const QString PAGES_WIDGET_UI;
+    static const QString LEAD_STOCKS_UI;
 
     /**
      * @brief Initializes all UI signal-slot connections.

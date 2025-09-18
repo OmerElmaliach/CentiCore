@@ -1,0 +1,37 @@
+QLabel {
+    color: white;
+    font-weight: bold;
+}
+
+#leadStock1,
+#leadStock2,
+#leadStock3 {
+    background-color: #1f1f1f;
+    border-radius: 6px;
+    border: 1px solid #424242;
+}
+
+#leadStock1:hover,
+#leadStock2:hover,
+#leadStock3:hover {
+    background-color: #242424;
+}
+
+#per_1,
+#per_2,
+#per_3 {
+    font-size: 13px;
+    border-radius: 4px;
+    border: none;
+    padding: 1px 5px;
+}
+
+#price_1,
+#price_2,
+#price_3 {
+    font-size: 13px;
+}
+
+#leadTxt {
+    font-weight: normal;
+}

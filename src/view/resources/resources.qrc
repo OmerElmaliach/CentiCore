@@ -5,6 +5,7 @@
     <file>qss/asset_page.qss</file>
     <file>qss/topbar.qss</file>
     <file>qss/page_widget.qss</file>
+    <file>qss/leading_stocks.qss</file>
   </qresource>
 
   <qresource prefix="/background">

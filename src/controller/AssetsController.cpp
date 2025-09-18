@@ -89,10 +89,10 @@ void AssetsController::updateTable(const QString& symbol, double price, double d
             double quantity = model->item(row, QUANTITY)->text().toDouble();
 
             // Update the table
-            model->item(row, PRICE)->setText(m_utils->formatNumberWithCommas(price, 2) + "  $");
-            model->item(row, DAILY_CHANGE_PERCENT)->setText(m_utils->formatNumberWithCommas(dp, 2) + "  %");
-            model->item(row, DAILY_CHANGE_DOLLAR)->setText(m_utils->formatNumberWithCommas(d * quantity, 2) + "  $");
-            model->item(row, TOTAL_VALUE)->setText(m_utils->formatNumberWithCommas(price * quantity, 2) + "  $");
+            model->item(row, PRICE)->setText("$" + m_utils->formatNumberWithCommas(price, 2));
+            model->item(row, DAILY_CHANGE_PERCENT)->setText(m_utils->formatNumberWithCommas(dp, 2) + "%");
+            model->item(row, DAILY_CHANGE_DOLLAR)->setText("$" + m_utils->formatNumberWithCommas(d * quantity, 2));
+            model->item(row, TOTAL_VALUE)->setText("$" + m_utils->formatNumberWithCommas(price * quantity, 2));
 
             QColor color = (d > 0) ? Qt::darkGreen : Qt::darkRed;
             model->item(row, DAILY_CHANGE_PERCENT)->setData(QBrush(color), Qt::ForegroundRole);
@@ -178,4 +178,34 @@ void AssetsController::loadAssets() {
     }
 
     m_logger.debugLog("AssetsController: Loaded previous assets", "CONTROLLER", "INFO");
+}
+
+vector<QString> AssetsController::getLeadStocks() {
+    vector<QString> stocks;
+    vector<pair<double, int>> stockChanges;
+    for (int row = 0; row < m_stockTable->rowCount(); row++) {
+        if (m_stockTable->item(row, DAILY_CHANGE_PERCENT)) {
+            double change = m_stockTable->item(row, DAILY_CHANGE_PERCENT)->text().remove("%").remove(",").toDouble();
+            stockChanges.push_back(make_pair(change, row));
+        }
+    }
+    
+    // Sort by daily change percentage and get top 3
+    sort(stockChanges.begin(), stockChanges.end(), [](const pair<double, int>& a, const pair<double, int>& b) { return a.first > b.first; });
+    int numStocks = min(3, static_cast<int>(stockChanges.size()));
+    
+    for (int i = 0; i < numStocks; i++) {
+        int rowIndex = stockChanges[i].second;
+        if (m_stockTable->item(rowIndex, SYMBOL)) {
+            QString stockInfo = m_stockTable->item(rowIndex, SYMBOL)->text();
+            if (m_stockTable->item(rowIndex, PRICE))
+                stockInfo += "|" + m_stockTable->item(rowIndex, PRICE)->text();
+            if (m_stockTable->item(rowIndex, DAILY_CHANGE_PERCENT))
+                stockInfo += "|" + m_stockTable->item(rowIndex, DAILY_CHANGE_PERCENT)->text();
+            
+            stocks.push_back(stockInfo);
+        }
+    }
+    
+    return stocks;
 }

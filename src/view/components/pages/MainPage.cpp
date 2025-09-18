@@ -7,6 +7,7 @@ const QString MainPage::NEGATIVE_COLOR = "#dc3545";
 const QString MainPage::PAGE_UI = ":/styles/qss/main_page.qss";
 const QString MainPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
 const QString MainPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
+const QString MainPage::LEAD_STOCKS_UI = ":/styles/qss/leading_stocks.qss";
 
 MainPage::MainPage(QWidget *parent) :
         QMainWindow(parent),
@@ -29,11 +30,13 @@ MainPage::MainPage(QWidget *parent) :
         m_logger.debugLog("MainPage: Failed to load style for topbar", "VIEW", "ERR");
     if (!m_utils->loadStyles(m_ui->pageWidget, PAGES_WIDGET_UI))
         m_logger.debugLog("MainPage: Failed to load style for pages widget", "VIEW", "ERR");
+    if (!m_utils->loadStyles(m_ui->leadWidget, LEAD_STOCKS_UI))
+        m_logger.debugLog("MainPage: Failed to load style for leading stocks widget", "VIEW", "ERR");
     
     // Load page stats and expenses
     m_expense_cont->loadExpenses();
     EnvLoader env;
-    m_ui->cashNum->setText(m_utils->formatNumberWithCommas(env.getValue("AVAILABLE_CASH").toDouble(), 2) + " $");
+    m_ui->cashNum->setText("$" + m_utils->formatNumberWithCommas(env.getValue("AVAILABLE_CASH").toDouble(), 2));
     m_ui->cashNum->setStyleSheet("color: " + POSITIVE_COLOR);
     m_ui->networthNum->setText("Loading...");
 
@@ -87,34 +90,62 @@ void MainPage::setupConnections() {
 void MainPage::onExpenseCreate(const QString category, double amount) {
     double total = m_ui->totExpNum->text().remove('$').toDouble() + amount;
     // Update total
-    m_ui->totExpNum->setText(QString::number(total) + " $");
+    m_ui->totExpNum->setText("$" +  QString::number(total));
 
     // Update chart
     m_chart->refreshMonth(QDateTime::currentDateTime().toString("MM").toDouble() - 1, total);
 
     // Update stat
     double newbalance = m_ui->balanceNum->text().remove("$").remove(",").remove("+").remove("-").toDouble() - amount;
-    m_ui->balanceNum->setText(((newbalance >= 0) ? "+ " : "- ") + m_utils->formatNumberWithCommas(abs(newbalance), 2) + " $");
+    m_ui->balanceNum->setText(((newbalance >= 0) ? "+ $" : "- $") + m_utils->formatNumberWithCommas(abs(newbalance), 2));
     m_ui->balanceNum->setStyleSheet("color: " + ((newbalance >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
 
     m_logger.debugLog("MainPage: Added expense to list: " + category.toStdString(), "VIEW", "INFO");
 }
 
 void MainPage::onLoadExpenses(double totalExp) {
-    m_ui->totExpNum->setText(QString::number(totalExp) + " $");
+    m_ui->totExpNum->setText("$" + QString::number(totalExp));
 
     // Update stats
     QSettings settings(":/config/config/app.conf", QSettings::IniFormat);
     settings.beginGroup("Finance");
     double balance = settings.value("monthly_budget").toDouble() - totalExp;
-    m_ui->balanceNum->setText(((balance >= 0) ? "+ " : "- ") + m_utils->formatNumberWithCommas(abs(balance), 2) + " $");
+    m_ui->balanceNum->setText(((balance >= 0) ? "+ $" : "- $") + m_utils->formatNumberWithCommas(abs(balance), 2));
     m_ui->balanceNum->setStyleSheet("color: " + ((balance >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
 
     m_logger.debugLog("MainPage: Loaded total monthly expenses", "VIEW", "INFO");
 }
 
 void MainPage::onUpdateStats(double pvalue) {
+    // Update total networth
     double networth = pvalue + m_ui->cashNum->text().remove("$").remove(",").toDouble();
-    m_ui->networthNum->setText(m_utils->formatNumberWithCommas(networth, 2) + " $");
+    m_ui->networthNum->setText("$" + m_utils->formatNumberWithCommas(networth, 2));
     m_ui->networthNum->setStyleSheet("color: " + ((networth >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+
+    // Update leading stocks
+    vector<QString> leadStocks = AssetsController::getInstance()->getLeadStocks();
+    QLabel* stockLabels[] = {m_ui->stock_1, m_ui->stock_2, m_ui->stock_3};
+    QLabel* priceLabels[] = {m_ui->price_1, m_ui->price_2, m_ui->price_3};
+    QLabel* perLabels[] = {m_ui->per_1, m_ui->per_2, m_ui->per_3};
+    const QString positiveStyle = "background-color: rgba(0, 200, 100, 25); color: green;";
+    const QString negativeStyle = "background-color: rgba(200, 0, 50, 25); color: #ff4757;";
+    
+    for (int i = 0; i < 3; i++) {
+        QStringList stockData = leadStocks[i].split("|");
+        if (stockData.size() < 3) {
+            m_logger.debugLog("Invalid stock data format at index: " + i, "VIEW", "WARN");
+            continue;
+        }
+
+        QString symbol = stockData[0], price = stockData[1], changePercent = stockData[2];
+        QString percentForParsing = changePercent;
+        percentForParsing = percentForParsing.remove("%").remove("+");
+
+        // Update UI
+        bool isPositive = (percentForParsing.toDouble() >= 0);
+        stockLabels[i]->setText(symbol);
+        priceLabels[i]->setText(price);
+        perLabels[i]->setText((isPositive ? "▲ +" : "▼ ") + changePercent);
+        perLabels[i]->setStyleSheet(isPositive ? positiveStyle : negativeStyle);
+    }
 }
