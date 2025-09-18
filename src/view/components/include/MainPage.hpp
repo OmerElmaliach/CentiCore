@@ -33,6 +33,7 @@ private:
     DebugUtils& m_logger;
     ExpensesController* m_expense_cont;
     GeneralUtils* m_utils;
+    ExpenseChart* m_chart;
     static const int STOCKS_PAGE;
     static const QString POSITIVE_COLOR;
     static const QString NEGATIVE_COLOR;

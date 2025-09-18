@@ -10,6 +10,8 @@
 #include <QBrush>
 #include <QColor>
 #include <vector>
+#include <QSettings>
+#include <QLineSeries>
 
 /**
  * @class ExpenseChart
@@ -19,16 +21,10 @@
  */
 class ExpenseChart : public QChartView {
     Q_OBJECT
-
-public:
-    /**
-     * @brief Constructs an ExpenseChart with the given expense data
-     * @param expenses Vector of 12 double values representing monthly expenses (Jan-Dec)
-     * @param parent Optional parent widget (default: nullptr)
-     */
-    ExpenseChart(const std::vector<double>& expenses, QWidget* parent = nullptr);
     
 private:
+    QBarSet* m_expenseSet;
+
     /**
      * @brief Main chart setup method that orchestrates the chart creation
      * @param expenses The expense data to display
@@ -59,4 +55,25 @@ private:
      * @return Pointer to the configured QBarSet with styling applied
      */
     QBarSet* createBarSet(const std::vector<double>& expenses);
+
+public:
+    /**
+     * @brief Constructs an ExpenseChart with the given expense data
+     * @param expenses Vector of 12 double values representing monthly expenses (Jan-Dec)
+     * @param parent Optional parent widget (default: nullptr)
+     */
+    ExpenseChart(const std::vector<double>& expenses, QWidget* parent = nullptr);
+
+    /**
+     * @brief Updates the expense value for a specific month in the chart.
+     *
+     * This function modifies the value of the bar corresponding to the given
+     * month in the chart’s QBarSet. After calling this function, the chart
+     * will automatically reflect the updated value.
+     *
+     * @param month The month index to update (0-based). For example:
+     *              0 = January, 1 = February, ..., 11 = December.
+     * @param amount The new expense amount for the given month.
+     */
+    void refreshMonth(int month ,double amount);
 };

@@ -5,6 +5,10 @@ ExpenseChart::ExpenseChart(const std::vector<double>& expenses, QWidget* parent)
     setupStyling();
 }
 
+void ExpenseChart::refreshMonth(int month ,double amount) {
+    m_expenseSet->replace(month, amount);
+}
+
 void ExpenseChart::setupChart(const std::vector<double>& expenses) {
     // Create and configure chart
     QChart* chart = new QChart();
@@ -12,9 +16,9 @@ void ExpenseChart::setupChart(const std::vector<double>& expenses) {
     chart->setAnimationOptions(QChart::SeriesAnimations);
     
     // Create bar series with data
-    QBarSet* expenseSet = createBarSet(expenses);
+    m_expenseSet = createBarSet(expenses);
     QBarSeries* series = new QBarSeries();
-    series->append(expenseSet);
+    series->append(m_expenseSet);
     series->setLabelsVisible(true);
     series->setLabelsPosition(QBarSeries::LabelsOutsideEnd);
     chart->addSeries(series);
@@ -37,6 +41,10 @@ QBarSet* ExpenseChart::createBarSet(const std::vector<double>& expenses) {
 }
 
 void ExpenseChart::setupAxes(QChart* chart, QBarSeries* series) {
+    QSettings settings(":/config/config/app.conf", QSettings::IniFormat);
+    settings.beginGroup("Finance");
+    double budget = settings.value("monthly_budget").toDouble();
+
     const QStringList months = {
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
@@ -52,12 +60,28 @@ void ExpenseChart::setupAxes(QChart* chart, QBarSeries* series) {
     
     // Y-axis
     QValueAxis* yAxis = new QValueAxis();
-    yAxis->setRange(0, 200);
+    yAxis->setRange(0, budget + 50);
     yAxis->setLabelsColor(Qt::white);
     yAxis->setGridLineColor(QColor("#444444"));
     yAxis->setLabelFormat("%.0f");
     chart->addAxis(yAxis, Qt::AlignLeft);
     series->attachAxis(yAxis);
+
+    // Add threshhold line
+    QLineSeries* line = new QLineSeries();
+    line->setName("Budget Limit");
+    line->append(-1, budget);
+    line->append(12, budget);
+
+    QPen pen(Qt::red);
+    pen.setWidth(2);
+    pen.setStyle(Qt::DashLine);
+    line->setPen(pen);
+
+    chart->addSeries(line);
+    line->attachAxis(xAxis);
+    line->attachAxis(yAxis);
+    
 }
 
 void ExpenseChart::applyChartStyling(QChart* chart) {
@@ -72,6 +96,6 @@ void ExpenseChart::applyChartStyling(QChart* chart) {
 
 void ExpenseChart::setupStyling() {
     setRenderHint(QPainter::Antialiasing);
-    setStyleSheet("border-radius: 4px; background: transparent;");
+    setStyleSheet("background: transparent;");
     setContentsMargins(0, 0, 0, 0);
 }

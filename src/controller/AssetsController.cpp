@@ -34,7 +34,7 @@ void AssetsController::setupConnections() {
 
     // Data received from API (Error)
     connect(&m_api, &ApiServices::assetRequestFailed, this, [this](const QString& symbol, const QString& error) {
-        m_logger.debugLog("AssetsController: Failed to retrieve asset: " + symbol.toStdString() + "ERROR: " + error.toStdString(), "CONTROLLER", "ERR");
+        m_logger.debugLog("AssetsController: Failed to retrieve asset: " + symbol.toStdString() + ", " + error.toStdString(), "CONTROLLER", "ERR");
     });
 
     // Timer timeout event

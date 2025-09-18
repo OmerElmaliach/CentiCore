@@ -1,7 +1,7 @@
 #include "AssetPage.hpp"
 #include "../../ui/ui_asset_page.h"
 
-constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 6000;
+constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 10000;
 const QString AssetPage::POSITIVE_COLOR = "#28a745";
 const QString AssetPage::NEGATIVE_COLOR = "#dc3545";
 const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";

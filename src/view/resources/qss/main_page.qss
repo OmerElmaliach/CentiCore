@@ -47,11 +47,12 @@ QPushButton {
     letter-spacing: 0.5px;
 }
 
-/* --> Leading Stocks <-- */
-#leadWidget {
-    background-color: #1d1d1d;
+/* --> Leading Stocks && Expense Graph <-- */
+#leadWidget,
+#graphWidget {
+    background-color: #181818;
     border-radius: 4px;
-    border: 1px solid #292929;
+    border: 2px solid #464646;
 }
 
 /* --> Expenses List <-- */
@@ -115,10 +116,4 @@ QPushButton {
 
 #expensesWidget #addExpense_btn:pressed {
     background-color: #414141;
-}
-
-#graphWidget {
-    background-color: #181818;
-    border-radius: 4px;
-    border: 1px solid #292929;
 }

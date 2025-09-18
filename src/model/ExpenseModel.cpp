@@ -86,13 +86,13 @@ QJsonArray ExpenseModel::getMonth(const QString& year, const QString& month) {
     QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/" + year + "/expenses/");
     QDir dir(dataPath);
     if (!dir.exists()) {
-        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with year does not exist", "MODEL", "ERR");
+        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with year does not exist", "MODEL", "WARN");
         return data;
     }
 
     dataFile.setFileName(dataPath + month + ".json");
     if (!dataFile.exists()) {
-        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with month does not exist", "MODEL", "ERR");
+        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with month does not exist", "MODEL", "WARN");
         return data;
     }
 

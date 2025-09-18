@@ -45,13 +45,13 @@ MainPage::MainPage(QWidget *parent) :
 }
 
 void MainPage::setupChart() {
-    QVBoxLayout *layout = new QVBoxLayout(m_ui->graphWidget);
+    QVBoxLayout* layout = new QVBoxLayout(m_ui->graphWidget);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
-    ExpenseChart *chart = new ExpenseChart(m_expense_cont->getYear("2025"), this);
-    chart->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    layout->addWidget(chart);
+    m_chart = new ExpenseChart(m_expense_cont->getYear(QDateTime::currentDateTime().toString("yyyy")), this);
+    m_chart->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    layout->addWidget(m_chart);
 }
 
 void MainPage::setupConnections() {
@@ -85,8 +85,18 @@ void MainPage::setupConnections() {
 }
 
 void MainPage::onExpenseCreate(const QString category, double amount) {
-    double currTot = m_ui->totExpNum->text().remove('$').toDouble();
-    m_ui->totExpNum->setText(QString::number(currTot + amount) + " $");
+    double total = m_ui->totExpNum->text().remove('$').toDouble() + amount;
+    // Update total
+    m_ui->totExpNum->setText(QString::number(total) + " $");
+
+    // Update chart
+    m_chart->refreshMonth(QDateTime::currentDateTime().toString("MM").toDouble() - 1, total);
+
+    // Update stat
+    double newbalance = m_ui->balanceNum->text().remove("$").remove(",").remove("+").remove("-").toDouble() - amount;
+    m_ui->balanceNum->setText(((newbalance >= 0) ? "+ " : "- ") + m_utils->formatNumberWithCommas(abs(newbalance), 2) + " $");
+    m_ui->balanceNum->setStyleSheet("color: " + ((newbalance >= 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+
     m_logger.debugLog("MainPage: Added expense to list: " + category.toStdString(), "VIEW", "INFO");
 }
 
