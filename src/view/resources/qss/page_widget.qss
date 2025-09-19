@@ -6,13 +6,15 @@
 }
 
 #pageWidget QPushButton {
-    background-color: #005186;
+    border-radius: 0px;
+    background-color: transparent;
 }
 
 #pageWidget QPushButton:hover {
-    background-color: #005b97;
+    background-color: #3d3d3d;
+    border-left: 4px solid #525252;
 }
 
 #pageWidget QPushButton:pressed {
-    background-color: #0063a5
+    background-color: #444444
 }

@@ -48,9 +48,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>80</y>
+      <y>200</y>
       <width>201</width>
-      <height>601</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -59,66 +59,66 @@
     <widget class="QPushButton" name="dashBoard_btn">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>141</width>
+       <x>0</x>
+       <y>20</y>
+       <width>201</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Dashboard</string>
+      <string>📊 Dashboard</string>
      </property>
     </widget>
     <widget class="QPushButton" name="stocks_btn">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>90</y>
-       <width>141</width>
+       <x>0</x>
+       <y>80</y>
+       <width>201</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Stocks / Crypto</string>
+      <string>💹 Stocks / Crypto</string>
      </property>
     </widget>
     <widget class="QPushButton" name="stats_btn">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>150</y>
-       <width>141</width>
+       <x>0</x>
+       <y>140</y>
+       <width>201</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Statistics</string>
+      <string>📈  Statistics</string>
      </property>
     </widget>
     <widget class="QPushButton" name="settings_btn">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>210</y>
-       <width>141</width>
+       <x>0</x>
+       <y>200</y>
+       <width>201</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Settings</string>
+      <string>⚙️  Settings</string>
      </property>
     </widget>
     <widget class="QPushButton" name="getHelp_btn">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>270</y>
-       <width>141</width>
+       <x>0</x>
+       <y>260</y>
+       <width>201</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Get Help</string>
+      <string>❓ Get Help</string>
      </property>
     </widget>
    </widget>

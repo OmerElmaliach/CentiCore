@@ -35,6 +35,8 @@ private:
     GeneralUtils* m_utils;
     QStandardItemModel* m_stockTable;
     QStandardItemModel* m_cryptoTable;
+
+    static const int LIVE_UPDATE_INTERVAL;
     enum AssetColumns {
         SYMBOL = 0,
         QUANTITY = 1,

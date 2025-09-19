@@ -1,7 +1,6 @@
 #include "AssetPage.hpp"
 #include "../../ui/ui_asset_page.h"
 
-constexpr int AssetPage::LIVE_UPDATE_INTERVAL = 10000;
 const QString AssetPage::POSITIVE_COLOR = "#28a745";
 const QString AssetPage::NEGATIVE_COLOR = "#dc3545";
 const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";
@@ -39,9 +38,6 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->topbarWidget->installEventFilter(dragFilter);
     m_ui->topbarDisplay->installEventFilter(dragFilter);
     m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
-
-    // Start dynamically updating data
-    m_asset_cont->enableLiveUpdates(LIVE_UPDATE_INTERVAL);
 }
 
 AssetPage::~AssetPage() {

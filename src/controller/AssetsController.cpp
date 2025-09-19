@@ -1,10 +1,11 @@
 #include "AssetsController.hpp"
 
 const QStringList AssetsController::ASSET_HEADERS = {"Symbol", "Quantity", "Price per Unit", "Daily change (%)", "Daily change ($)", "Total Value"};
+constexpr int AssetsController::LIVE_UPDATE_INTERVAL = 10000;
 
 AssetsController::AssetsController() :
         m_model(AssetModel::getInstance()),
-        m_logger(DebugUtils::getInstance()), 
+        m_logger(DebugUtils::getInstance()),
         m_api(ApiServices::getInstance()),
         m_utils(GeneralUtils::getInstance()) {
     m_timer = new QTimer(this);
@@ -13,6 +14,12 @@ AssetsController::AssetsController() :
     setupConnections();
     loadAssets();
     fetchAssets();
+
+    // Single use timer to instantly update stats after dats is received
+    QTimer::singleShot(250, this, [=]() {
+        updateStats();
+        m_timer->start(LIVE_UPDATE_INTERVAL); 
+    });
 }
 
 void AssetsController::setupConnections() {

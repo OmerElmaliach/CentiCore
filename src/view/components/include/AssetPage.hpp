@@ -32,7 +32,6 @@ private:
     InvestsController* m_invest_cont;
     GeneralUtils* m_utils;
     
-    static const int LIVE_UPDATE_INTERVAL;
     static const QString POSITIVE_COLOR;
     static const QString NEGATIVE_COLOR;
     static const QString PAGE_UI;

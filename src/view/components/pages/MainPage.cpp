@@ -133,7 +133,7 @@ void MainPage::onUpdateStats(double pvalue) {
     for (int i = 0; i < 3; i++) {
         QStringList stockData = leadStocks[i].split("|");
         if (stockData.size() < 3) {
-            m_logger.debugLog("Invalid stock data format at index: " + i, "VIEW", "WARN");
+            m_logger.debugLog("MainPage: Invalid stock data format at index: " + i, "VIEW", "WARN");
             continue;
         }
 
