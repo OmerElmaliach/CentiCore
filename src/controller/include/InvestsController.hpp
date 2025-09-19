@@ -4,7 +4,7 @@
 #include <QStringListModel>
 #include <string>
 #include "InvestModel.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
 /**
  * @class InvestsController
@@ -22,7 +22,7 @@ class InvestsController : public QObject {
     
 private:
     InvestModel& m_model;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     QStringListModel* m_investList;
     
     /**

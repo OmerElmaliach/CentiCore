@@ -7,7 +7,7 @@
 #include <QCoreApplication>
 #include <QJsonObject>
 #include <string>
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 #define LOG_MSG_LENGTH 256
 using namespace std;
 
@@ -15,7 +15,7 @@ using namespace std;
 class ExpenseModel {
 private:
     QFile m_dataFile;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     QJsonArray m_data;
 
     /**

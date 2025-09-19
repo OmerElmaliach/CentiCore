@@ -1,6 +1,6 @@
 #include "InvestsController.hpp"
 
-InvestsController::InvestsController() : m_model(InvestModel::getInstance()), m_logger(DebugUtils::getInstance()) {
+InvestsController::InvestsController() : m_model(InvestModel::getInstance()), m_logger(Logger::getInstance()) {
     m_investList = new QStringListModel(this);
     loadInvests();
 }

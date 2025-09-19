@@ -5,24 +5,25 @@
 #include <QDateTime>
 #include <QFile>
 #include <QDir>
+#include "AppConstants.hpp"
 #include "version.h"
 #define LOG_MSG_LENGTH 256
 using namespace std;
 
 // Singleton
-class DebugUtils {
+class Logger {
 private:
     QFile m_logfile;
 
     /**
-     * Default constructor for DebugUtils
+     * Default constructor for Logger
      */
-    DebugUtils();
+    Logger();
 
     /**
-     * Constructor for DebugUtils
+     * Constructor for Logger
      */
-    DebugUtils(QString filepath);
+    Logger(QString filepath);
 
     /**
      * @brief Prints initial welcome message.
@@ -30,19 +31,17 @@ private:
     void initMessage();
     
 public:
-    const char* logFolder = "logs/";
-    
     /**
-     * Returns the instance of debug log
+     * Returns the instance of logger
      */
-    static DebugUtils& getInstance();
+    static Logger& getInstance();
 
     /**
      * @brief Logs activity to the CLI and log file.
      */
     void debugLog(string info, string origin, string type);
 
-    DebugUtils(const DebugUtils&) = delete;
+    Logger(const Logger&) = delete;
     
-    DebugUtils& operator=(const DebugUtils&) = delete;
+    Logger& operator=(const Logger&) = delete;
 };

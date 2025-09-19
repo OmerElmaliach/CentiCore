@@ -1,6 +1,6 @@
 #include "ExpenseModel.hpp"
 
-ExpenseModel::ExpenseModel() : m_logger(DebugUtils::getInstance()) {
+ExpenseModel::ExpenseModel() : m_logger(Logger::getInstance()) {
     QDateTime dt = QDateTime::currentDateTime();
     QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/" + dt.toString("yyyy") + "/expenses/");
     QDir dir(dataPath);

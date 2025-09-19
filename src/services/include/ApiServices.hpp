@@ -5,7 +5,7 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 #include "EnvLoader.hpp"
 
 class ApiServices : public QObject {
@@ -13,7 +13,7 @@ class ApiServices : public QObject {
 
 private:
     QNetworkAccessManager* m_manager;
-    DebugUtils& m_logger;
+    Logger& m_logger;
 
     /**
      * @brief Constructor for api services.

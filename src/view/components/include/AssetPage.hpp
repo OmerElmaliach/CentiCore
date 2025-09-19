@@ -3,10 +3,11 @@
 #include <QMainWindow>
 #include <QStringListModel>
 #include <QTableView>
-#include "GeneralUtils.hpp"
+#include "AppConstants.hpp"
+#include "Utils.hpp"
 #include "CreateAssetDialog.hpp"
 #include "CreateInvestDialog.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 #include "WindowDragFilter.hpp"
 #include "InvestsController.hpp"
 #include "AssetsController.hpp"
@@ -27,16 +28,9 @@ class AssetPage : public QMainWindow {
 
 private:
     Ui::AssetPage *m_ui;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     AssetsController* m_asset_cont;
     InvestsController* m_invest_cont;
-    GeneralUtils* m_utils;
-    
-    static const QString POSITIVE_COLOR;
-    static const QString NEGATIVE_COLOR;
-    static const QString PAGE_UI;
-    static const QString TOPBAR_UI;
-    static const QString PAGES_WIDGET_UI;
 
 public:
     /**

@@ -1,19 +1,12 @@
 #include "AssetPage.hpp"
 #include "../../ui/ui_asset_page.h"
 
-const QString AssetPage::POSITIVE_COLOR = "#28a745";
-const QString AssetPage::NEGATIVE_COLOR = "#dc3545";
-const QString AssetPage::PAGE_UI = ":/styles/qss/asset_page.qss";
-const QString AssetPage::TOPBAR_UI = ":/styles/qss/topbar.qss";
-const QString AssetPage::PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
-
 AssetPage::AssetPage(QWidget *parent) :
         QMainWindow(parent),
         m_ui(new Ui::AssetPage),
-        m_logger(DebugUtils::getInstance()),
+        m_logger(Logger::getInstance()),
         m_asset_cont(AssetsController::getInstance()),
-        m_invest_cont(InvestsController::getInstance()),
-        m_utils(GeneralUtils::getInstance()) {
+        m_invest_cont(InvestsController::getInstance()) {
     m_logger.debugLog("AssetPage: Performing UI setup", "VIEW", "INFO");
     m_ui->setupUi(this);
 
@@ -23,11 +16,11 @@ AssetPage::AssetPage(QWidget *parent) :
     m_ui->investsView->setModel(m_invest_cont->getInstance()->getList());
 
     // Load connections and styles
-    if (!m_utils->loadStyles(this, PAGE_UI))
+    if (!Utils::loadStyles(this, AppConstants::Ui::ASSET_PAGE_UI))
         m_logger.debugLog("AssetPage: Failed to load style file stocks.ui", "VIEW", "ERR");
-    if (!m_utils->loadStyles(m_ui->topbarWidget, TOPBAR_UI))
+    if (!Utils::loadStyles(m_ui->topbarWidget, AppConstants::Ui::TOPBAR_UI))
         m_logger.debugLog("AssetPage: Failed to load style for topbar", "VIEW", "ERR");
-    if (!m_utils->loadStyles(m_ui->pageWidget, PAGES_WIDGET_UI))
+    if (!Utils::loadStyles(m_ui->pageWidget, AppConstants::Ui::PAGES_WIDGET_UI))
         m_logger.debugLog("AssetPage: Failed to load style for pages widget", "VIEW", "ERR");
     
     setupConnections();
@@ -60,7 +53,7 @@ void AssetPage::setupConnections() {
     // Move to dashboard
     connect(m_ui->dashBoard_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("AssetPage: Switching to dashboard page", "VIEW", "INFO");
-        emit switchPage(0);
+        emit switchPage(AppConstants::Pages::MAIN_PAGE);
     });
 
     // Add stock button
@@ -91,14 +84,14 @@ void AssetPage::onAssetUpdate() {
 }
 
 void AssetPage::onUpdateStats(double pvalue, double dchange, double invests) {
-    m_ui->valueNum->setText("$" + m_utils->formatNumberWithCommas(pvalue, 2));
-    m_ui->balanceNum->setText("$" + m_utils->formatNumberWithCommas(pvalue - invests, 2));
-    m_ui->changeNum->setText("$" + m_utils->formatNumberWithCommas(dchange, 2));
+    m_ui->valueNum->setText("$" + Utils::formatNumberWithCommas(pvalue, 2));
+    m_ui->balanceNum->setText("$" + Utils::formatNumberWithCommas(pvalue - invests, 2));
+    m_ui->changeNum->setText("$" + Utils::formatNumberWithCommas(dchange, 2));
 
     double balance = pvalue - invests;
-    m_ui->valueNum->setStyleSheet("color: " + ((pvalue > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
-    m_ui->balanceNum->setStyleSheet("color: " + ((balance > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
-    m_ui->changeNum->setStyleSheet("color: " + ((dchange > 0) ? POSITIVE_COLOR : NEGATIVE_COLOR));
+    m_ui->valueNum->setStyleSheet("color: " + ((pvalue > 0) ? AppConstants::Colors::POSITIVE_COLOR : AppConstants::Colors::NEGATIVE_COLOR));
+    m_ui->balanceNum->setStyleSheet("color: " + ((balance > 0) ? AppConstants::Colors::POSITIVE_COLOR : AppConstants::Colors::NEGATIVE_COLOR));
+    m_ui->changeNum->setStyleSheet("color: " + ((dchange > 0) ? AppConstants::Colors::POSITIVE_COLOR : AppConstants::Colors::NEGATIVE_COLOR));
 }
 
 void AssetPage::onInvestCreate(double amount) {

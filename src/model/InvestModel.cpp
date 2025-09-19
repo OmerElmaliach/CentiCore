@@ -1,6 +1,6 @@
 #include "InvestModel.hpp"
 
-InvestModel::InvestModel() : m_logger(DebugUtils::getInstance()) {
+InvestModel::InvestModel() : m_logger(Logger::getInstance()) {
     QDateTime dt = QDateTime::currentDateTime();
     QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/");
     QDir dir(dataPath);

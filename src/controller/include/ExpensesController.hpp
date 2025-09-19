@@ -8,7 +8,7 @@
 #include <QLocale>
 #include <vector>
 #include "ExpenseModel.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
 /**
  * @class ExpensesController
@@ -25,7 +25,7 @@ class ExpensesController : public QObject {
 
 private:
     ExpenseModel& m_model;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     QStringListModel* m_list;
 
     /**

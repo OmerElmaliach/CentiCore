@@ -1,6 +1,6 @@
 #include "ExpensesController.hpp"
 
-ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(DebugUtils::getInstance()) {
+ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(Logger::getInstance()) {
     m_list = new QStringListModel(this);
 }
 

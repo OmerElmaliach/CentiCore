@@ -3,19 +3,18 @@
 #include <QTextStream>
 #include <QProcessEnvironment>
 #include <QDebug>
-#include "DebugUtils.hpp"
+#include "AppConstants.hpp"
+#include "Logger.hpp"
 
 /**
  * @class EnvLoader
- * @brief Utility class for loading environment variables from a configuration file.
+ * @brief Utility namespace for loading environment variables from a configuration file.
  *
  * The EnvLoader class provides functionality to retrieve configuration values
  * from a `.env` style file stored as a Qt resource.
  * The file is expected to contain key-value pairs.
  */
-class EnvLoader {
-public:
-
+namespace EnvLoader {
     /**
      * @brief Retrieves the value associated with a given key from the configuration file.
      *
@@ -28,4 +27,4 @@ public:
      * @return The value associated with the given key, or an empty string if not found.
      */
     QString getValue(const QString& key);
-};
+}

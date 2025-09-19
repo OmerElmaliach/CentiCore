@@ -4,12 +4,13 @@
 #include <QString>
 #include <QSettings>
 #include <QVBoxLayout>
+#include "AppConstants.hpp"
 #include "CreateExpenseDialog.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 #include "WindowDragFilter.hpp"
 #include "ExpensesController.hpp"
 #include "AssetsController.hpp"
-#include "GeneralUtils.hpp"
+#include "Utils.hpp"
 #include "EnvLoader.hpp"
 #include "ExpenseChart.hpp"
 
@@ -30,17 +31,9 @@ class MainPage : public QMainWindow {
 
 private:
     Ui::MainPage* m_ui;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     ExpensesController* m_expense_cont;
-    GeneralUtils* m_utils;
     ExpenseChart* m_chart;
-    static const int STOCKS_PAGE;
-    static const QString POSITIVE_COLOR;
-    static const QString NEGATIVE_COLOR;
-    static const QString PAGE_UI;
-    static const QString TOPBAR_UI;
-    static const QString PAGES_WIDGET_UI;
-    static const QString LEAD_STOCKS_UI;
 
     /**
      * @brief Initializes all UI signal-slot connections.

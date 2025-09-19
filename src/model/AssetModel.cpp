@@ -1,6 +1,6 @@
 #include "AssetModel.hpp"
 
-AssetModel::AssetModel() : m_logger(DebugUtils::getInstance()) {
+AssetModel::AssetModel() : m_logger(Logger::getInstance()) {
     QDateTime dt = QDateTime::currentDateTime();
     QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/");
     QDir dir(dataPath);

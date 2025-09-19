@@ -1,26 +1,26 @@
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
-DebugUtils::DebugUtils() : DebugUtils("cc_" + QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss") + ".log") {}
+Logger::Logger() : Logger("cc_" + QDateTime::currentDateTime().toString("dd-MM-yyyy_hh-mm-ss") + ".log") {}
 
-DebugUtils::DebugUtils(QString filepath) {
+Logger::Logger(QString filepath) {
     // Creates directory if doesnt exist.
-    QDir dir(logFolder);
+    QDir dir(AppConstants::Utils::LOG_PATH);
     if (!dir.exists())
         dir.mkpath(".");
 
-    m_logfile.setFileName(logFolder + filepath);
+    m_logfile.setFileName(AppConstants::Utils::LOG_PATH + filepath);
     if (!m_logfile.open(QIODevice::WriteOnly | QIODevice::Text))
         qWarning("Failed to open log file.");
 
     initMessage();
 }
 
-DebugUtils& DebugUtils::getInstance() {
-    static DebugUtils instance;
+Logger& Logger::getInstance() {
+    static Logger instance;
     return instance;
 }
 
-void DebugUtils::debugLog(string info, string origin, string type) {
+void Logger::debugLog(string info, string origin, string type) {
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "[%s][CENTICORE-%s][%s] %s", QDateTime().currentDateTime().toString("hh:mm:ss").toLocal8Bit().constData(),
         origin.c_str(), type.c_str(), info.c_str());
@@ -31,7 +31,7 @@ void DebugUtils::debugLog(string info, string origin, string type) {
     m_logfile.flush();
 }
 
-void DebugUtils::initMessage() {
+void Logger::initMessage() {
     // Log starting message
     char buff[LOG_MSG_LENGTH];
     sprintf(buff, "=            Version %s | Build %s              =", CENTICORE_VERSION,
