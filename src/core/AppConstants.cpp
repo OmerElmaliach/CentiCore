@@ -20,6 +20,7 @@ namespace AppConstants {
         const int STOCKS_PAGE = 1;
         const int LIVE_UPDATE_INTERVAL = 10000;
         const QStringList ASSET_HEADERS = {"Symbol", "Quantity", "Price per Unit", "Daily change (%)", "Daily change ($)", "Total Value"};
+        const QStringList EXPENSE_CATEGORIES = {"Personal Care", "Transportation", "Food", "Utilities", "Entertainment", "Miscellaneous"};
     }
 
     namespace Utils {
@@ -28,5 +29,6 @@ namespace AppConstants {
 
     namespace Config {
         const QString ENV_FILE_PATH = ":/config/config/app.env";
+        const QString GITHUB_URL = "https://github.com/OmerElmaliach/CentiCore";
     }
 }

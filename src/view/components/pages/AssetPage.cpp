@@ -74,6 +74,11 @@ void AssetPage::setupConnections() {
         dialog.exec();
     });
 
+    // Get help button
+    connect(m_ui->getHelp_btn, &QPushButton::clicked, this, [this] {
+        QDesktopServices::openUrl(QUrl(AppConstants::Config::GITHUB_URL));
+    });
+
     connect(m_asset_cont, &AssetsController::updatedAsset, this, &AssetPage::onAssetUpdate);
     connect(m_asset_cont, &AssetsController::updatedStats, this, &AssetPage::onUpdateStats);
     connect(m_invest_cont, &InvestsController::investCreated, this, &AssetPage::onInvestCreate);

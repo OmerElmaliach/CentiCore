@@ -51,8 +51,7 @@ QPushButton {
 #leadWidget,
 #graphWidget {
     background-color: #181818;
-    border-radius: 4px;
-    border: 2px solid #464646;
+    border: 1px solid #464646;
 }
 
 /* --> Expenses List <-- */

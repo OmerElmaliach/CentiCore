@@ -12,7 +12,7 @@ AssetsController::AssetsController() :
     fetchAssets();
 
     // Single use timer to instantly update stats after dats is received
-    QTimer::singleShot(250, this, [=]() {
+    QTimer::singleShot(400, this, [=]() {
         updateStats();
         m_timer->start(AppConstants::Pages::LIVE_UPDATE_INTERVAL); 
     });

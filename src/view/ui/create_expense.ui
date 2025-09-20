@@ -104,19 +104,6 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="categoryInput">
-   <property name="geometry">
-    <rect>
-     <x>110</x>
-     <y>60</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="placeholderText">
-    <string>Category Name...</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="amountInput">
    <property name="geometry">
     <rect>
@@ -154,6 +141,16 @@
    </property>
    <property name="text">
     <string>✅ Create</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="categoryInput">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>60</y>
+     <width>191</width>
+     <height>27</height>
+    </rect>
    </property>
   </widget>
  </widget>

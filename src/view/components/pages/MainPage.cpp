@@ -72,6 +72,11 @@ void MainPage::setupConnections() {
         emit switchPage(AppConstants::Pages::STOCKS_PAGE);
     });
 
+    // Get help button
+    connect(m_ui->getHelp_btn, &QPushButton::clicked, this, [this] {
+        QDesktopServices::openUrl(QUrl(AppConstants::Config::GITHUB_URL));
+    });
+
     connect(m_expense_cont, &ExpensesController::expenseCreated, this, &MainPage::onExpenseCreate);
     connect(m_expense_cont, &ExpensesController::expensesLoaded, this, &MainPage::onLoadExpenses);
     connect(AssetsController::getInstance(), &AssetsController::updatedStats, this, &MainPage::onUpdateStats);

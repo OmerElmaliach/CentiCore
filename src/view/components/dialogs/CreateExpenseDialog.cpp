@@ -10,6 +10,8 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint);
     Utils::loadStyles(this, AppConstants::Ui::DIALOG_UI);
 
+    m_ui->categoryInput->addItems(AppConstants::Pages::EXPENSE_CATEGORIES);
+
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);
     connect(m_ui->createBtn, &QPushButton::clicked, this, &QDialog::accept);
@@ -19,7 +21,7 @@ CreateExpenseDialog::CreateExpenseDialog(QWidget *parent) :
 void CreateExpenseDialog::accept() {
     // Send a request to add an expense
     bool isNumber;
-    QString category = m_ui->categoryInput->text(), amount = m_ui->amountInput->text();
+    QString category = m_ui->categoryInput->currentText(), amount = m_ui->amountInput->text();
     amount.toDouble(&isNumber);
 
     // Check if fields are invalid

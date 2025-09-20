@@ -1,6 +1,6 @@
 # <== Project properties ===>
 cmake_minimum_required(VERSION 3.16)
-project(CentiCore VERSION 0.6.7)
+project(CentiCore VERSION 0.6.8)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network Charts)
@@ -45,6 +45,12 @@ qt_add_executable(centicore
     ${RESOURCES}
 )
 
+if(WIN32)
+    set_target_properties(centicore PROPERTIES WIN32_EXECUTABLE ON)
+elseif(APPLE)
+    set_target_properties(centicore PROPERTIES MACOSX_BUNDLE ON)
+endif()
+
 # <== Library linking ===>
 target_include_directories(centicore PRIVATE
     src
@@ -57,9 +63,3 @@ target_include_directories(centicore PRIVATE
     ${PROJECT_SOURCE_DIR}/core/include
 )
 target_link_libraries(centicore PRIVATE Qt6::Core Qt6::Widgets Qt6::Network Qt6::Charts)
-
-if(WIN32)
-    set_target_properties(centicore PROPERTIES WIN32_EXECUTABLE ON)
-elseif(APPLE)
-    set_target_properties(centicore PROPERTIES MACOSX_BUNDLE ON)
-endif()

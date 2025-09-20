@@ -32,6 +32,7 @@ namespace AppConstants {
         extern const int STOCKS_PAGE;
         extern const int LIVE_UPDATE_INTERVAL;
         extern const QStringList ASSET_HEADERS;
+        extern const QStringList EXPENSE_CATEGORIES;
     }
 
     namespace Utils {
@@ -40,5 +41,6 @@ namespace AppConstants {
 
     namespace Config {
         extern const QString ENV_FILE_PATH;
+        extern const QString GITHUB_URL;
     }
 }

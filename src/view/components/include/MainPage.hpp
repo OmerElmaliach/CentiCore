@@ -4,6 +4,7 @@
 #include <QString>
 #include <QSettings>
 #include <QVBoxLayout>
+#include <QDesktopServices>
 #include "AppConstants.hpp"
 #include "CreateExpenseDialog.hpp"
 #include "Logger.hpp"

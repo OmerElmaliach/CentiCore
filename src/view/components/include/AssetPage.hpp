@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QStringListModel>
 #include <QTableView>
+#include <QDesktopServices>
 #include "AppConstants.hpp"
 #include "Utils.hpp"
 #include "CreateAssetDialog.hpp"
