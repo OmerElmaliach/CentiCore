@@ -14,7 +14,7 @@ bool ExpensesController::add(const QString& category, double amount, const QStri
     if (m_model.find(category, date) == -1 && m_model.add(category, amount, date)) {
         // Update expense list
         QStringList currList = m_list->stringList();
-        currList.append("$" + category + " " + QString::number(amount));
+        currList.append(category + " $" + QString::number(amount));
         m_list->setStringList(currList);
 
         // Signal to view

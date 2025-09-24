@@ -122,10 +122,8 @@ void MainPage::onUpdateStats(double pvalue) {
     QLabel* stockLabels[] = {m_ui->stock_1, m_ui->stock_2, m_ui->stock_3};
     QLabel* priceLabels[] = {m_ui->price_1, m_ui->price_2, m_ui->price_3};
     QLabel* perLabels[] = {m_ui->per_1, m_ui->per_2, m_ui->per_3};
-    const QString positiveStyle = "background-color: rgba(0, 200, 100, 25); color: green;";
-    const QString negativeStyle = "background-color: rgba(200, 0, 50, 25); color: #ff4757;";
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < leadStocks.size(); i++) {
         QStringList stockData = leadStocks[i].split("|");
         if (stockData.size() < 3) {
             m_logger.debugLog("MainPage: Invalid stock data format at index: " + i, "VIEW", "WARN");
@@ -141,6 +139,8 @@ void MainPage::onUpdateStats(double pvalue) {
         stockLabels[i]->setText(symbol);
         priceLabels[i]->setText(price);
         perLabels[i]->setText((isPositive ? "▲ +" : "▼ ") + changePercent);
-        perLabels[i]->setStyleSheet(isPositive ? positiveStyle : negativeStyle);
+        perLabels[i]->setStyleSheet(isPositive ?
+             "background-color: rgba(0, 200, 100, 25); color: green" : 
+             "background-color: rgba(200, 0, 50, 25); color: #ff4757");
     }
 }
