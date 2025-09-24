@@ -28,11 +28,11 @@ A comprehensive financial dashboard application for tracking expenses, managing 
 ## Screenshots
 
 ### Dashboard View
-![Dashboard](screenshot1.png)
+![Dashboard](<img width="1279" height="715" alt="image" src="https://github.com/user-attachments/assets/2c20b512-8294-47a7-a26c-6970a1c4eadf" />)
 *Main dashboard showing financial overview, monthly expenses, and market leaders*
 
 ### Portfolio Management
-![Portfolio](screenshot2.png)
+![Portfolio](<img width="1278" height="714" alt="image" src="https://github.com/user-attachments/assets/aa79ff17-ba7a-4f83-84f6-e2502c4ac7f4" />)
 *Detailed view of stock and cryptocurrency holdings with real-time valuations*
 
 ## Installation & Setup
