@@ -4,12 +4,12 @@
 CreateInvestDialog::CreateInvestDialog(QWidget *parent) :
         QDialog(parent),
         m_ui(new Ui::CreateInvestDialog),
-        m_logger(DebugUtils::getInstance()) {
+        m_logger(Logger::getInstance()) {
     m_logger.debugLog("CreateInvestDialog: Creating QDialog Invest...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
     m_ui->dateInput->setDate(QDate::currentDate());
-    GeneralUtils::getInstance()->loadStyles(this, DIALOG_UI);
+    Utils::loadStyles(this, AppConstants::Ui::DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);

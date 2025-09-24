@@ -7,11 +7,11 @@
 #include <QStandardItemModel>
 #include <QTableView>
 #include <QHeaderView>
-#include "GeneralUtils.hpp"
+#include "Utils.hpp"
 #include "InvestsController.hpp"
 #include "ApiServices.hpp"
 #include "AssetModel.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
 /**
  * @class AssetsController
@@ -29,21 +29,11 @@ class AssetsController : public QObject {
     
 private:
     AssetModel& m_model;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     QTimer* m_timer;
     ApiServices& m_api;
-    GeneralUtils* m_utils;
     QStandardItemModel* m_stockTable;
     QStandardItemModel* m_cryptoTable;
-    enum AssetColumns {
-        SYMBOL = 0,
-        QUANTITY = 1,
-        PRICE = 2,
-        DAILY_CHANGE_PERCENT = 3,
-        DAILY_CHANGE_DOLLAR = 4,
-        TOTAL_VALUE = 5,
-        COLUMN_COUNT = 6
-    };
     
     /**
      * @brief Private constructor implementing singleton pattern.
@@ -64,8 +54,6 @@ private:
     void setupConnections();
 
 public:
-    static const QStringList ASSET_HEADERS;
-    
     /**
      * @brief Returns the singleton instance of AssetsController.
      * 
@@ -223,6 +211,18 @@ public:
      * application startup to restore previous portfolio state.
      */
     void loadAssets();
+
+    /**
+     * @brief Retrieves the top 3 performing stocks based on daily percentage change
+     * 
+     * Analyzes all stocks in the stock table and returns the top 3 performers
+     * sorted by their daily percentage change in descending order.
+     * 
+     * @return vector<QString> A vector containing 0-3 strings, each formatted as:
+     *         "SYMBOL|PRICE|CHANGE_PERCENT".
+     *         Returns empty vector if no valid stock data is available.
+     */
+    vector<QString> getLeadStocks();
     
     AssetsController(const AssetsController&) = delete;
     AssetsController& operator=(const AssetsController&) = delete;

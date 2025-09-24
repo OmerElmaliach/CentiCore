@@ -1,6 +1,6 @@
 #include "ExpensesController.hpp"
 
-ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(DebugUtils::getInstance()) {
+ExpensesController::ExpensesController() : m_model(ExpenseModel::getInstance()), m_logger(Logger::getInstance()) {
     m_list = new QStringListModel(this);
 }
 
@@ -14,7 +14,7 @@ bool ExpensesController::add(const QString& category, double amount, const QStri
     if (m_model.find(category, date) == -1 && m_model.add(category, amount, date)) {
         // Update expense list
         QStringList currList = m_list->stringList();
-        currList.append(category + " " + QString::number(amount) + " $");
+        currList.append(category + " $" + QString::number(amount));
         m_list->setStringList(currList);
 
         // Signal to view
@@ -48,7 +48,7 @@ void ExpensesController::loadExpenses() {
     // Add each monthly expense
     for (int i = 0; i < data.size(); i++) {
         QJsonObject item = data[i].toObject();
-        curr.append(item["category"].toString() + " " + QString::number(item["amount"].toDouble()) + " $");
+        curr.append(item["category"].toString() + " $" + QString::number(item["amount"].toDouble()));
         totalExp += item["amount"].toDouble();
     }
 
@@ -60,4 +60,24 @@ void ExpensesController::loadExpenses() {
 
 QJsonArray ExpensesController::getExpenses() {
     return m_model.getExpenses();
+}
+
+double ExpensesController::getMonth(const QString& year, const QString& month) {
+    double total = 0;
+    QJsonArray monthlyData = m_model.getMonth(year, month);
+    for (QJsonValueRef it : monthlyData) {
+        QJsonObject entry = it.toObject();
+        total += entry["amount"].toDouble();
+    }
+
+    return total;
+}
+
+vector<double> ExpensesController::getYear(const QString& year) {
+    vector<double> vec = {0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0};
+    QLocale locale;
+    for (int i = 0; i < vec.size(); i++)
+        vec[i] = getMonth(year, locale.monthName(i + 1));
+
+    return vec;
 }

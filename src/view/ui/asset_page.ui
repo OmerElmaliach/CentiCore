@@ -44,84 +44,6 @@
    <string>Dashboard</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="pageWidget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>80</y>
-      <width>201</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <widget class="QPushButton" name="dashBoard_btn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Dashboard</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="stocks_btn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>90</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Stocks / Crypto</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="stats_btn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>150</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Statistics</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="settings_btn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>210</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Settings</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="getHelp_btn">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>270</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Get Help</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QWidget" name="topbarWidget" native="true">
     <property name="geometry">
      <rect>
@@ -196,13 +118,32 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QLabel" name="icon">
+     <property name="geometry">
+      <rect>
+       <x>-10</x>
+       <y>-10</y>
+       <width>81</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>:/icons/icons/centicore_ic.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="stocksWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>200</y>
-      <width>711</width>
+      <width>771</width>
       <height>281</height>
      </rect>
     </property>
@@ -211,7 +152,7 @@
       <rect>
        <x>0</x>
        <y>50</y>
-       <width>711</width>
+       <width>771</width>
        <height>231</height>
       </rect>
      </property>
@@ -250,7 +191,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>730</x>
        <y>10</y>
        <width>31</width>
        <height>31</height>
@@ -274,9 +215,9 @@
    <widget class="QWidget" name="numsWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>80</y>
-      <width>711</width>
+      <width>771</width>
       <height>101</height>
      </rect>
     </property>
@@ -285,7 +226,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>231</width>
+       <width>241</width>
        <height>101</height>
       </rect>
      </property>
@@ -294,12 +235,12 @@
        <rect>
         <x>0</x>
         <y>40</y>
-        <width>231</width>
+        <width>241</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>Loading...</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -310,7 +251,7 @@
        <rect>
         <x>50</x>
         <y>10</y>
-        <width>131</width>
+        <width>141</width>
         <height>31</height>
        </rect>
       </property>
@@ -328,9 +269,9 @@
     <widget class="QWidget" name="balanceWidget" native="true">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>260</x>
        <y>0</y>
-       <width>231</width>
+       <width>251</width>
        <height>101</height>
       </rect>
      </property>
@@ -339,7 +280,7 @@
        <rect>
         <x>50</x>
         <y>10</y>
-        <width>131</width>
+        <width>151</width>
         <height>31</height>
        </rect>
       </property>
@@ -355,12 +296,12 @@
        <rect>
         <x>0</x>
         <y>40</y>
-        <width>231</width>
+        <width>251</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>Loading...</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -370,9 +311,9 @@
     <widget class="QWidget" name="changeWidget" native="true">
      <property name="geometry">
       <rect>
-       <x>480</x>
+       <x>530</x>
        <y>0</y>
-       <width>231</width>
+       <width>241</width>
        <height>101</height>
       </rect>
      </property>
@@ -381,12 +322,12 @@
        <rect>
         <x>0</x>
         <y>40</y>
-        <width>231</width>
+        <width>241</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>Loading...</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -397,7 +338,7 @@
        <rect>
         <x>50</x>
         <y>10</y>
-        <width>131</width>
+        <width>141</width>
         <height>31</height>
        </rect>
       </property>
@@ -416,10 +357,10 @@
    <widget class="QWidget" name="investsWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>1020</x>
+      <x>1030</x>
       <y>80</y>
       <width>231</width>
-      <height>571</height>
+      <height>601</height>
      </rect>
     </property>
     <widget class="QLabel" name="investsLabel">
@@ -441,8 +382,8 @@
     <widget class="QLabel" name="investsStr">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>530</y>
+       <x>20</x>
+       <y>560</y>
        <width>121</width>
        <height>41</height>
       </rect>
@@ -458,7 +399,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>530</y>
+       <y>560</y>
        <width>81</width>
        <height>41</height>
       </rect>
@@ -499,7 +440,7 @@
        <x>0</x>
        <y>50</y>
        <width>231</width>
-       <height>481</height>
+       <height>511</height>
       </rect>
      </property>
      <property name="editTriggers">
@@ -510,10 +451,10 @@
    <widget class="QWidget" name="cryptoWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>240</x>
       <y>490</y>
-      <width>711</width>
-      <height>161</height>
+      <width>771</width>
+      <height>191</height>
      </rect>
     </property>
     <widget class="QTableView" name="cryptoView">
@@ -521,8 +462,8 @@
       <rect>
        <x>0</x>
        <y>50</y>
-       <width>711</width>
-       <height>111</height>
+       <width>771</width>
+       <height>141</height>
       </rect>
      </property>
      <property name="editTriggers">
@@ -566,7 +507,7 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>730</x>
        <y>10</y>
        <width>31</width>
        <height>31</height>
@@ -584,6 +525,84 @@
        <width>20</width>
        <height>20</height>
       </size>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>200</y>
+      <width>201</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <widget class="QPushButton" name="dashBoard_btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>10</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>📊 Dashboard</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stocks_btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>80</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>💹 Stocks / Crypto</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="stats_btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>150</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>📈  Statistics</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="settings_btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>220</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>⚙️  Settings</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="getHelp_btn">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>290</y>
+       <width>201</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>❓ Get Help</string>
      </property>
     </widget>
    </widget>

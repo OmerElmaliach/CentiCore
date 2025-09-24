@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>CreateAssetDialog</class>
  <widget class="QDialog" name="CreateAssetDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -36,7 +39,7 @@
     <normaloff>:icons/icons/centicore_ic.png</normaloff>:icons/icons/centicore_ic.png</iconset>
   </property>
   <property name="modal">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <widget class="QLabel" name="symbolLabel">
    <property name="geometry">
@@ -91,9 +94,9 @@
   <widget class="QLabel" name="topbarLabel">
    <property name="geometry">
     <rect>
-     <x>-10</x>
+     <x>0</x>
      <y>0</y>
-     <width>341</width>
+     <width>321</width>
      <height>41</height>
     </rect>
    </property>

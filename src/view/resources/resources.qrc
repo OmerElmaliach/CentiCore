@@ -3,6 +3,9 @@
     <file>qss/main_page.qss</file>
     <file>qss/dialog_box.qss</file>
     <file>qss/asset_page.qss</file>
+    <file>qss/topbar.qss</file>
+    <file>qss/page_widget.qss</file>
+    <file>qss/leading_stocks.qss</file>
   </qresource>
 
   <qresource prefix="/background">
@@ -17,6 +20,7 @@
  </qresource>
 
  <qresource prefix="/config">
+    <file>config/app.env</file>
     <file>config/app.conf</file>
  </qresource>
 </RCC>

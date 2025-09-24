@@ -1,6 +1,6 @@
 #include "ExpenseModel.hpp"
 
-ExpenseModel::ExpenseModel() : m_logger(DebugUtils::getInstance()) {
+ExpenseModel::ExpenseModel() : m_logger(Logger::getInstance()) {
     QDateTime dt = QDateTime::currentDateTime();
     QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/" + dt.toString("yyyy") + "/expenses/");
     QDir dir(dataPath);
@@ -78,4 +78,29 @@ int ExpenseModel::find(const QString& category, const QString& date) {
 
 QJsonArray ExpenseModel::getExpenses() {
     return m_data;
+}
+
+QJsonArray ExpenseModel::getMonth(const QString& year, const QString& month) {
+    QJsonArray data;
+    QFile dataFile;
+    QString dataPath = QDir(QCoreApplication::applicationDirPath()).absoluteFilePath("../../data/" + year + "/expenses/");
+    QDir dir(dataPath);
+    if (!dir.exists()) {
+        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with year does not exist", "MODEL", "WARN");
+        return data;
+    }
+
+    dataFile.setFileName(dataPath + month + ".json");
+    if (!dataFile.exists()) {
+        m_logger.debugLog("ExpenseModel: getMonth() failed - file path with month does not exist", "MODEL", "WARN");
+        return data;
+    }
+
+    if (!dataFile.open(QIODevice::ReadOnly | QIODevice::Text))
+        m_logger.debugLog("ExpenseModel: Failed to open expense file", "MODEL", "ERR");
+        
+    // Extract available data from the json file.
+    data = QJsonDocument().fromJson(dataFile.readAll()).array();
+    dataFile.close();
+    return data;
 }

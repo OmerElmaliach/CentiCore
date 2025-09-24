@@ -2,12 +2,18 @@
 
 #include <QMainWindow>
 #include <QString>
-#include <memory>
+#include <QSettings>
+#include <QVBoxLayout>
+#include <QDesktopServices>
+#include "AppConstants.hpp"
 #include "CreateExpenseDialog.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 #include "WindowDragFilter.hpp"
 #include "ExpensesController.hpp"
-#include "GeneralUtils.hpp"
+#include "AssetsController.hpp"
+#include "Utils.hpp"
+#include "EnvLoader.hpp"
+#include "ExpenseChart.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainPage; }
@@ -26,11 +32,9 @@ class MainPage : public QMainWindow {
 
 private:
     Ui::MainPage* m_ui;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     ExpensesController* m_expense_cont;
-    GeneralUtils* m_utils;
-    static constexpr int STOCKS_PAGE = 1;
-    static constexpr const char* PAGE_UI = ":/styles/qss/main_page.qss";
+    ExpenseChart* m_chart;
 
     /**
      * @brief Initializes all UI signal-slot connections.
@@ -42,6 +46,17 @@ private:
      * - ExpensesController event handling
      */
     void setupConnections();
+
+    /**
+     * @brief Initializes and configures the expense chart.
+     * 
+     * Sets up the chart with:
+     * - Chart title and animation options
+     * - Data series and bar sets representing expenses
+     * - Axes and labels for proper display
+     * - Any additional styling or theme adjustments
+     */
+    void setupChart();
 
 public:
     /**
@@ -67,11 +82,24 @@ public slots:
      * 
      * Called when the ExpensesController finishes loading expense data (typically
      * during application startup or when refreshing data). Sets the total expense
-     * display to show the calculated total for the current month.
+     * display to show the calculated total for the current month,
+     * Also updates stats regarding monthly balance.
      * 
      * @param totalExp The calculated total of all expenses for the current period
      */
     void onLoadExpenses(double totalExp);
+
+    /**
+     * @brief Updates the net worth statistics display on the main dashboard.
+     * 
+     * This slot function is called when portfolio statistics need to be refreshed
+     * on the main page interface. It updates the net worth display widget with
+     * the current total portfolio value, typically triggered by asset price updates.
+     * 
+     * @param pvalue The current total portfolio value in the base currency.
+     *               Represents the sum of all asset values at current market.
+     */
+    void onUpdateStats(double pvalue);
 
 signals:
     /**

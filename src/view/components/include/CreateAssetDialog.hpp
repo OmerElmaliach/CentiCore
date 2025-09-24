@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QDialog>
-#include "DebugUtils.hpp"
+#include "AppConstants.hpp"
+#include "Logger.hpp"
 #include "WindowDragFilter.hpp"
 #include "AssetsController.hpp"
-#include "GeneralUtils.hpp"
+#include "Utils.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CreateAssetDialog; }
@@ -23,9 +24,8 @@ class CreateAssetDialog : public QDialog {
     Q_OBJECT
     
 private:
-    const char* DIALOG_UI = ":/styles/qss/dialog_box.qss";
     Ui::CreateAssetDialog *m_ui;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     int m_type;
 
 public:

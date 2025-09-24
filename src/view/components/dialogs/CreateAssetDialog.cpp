@@ -4,12 +4,12 @@
 CreateAssetDialog::CreateAssetDialog(int type, QWidget *parent) :
         QDialog(parent),
         m_ui(new Ui::CreateAssetDialog),
-        m_logger(DebugUtils::getInstance()), 
+        m_logger(Logger::getInstance()), 
         m_type(type) {
     m_logger.debugLog("CreateAssetDialog: Creating QDialog Asset...", "VIEW", "INFO");
     m_ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    GeneralUtils::getInstance()->loadStyles(this, DIALOG_UI);
+    Utils::loadStyles(this, AppConstants::Ui::DIALOG_UI);
 
     WindowDragFilter *dragFilter = new WindowDragFilter(this, this);
     m_ui->topbarLabel->installEventFilter(dragFilter);

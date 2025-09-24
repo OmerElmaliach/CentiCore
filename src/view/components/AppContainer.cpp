@@ -1,6 +1,6 @@
 #include "AppContainer.hpp"
 
-AppContainer::AppContainer(QWidget *parent) : QMainWindow(parent), m_logger(DebugUtils::getInstance()) {
+AppContainer::AppContainer(QWidget *parent) : QMainWindow(parent), m_logger(Logger::getInstance()) {
     setWindowFlags(Qt::FramelessWindowHint);
     setupConnections();
 }

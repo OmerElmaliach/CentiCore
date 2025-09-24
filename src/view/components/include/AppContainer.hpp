@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include "MainPage.hpp"
 #include "AssetPage.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
 /**
  * @class AppContainer
@@ -21,7 +21,7 @@ class AppContainer : public QMainWindow {
 
 private:
     QStackedWidget* m_stack;
-    DebugUtils& m_logger;
+    Logger& m_logger;
 
 public:
     /**

@@ -1,6 +1,6 @@
 #include "ApiServices.hpp"
 
-ApiServices::ApiServices(QObject *parent) : m_logger(DebugUtils::getInstance()) {
+ApiServices::ApiServices(QObject *parent) : m_logger(Logger::getInstance()) {
     m_manager = new QNetworkAccessManager(this);
 }
 
@@ -11,10 +11,9 @@ ApiServices& ApiServices::getInstance() {
 
 void ApiServices::getAsset(const QString& symbol) {
     QNetworkRequest request;
-    QSettings settings(":/config/config/app.conf", QSettings::IniFormat);
     request.setUrl(QUrl("https://finnhub.io/api/v1/quote?symbol=" + symbol));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("X-Finnhub-Token", settings.value("FINNHUB_API_KEY").toString().toLocal8Bit());
+    request.setRawHeader("X-Finnhub-Token", EnvLoader::getValue("FINNHUB_API_KEY").toLocal8Bit());
     
     QNetworkReply* reply = m_manager->get(request);
     connect(reply, &QNetworkReply::finished, this, [=]() {

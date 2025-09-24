@@ -1,6 +1,6 @@
 #include "InvestsController.hpp"
 
-InvestsController::InvestsController() : m_model(InvestModel::getInstance()), m_logger(DebugUtils::getInstance()) {
+InvestsController::InvestsController() : m_model(InvestModel::getInstance()), m_logger(Logger::getInstance()) {
     m_investList = new QStringListModel(this);
     loadInvests();
 }
@@ -16,7 +16,7 @@ bool InvestsController::add(double amount, QString date) {
         QStringList currList = m_investList->stringList();
 
         // Update investment list
-        currList.append(QString::number(amount) + "$");
+        currList.append("$" + QString::number(amount));
         m_investList->setStringList(currList);
         emit investCreated(amount);
     }
@@ -49,7 +49,7 @@ void InvestsController::loadInvests() {
     // Add each investment made
     for (int i = 0; i < data.size(); i++) {
         QJsonObject item = data[i].toObject();
-        curr.append(QString::number(item["amount"].toDouble()) + " $");
+        curr.append("$" + QString::number(item["amount"].toDouble()));
     }
 
     m_investList->setStringList(curr);

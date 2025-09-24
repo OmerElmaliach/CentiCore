@@ -5,9 +5,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QString>
-#include <memory>
+#include <QLocale>
+#include <vector>
 #include "ExpenseModel.hpp"
-#include "DebugUtils.hpp"
+#include "Logger.hpp"
 
 /**
  * @class ExpensesController
@@ -24,7 +25,7 @@ class ExpensesController : public QObject {
 
 private:
     ExpenseModel& m_model;
-    DebugUtils& m_logger;
+    Logger& m_logger;
     QStringListModel* m_list;
 
     /**
@@ -96,6 +97,29 @@ public:
      * expensesLoaded signal with the calculated total.
      */
     void loadExpenses();
+
+    /**
+     * @brief Retrieves the total expenses for a specific month of a given year.
+     * 
+     * @param year The year for which expenses should be calculated.
+     * @param month The month for which expenses should be calculated.
+     * @return The total sum of expenses for the specified month.
+     * 
+     * This function queries the expense model for all entries that match the given
+     * year and month, sums their values, and returns the result.
+     */
+    double getMonth(const QString& year, const QString& month);
+
+    /**
+     * @brief Retrieves monthly expense totals for a specific year.
+     * 
+     * @param year The year for which monthly expenses should be calculated.
+     * @return A vector of 12 doubles, each representing the total expenses for the corresponding month (January = index 0, December = index 11).
+     * 
+     * This function queries the expense model for all entries in the specified year,
+     * calculates the total expenses for each month, and returns them as a vector.
+     */
+    vector<double> getYear(const QString& year);
 
     ExpensesController(const ExpensesController&) = delete;
     ExpensesController& operator=(const ExpensesController&) = delete;
