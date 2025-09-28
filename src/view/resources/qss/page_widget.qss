@@ -1,20 +1,22 @@
 /* --> Page Widget <-- */
 #pageWidget {
-    background-color: #333333;
-    border-radius: 4px;
-    border: 1px solid #414141;
+    background-color: #202020;
+    border: 1px solid #272727;
 }
 
 #pageWidget QPushButton {
     border-radius: 0px;
-    background-color: transparent;
 }
 
 #pageWidget QPushButton:hover {
-    background-color: #3d3d3d;
-    border-left: 4px solid #525252;
+    background-color: #2b2b2b;
+    border-left: 4px solid #3d3d3d;
 }
 
 #pageWidget QPushButton:pressed {
-    background-color: #444444
+    background-color: #353535
+}
+
+#pageWidget #label {
+    border-bottom: 1px solid #414141;
 }

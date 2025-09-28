@@ -12,7 +12,7 @@ void ExpenseChart::refreshMonth(int month ,double amount) {
 void ExpenseChart::setupChart(const std::vector<double>& expenses) {
     // Create and configure chart
     QChart* chart = new QChart();
-    chart->setTitle("Monthly Expenses");
+    chart->setTitle(" ");
     chart->setAnimationOptions(QChart::SeriesAnimations);
     
     // Create bar series with data

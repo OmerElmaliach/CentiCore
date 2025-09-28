@@ -1,9 +1,7 @@
 /* --> Topbar <-- */
 #topbarWidget {
-    background-color: #4b4b4b;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border: 1px solid #555555;
+    background-color: #2b2b2b;
+    border: 1px solid #2e2e2e;
 }
 
 #topbarWidget QLabel {
@@ -16,7 +14,7 @@
 
 #exit_btn,
 #minimize_btn {
-    background-color: #4b4b4b;
+    background-color: #2b2b2b;
 }
 
 #exit_btn:hover {
@@ -24,5 +22,5 @@
 }
 
 #minimize_btn:hover {
-    background-color: #585858;
+    background-color: #3a3a3a;
 }

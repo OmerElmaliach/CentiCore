@@ -10,9 +10,15 @@ QLabel {
     color: white;
 }
 
+/* --> Highlight current page <-- */
+#stocks_btn {
+    background-color: #2b2b2b;
+    border-left: 4px solid #3d3d3d;
+}
+
 /* --> Main Widget <-- */
 #centralWidget {
-    background-color: #252525;
+    background-color: #1b1b1b;
 }
 
 /* --> Investments List <-- */
@@ -21,8 +27,8 @@ QLabel {
 }
 
 #investsWidget {
-    background-color: #2c2c2c;
-    border: 1px solid #3d3d3d;
+    background-color: #252525;
+    border: 1px solid #2c2c2c;
     border-radius: 8px;
     font-family: "Segoe UI";
     font-size: 16px;
@@ -38,11 +44,11 @@ QLabel {
     background-color: #1e1e1e;
     color: #e0e0e0;
     border: none;
-    border-radius: 6px;
+    border-left: 1px solid #2c2c2c;
+    border-right: 1px solid #2c2c2c;
     font-size: 16px;
     padding: 8px;
     outline: none;
-    margin: 4px;
 }
 
 #investsWidget QListView::item {
@@ -83,7 +89,7 @@ QLabel {
 #balanceWidget,
 #changeWidget {
     border-radius: 4px;
-    border: 1px solid #414141;
+    border: 1px solid #252525;
     background-image: url(:/background/background/stocks_bg.png);
     background-position: center;
     background-repeat: no-repeat;
@@ -115,7 +121,7 @@ QLabel {
 
 /* --> Asset Tables <-- */
 QTableView {
-    border: 1px solid #414141;
+    border: 1px solid #353535;
     background-color: #1e1e1e;
     color: #e0e0e0;
     gridline-color: #2a2a2a;
@@ -219,9 +225,8 @@ QTableView QScrollBar::sub-line:horizontal {
 /* Container widgets */
 #stocksWidget,
 #cryptoWidget {
-    border: 1px solid #414141;
+    border: 1px solid #5e2424;
     background-color: #552020;
-    border-radius: 8px;
     padding: 4px;
 }
 

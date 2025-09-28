@@ -360,7 +360,7 @@
       <x>1030</x>
       <y>80</y>
       <width>231</width>
-      <height>601</height>
+      <height>611</height>
      </rect>
     </property>
     <widget class="QLabel" name="investsLabel">
@@ -383,7 +383,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>560</y>
+       <y>570</y>
        <width>121</width>
        <height>41</height>
       </rect>
@@ -399,7 +399,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>560</y>
+       <y>570</y>
        <width>81</width>
        <height>41</height>
       </rect>
@@ -440,19 +440,24 @@
        <x>0</x>
        <y>50</y>
        <width>231</width>
-       <height>511</height>
+       <height>521</height>
       </rect>
      </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
     </widget>
+    <zorder>investsView</zorder>
+    <zorder>investsLabel</zorder>
+    <zorder>investsStr</zorder>
+    <zorder>investsNum</zorder>
+    <zorder>addInvest_btn</zorder>
    </widget>
    <widget class="QWidget" name="cryptoWidget" native="true">
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>490</y>
+      <y>500</y>
       <width>771</width>
       <height>191</height>
      </rect>
@@ -531,10 +536,10 @@
    <widget class="QWidget" name="pageWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>200</y>
+      <x>0</x>
+      <y>50</y>
       <width>201</width>
-      <height>351</height>
+      <height>671</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -544,7 +549,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>10</y>
+       <y>30</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -557,7 +562,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>80</y>
+       <y>90</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -583,7 +588,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>220</y>
+       <y>210</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -596,7 +601,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>290</y>
+       <y>270</y>
        <width>201</width>
        <height>51</height>
       </rect>
@@ -606,6 +611,12 @@
      </property>
     </widget>
    </widget>
+   <zorder>pageWidget</zorder>
+   <zorder>topbarWidget</zorder>
+   <zorder>stocksWidget</zorder>
+   <zorder>numsWidget</zorder>
+   <zorder>investsWidget</zorder>
+   <zorder>cryptoWidget</zorder>
   </widget>
  </widget>
  <resources/>
