@@ -12,6 +12,7 @@ namespace AppConstants {
     namespace Ui {
         extern const QString MAIN_PAGE_UI;
         extern const QString ASSET_PAGE_UI;
+        extern const QString STATS_PAGE_UI;
         extern const QString TOPBAR_UI;
         extern const QString PAGES_WIDGET_UI;
         extern const QString LEAD_STOCKS_UI;
@@ -28,8 +29,12 @@ namespace AppConstants {
     }
 
     namespace Pages {
-        extern const int MAIN_PAGE;
-        extern const int STOCKS_PAGE;
+        enum PAGE_ID {
+            MAIN_PAGE = 0,
+            STOCKS_PAGE = 1,
+            STATS_PAGE = 2
+        };
+
         extern const int LIVE_UPDATE_INTERVAL;
         extern const QStringList ASSET_HEADERS;
         extern const QStringList EXPENSE_CATEGORIES;

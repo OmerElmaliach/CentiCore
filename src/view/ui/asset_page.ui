@@ -41,7 +41,7 @@
    <bool>false</bool>
   </property>
   <property name="windowTitle">
-   <string>Dashboard</string>
+   <string>Assets</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="topbarWidget" native="true">

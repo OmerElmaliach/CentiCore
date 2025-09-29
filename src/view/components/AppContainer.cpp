@@ -8,14 +8,17 @@ AppContainer::AppContainer(QWidget *parent) : QMainWindow(parent), m_logger(Logg
 void AppContainer::setupConnections() {
     MainPage* mainPage = new MainPage(this);
     AssetPage* stocksPage = new AssetPage(this);
+    StatsPage* statsPage = new StatsPage(this);
 
     m_stack = new QStackedWidget(this);
     m_stack->addWidget(mainPage);
     m_stack->addWidget(stocksPage);
+    m_stack->addWidget(statsPage);
     setCentralWidget(m_stack);
 
     connect(mainPage, &MainPage::switchPage, this, &AppContainer::switchPage);
     connect(stocksPage, &AssetPage::switchPage, this, &AppContainer::switchPage);
+    connect(statsPage, &StatsPage::switchPage, this, &AppContainer::switchPage);
 }
 
 void AppContainer::switchPage(int index) {

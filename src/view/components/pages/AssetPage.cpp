@@ -2,35 +2,36 @@
 #include "../../ui/ui_asset_page.h"
 
 AssetPage::AssetPage(QWidget *parent) :
-        QMainWindow(parent),
-        m_ui(new Ui::AssetPage),
-        m_logger(Logger::getInstance()),
-        m_asset_cont(AssetsController::getInstance()),
-        m_invest_cont(InvestsController::getInstance()) {
-    m_logger.debugLog("AssetPage: Performing UI setup", "VIEW", "INFO");
-    m_ui->setupUi(this);
+    QMainWindow(parent),
+    m_ui(new Ui::AssetPage),
+    m_logger(Logger::getInstance()),
+    m_asset_cont(AssetsController::getInstance()),
+    m_invest_cont(InvestsController::getInstance()) {
 
-    // Setup models
-    m_asset_cont->setupAssetTable(m_asset_cont->getStockTable(), m_ui->stocksView);
-    m_asset_cont->setupAssetTable(m_asset_cont->getCryptoTable(), m_ui->cryptoView);
-    m_ui->investsView->setModel(m_invest_cont->getInstance()->getList());
+        m_logger.debugLog("AssetPage: Performing UI setup", "VIEW", "INFO");
+        m_ui->setupUi(this);
 
-    // Load connections and styles
-    if (!Utils::loadStyles(this, AppConstants::Ui::ASSET_PAGE_UI))
-        m_logger.debugLog("AssetPage: Failed to load style file stocks.ui", "VIEW", "ERR");
-    if (!Utils::loadStyles(m_ui->topbarWidget, AppConstants::Ui::TOPBAR_UI))
-        m_logger.debugLog("AssetPage: Failed to load style for topbar", "VIEW", "ERR");
-    if (!Utils::loadStyles(m_ui->pageWidget, AppConstants::Ui::PAGES_WIDGET_UI))
-        m_logger.debugLog("AssetPage: Failed to load style for pages widget", "VIEW", "ERR");
-    
-    setupConnections();
-    loadTotalInvests();
+        // Setup models
+        m_asset_cont->setupAssetTable(m_asset_cont->getStockTable(), m_ui->stocksView);
+        m_asset_cont->setupAssetTable(m_asset_cont->getCryptoTable(), m_ui->cryptoView);
+        m_ui->investsView->setModel(m_invest_cont->getInstance()->getList());
 
-    // Load events
-    WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
-    m_ui->topbarWidget->installEventFilter(dragFilter);
-    m_ui->topbarDisplay->installEventFilter(dragFilter);
-    m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
+        // Load connections and styles
+        if (!Utils::loadStyles(this, AppConstants::Ui::ASSET_PAGE_UI))
+            m_logger.debugLog("AssetPage: Failed to load style file assets_page", "VIEW", "ERR");
+        if (!Utils::loadStyles(m_ui->topbarWidget, AppConstants::Ui::TOPBAR_UI))
+            m_logger.debugLog("AssetPage: Failed to load style for topbar", "VIEW", "ERR");
+        if (!Utils::loadStyles(m_ui->pageWidget, AppConstants::Ui::PAGES_WIDGET_UI))
+            m_logger.debugLog("AssetPage: Failed to load style for pages_widget", "VIEW", "ERR");
+
+        setupConnections();
+        loadTotalInvests();
+
+        // Load events
+        WindowDragFilter* dragFilter = new WindowDragFilter(parent, this);
+        m_ui->topbarWidget->installEventFilter(dragFilter);
+        m_ui->topbarDisplay->installEventFilter(dragFilter);
+        m_logger.debugLog("AssetPage: UI setup completed", "VIEW", "INFO");
 }
 
 AssetPage::~AssetPage() {
@@ -54,6 +55,12 @@ void AssetPage::setupConnections() {
     connect(m_ui->dashBoard_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("AssetPage: Switching to dashboard page", "VIEW", "INFO");
         emit switchPage(AppConstants::Pages::MAIN_PAGE);
+    });
+
+    // Stats page button
+    connect(m_ui->stats_btn, &QPushButton::clicked, this, [this] {
+        m_logger.debugLog("MainPage: Switching to stats page", "VIEW", "INFO");
+        emit switchPage(AppConstants::Pages::STATS_PAGE);
     });
 
     // Add stock button

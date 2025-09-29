@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include "MainPage.hpp"
 #include "AssetPage.hpp"
+#include "StatsPage.hpp"
 #include "Logger.hpp"
 
 /**

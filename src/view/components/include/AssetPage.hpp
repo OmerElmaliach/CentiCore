@@ -33,6 +33,12 @@ private:
     AssetsController* m_asset_cont;
     InvestsController* m_invest_cont;
 
+    /**
+     * @brief Initializes and connects all UI signals to their respective slots
+     * @details Sets up window controls, navigation buttons, dialog connections, and controller signals
+     */
+    void setupConnections();
+
 public:
     /**
      * @brief Constructs the asset page with parent widget
@@ -44,12 +50,6 @@ public:
      * @brief Destructor - cleans up UI resources and stops live data updates
      */
     ~AssetPage();
-
-    /**
-     * @brief Initializes and connects all UI signals to their respective slots
-     * @details Sets up window controls, navigation buttons, dialog connections, and controller signals
-     */
-    void setupConnections();
     
     /**
      * @brief Loads existing assets from persistent storage into the UI tables

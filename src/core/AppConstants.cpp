@@ -9,6 +9,7 @@ namespace AppConstants {
     namespace Ui {
         const QString MAIN_PAGE_UI = ":/styles/qss/main_page.qss";
         const QString ASSET_PAGE_UI = ":/styles/qss/asset_page.qss";
+        const QString STATS_PAGE_UI = ":/styles/qss/stats_page.qss";
         const QString TOPBAR_UI = ":/styles/qss/topbar.qss";
         const QString PAGES_WIDGET_UI = ":/styles/qss/page_widget.qss";
         const QString LEAD_STOCKS_UI = ":/styles/qss/leading_stocks.qss";
@@ -16,8 +17,6 @@ namespace AppConstants {
     }
 
     namespace Pages {
-        const int MAIN_PAGE = 0;
-        const int STOCKS_PAGE = 1;
         const int LIVE_UPDATE_INTERVAL = 10000;
         const QStringList ASSET_HEADERS = {"Symbol", "Quantity", "Price per Unit", "Daily change (%)", "Daily change ($)", "Total Value"};
         const QStringList EXPENSE_CATEGORIES = {"Personal Care", "Transportation", "Food", "Utilities", "Entertainment", "Miscellaneous"};

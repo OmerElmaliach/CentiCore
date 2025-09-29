@@ -16,7 +16,7 @@ MainPage::MainPage(QWidget *parent) :
     setupConnections();
     setupChart();
     if (!Utils::loadStyles(this, AppConstants::Ui::MAIN_PAGE_UI))
-        m_logger.debugLog("MainPage: Failed to load style file main_page.ui", "VIEW", "ERR");
+        m_logger.debugLog("MainPage: Failed to load style file main_page", "VIEW", "ERR");
     if (!Utils::loadStyles(m_ui->topbarWidget, AppConstants::Ui::TOPBAR_UI))
         m_logger.debugLog("MainPage: Failed to load style for topbar", "VIEW", "ERR");
     if (!Utils::loadStyles(m_ui->pageWidget, AppConstants::Ui::PAGES_WIDGET_UI))
@@ -70,6 +70,12 @@ void MainPage::setupConnections() {
     connect(m_ui->stocks_btn, &QPushButton::clicked, this, [this] {
         m_logger.debugLog("MainPage: Switching to stocks page", "VIEW", "INFO");
         emit switchPage(AppConstants::Pages::STOCKS_PAGE);
+    });
+
+    // Stats page button
+    connect(m_ui->stats_btn, &QPushButton::clicked, this, [this] {
+        m_logger.debugLog("MainPage: Switching to stats page", "VIEW", "INFO");
+        emit switchPage(AppConstants::Pages::STATS_PAGE);
     });
 
     // Get help button
